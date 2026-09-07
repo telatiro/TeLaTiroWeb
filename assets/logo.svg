@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 75" width="100%" height="100%" fill="none">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#25815F" />
+      <stop offset="100%" stop-color="#1b6348" />
+    </linearGradient>
+    <filter id="softGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#25815F" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Bag Toss Motion Graphic -->
+  <g transform="translate(195, 2)">
+    <!-- Motion curves -->
+    <path d="M-15 15 C-5 8, 5 6, 14 10" stroke="#25815F" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.7"/>
+    <path d="M-18 22 C-10 14, 2 12, 10 17" stroke="#25815F" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.45"/>
+    
+    <!-- Stylized Bag Icon -->
+    <path d="M16 11 C13 7, 21 4, 23 8 C25 6, 31 9, 28 13 C35 15, 38 28, 33 34 C28 39, 12 39, 7 34 C2 28, 5 15, 12 13 C9 9, 15 6, 16 11 Z" 
+          fill="#1E1E1E" filter="url(#softGlow)"/>
+    <!-- Bag Tie Knot -->
+    <ellipse cx="20" cy="9" rx="4.5" ry="3" fill="#25815F"/>
+    <!-- Two Eyes (del mismo color de la sonrisa) -->
+    <circle cx="15.5" cy="18.5" r="1.6" fill="#FFFFFF" opacity="0.9"/>
+    <circle cx="24.5" cy="18.5" r="1.6" fill="#FFFFFF" opacity="0.9"/>
+    <!-- Clean Smile on Bag -->
+    <path d="M13 23.5 C15 28.5, 25 28.5, 27 23.5" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.9"/>
+  </g>
+
+  <!-- Typography: TeLaTiro -->
+  <text x="8" y="52" font-family="'Poppins', 'Inter', sans-serif" font-weight="800" font-size="44" fill="#1E1E1E" letter-spacing="-1.5">Te</text>
+  <text x="64" y="52" font-family="'Poppins', 'Inter', sans-serif" font-weight="800" font-size="44" fill="#1E1E1E" letter-spacing="-1.5">La</text>
+  <text x="122" y="52" font-family="'Poppins', 'Inter', sans-serif" font-weight="800" font-size="44" fill="url(#brandGrad)" letter-spacing="-1.5">Tiro</text>
+
+  <!-- Subtitle Tagline inside Logo -->
+  <text x="10" y="69" font-family="'Poppins', 'Inter', sans-serif" font-weight="600" font-size="10" fill="#4B5563" letter-spacing="0.8">TÚ LA DEJAS. NOSOTROS LA TIRAMOS.</text>
+</svg>

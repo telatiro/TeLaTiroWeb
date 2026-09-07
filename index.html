@@ -1,0 +1,1973 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TeLaTiro | Servicio Premium Privado de Recogida de Basura a Domicilio</title>
+  <meta name="description" content="Recogida privada de bolsas de basura en la puerta de tu piso o chalet. Puntual, limpio, formal y profesional. Desde 24,90€/mes y bolsa desde 0,99€. Contrata tu plan online o por WhatsApp.">
+  <meta name="theme-color" content="#25815F">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#E8F5EF',
+              100: '#D1EBE0',
+              200: '#A3D7C1',
+              500: '#25815F',
+              600: '#1F6E50',
+              700: '#19573F',
+              800: '#13402E',
+              900: '#0C281D',
+            },
+            charcoal: {
+              DEFAULT: '#1E1E1E',
+              50: '#F8F9FA',
+              100: '#E9ECEF',
+              800: '#2D3748',
+              900: '#1E1E1E',
+            }
+          },
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-[#F8FAF9] text-[#2D3748] font-sans antialiased selection:bg-[#25815F] selection:text-white">
+
+  <!-- TOP TRUST ANNOUNCEMENT BAR -->
+  <div class="bg-[#1E1E1E] text-white text-xs sm:text-sm py-2.5 px-4 text-center border-b border-gray-800">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-x-6 gap-y-1">
+      <span class="flex items-center gap-1.5 text-emerald-400 font-bold bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
+        <i class="fa-solid fa-star text-emerald-400"></i> Servicio Exclusivo
+      </span>
+      <span class="hidden md:inline text-gray-500">•</span>
+      <span class="text-gray-300">
+        <i class="fa-solid fa-door-closed text-emerald-400 mr-1"></i> Puerta a Puerta
+      </span>
+      <span class="hidden sm:inline text-gray-500">•</span>
+      <span class="text-gray-300">
+        <i class="fa-solid fa-ban text-emerald-400 mr-1"></i> Sin Permanencia
+      </span>
+      <span class="hidden lg:inline text-gray-500">•</span>
+      <a href="https://wa.me/34600000000?text=Hola%20TeLaTiro%2C%20quiero%20informacion%20del%20servicio" target="_blank" class="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1 transition-colors">
+        <i class="fa-brands fa-whatsapp"></i> WhatsApp: +34 600 000 000
+      </a>
+    </div>
+  </div>
+
+  <!-- MAIN STICKY HEADER -->
+  <header id="mainHeader" class="glass-header sticky top-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logo Brand -->
+        <a href="#inicio" class="flex items-center gap-3 focus:outline-none">
+          <div class="w-48 sm:w-56 h-auto py-1">
+            <img src="assets/logo.svg" alt="TeLaTiro Logo" class="h-12 w-auto object-contain">
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden lg:flex items-center gap-8 font-medium text-sm text-gray-700">
+          <a href="#inicio" class="hover:text-[#25815F] transition-colors">Inicio</a>
+          <a href="#como-funciona" class="hover:text-[#25815F] transition-colors">¿Cómo Funciona?</a>
+          <a href="#tarifas" class="hover:text-[#25815F] transition-colors">Tarifas y Planes</a>
+          <a href="#que-recogemos" class="hover:text-[#25815F] transition-colors">Qué Recogemos</a>
+          <a href="#para-quien" class="hover:text-[#25815F] transition-colors">Para Quién Es</a>
+          <a href="#preguntas-frecuentes" class="hover:text-[#25815F] transition-colors">FAQ</a>
+          <a href="#contacto" class="hover:text-[#25815F] transition-colors">Contacto</a>
+        </nav>
+
+        <!-- Right Header Action Buttons -->
+        <div class="hidden sm:flex items-center gap-3">
+          <a href="https://wa.me/34600000000?text=Hola%20TeLaTiro%2C%20quiero%20consultar%20una%20duda" target="_blank" class="p-2.5 text-gray-600 hover:text-[#25D366] hover:bg-green-50 rounded-full transition-colors text-lg" title="Chatear por WhatsApp">
+            <i class="fa-brands fa-whatsapp text-2xl text-[#25D366]"></i>
+          </a>
+          <a href="#solicitar" class="btn-primary text-sm !py-2.5 !px-5 shadow-sm">
+            <i class="fa-solid fa-calendar-check"></i>
+            <span>Pedir Recogida</span>
+          </a>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobileMenuToggle" class="lg:hidden p-2 rounded-lg text-gray-700 hover:text-[#25815F] hover:bg-gray-100 focus:outline-none" aria-label="Abrir Menú">
+          <i class="fa-solid fa-bars text-2xl"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU SLIDEOUT DRAWER -->
+  <div id="mobileMenuBackdrop" class="fixed inset-0 bg-black/50 z-50 hidden transition-opacity"></div>
+  <div id="mobileMenu" class="fixed top-0 right-0 bottom-0 w-[85%] max-w-sm bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+    <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+      <img src="assets/logo.svg" alt="TeLaTiro" class="h-10 w-auto">
+      <button id="mobileMenuClose" class="p-2 text-gray-500 hover:text-gray-800 rounded-full" aria-label="Cerrar Menú">
+        <i class="fa-solid fa-xmark text-2xl"></i>
+      </button>
+    </div>
+    
+    <div class="flex-1 overflow-y-auto py-6 px-6 space-y-4">
+      <a href="#inicio" class="mobile-nav-link block text-base font-semibold text-gray-800 hover:text-[#25815F] py-2 border-b border-gray-50">Inicio</a>
+      <a href="#como-funciona" class="mobile-nav-link block text-base font-semibold text-gray-800 hover:text-[#25815F] py-2 border-b border-gray-50">¿Cómo Funciona?</a>
+      <a href="#tarifas" class="mobile-nav-link block text-base font-semibold text-gray-800 hover:text-[#25815F] py-2 border-b border-gray-50">Tarifas y Precios</a>
+      <a href="#que-recogemos" class="mobile-nav-link block text-base font-semibold text-gray-800 hover:text-[#25815F] py-2 border-b border-gray-50">Normativa de Residuos</a>
+      <a href="#para-quien" class="mobile-nav-link block text-base font-semibold text-gray-800 hover:text-[#25815F] py-2 border-b border-gray-50">Para Quién Es</a>
+      <a href="#solicitar" class="mobile-nav-link block text-base font-semibold text-gray-800 hover:text-[#25815F] py-2 border-b border-gray-50">Contratar Servicio</a>
+      <a href="#preguntas-frecuentes" class="mobile-nav-link block text-base font-semibold text-gray-800 hover:text-[#25815F] py-2 border-b border-gray-50">Preguntas Frecuentes</a>
+      <a href="#contacto" class="mobile-nav-link block text-base font-semibold text-gray-800 hover:text-[#25815F] py-2">Contacto</a>
+
+      <div class="pt-6 space-y-3">
+        <a href="#solicitar" class="mobile-nav-link btn-primary w-full text-center justify-center">
+          <i class="fa-solid fa-sparkles"></i> Pedir Recogida
+        </a>
+        <a href="https://wa.me/34600000000?text=Hola%20TeLaTiro%2C%20quiero%20informacion" target="_blank" class="btn-whatsapp w-full text-center justify-center">
+          <i class="fa-brands fa-whatsapp text-xl"></i> WhatsApp Directo
+        </a>
+      </div>
+    </div>
+
+    <div class="p-6 bg-gray-50 border-t border-gray-100 text-xs text-gray-500 text-center">
+      TeLaTiro • Recogida Premium de Basura a Domicilio
+    </div>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section id="inicio" class="relative pt-8 pb-16 lg:pt-16 lg:pb-24 overflow-hidden bg-gradient-to-b from-[#E8F5EF]/40 via-white to-[#F8FAF9]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left Hero Content -->
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+          
+          <!-- Badge Pill -->
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#25815F]/20 shadow-sm text-xs sm:text-sm font-semibold text-[#25815F]">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#25815F] animate-ping"></span>
+            <span>Servicio Exclusivo</span>
+          </div>
+
+          <!-- Main Headline -->
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#1E1E1E] tracking-tight leading-[1.15]">
+            Tú la dejas en la puerta.<br>
+            <span class="text-[#25815F] relative inline-block">
+              TeLaTiro
+              <svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 5.5C50 1.5 150 1.5 199 5.5" stroke="#25815F" stroke-width="4" stroke-linecap="round"/>
+              </svg>
+            </span>
+            se encarga.
+          </h1>
+
+          <!-- Subtitle -->
+          <p class="text-lg sm:text-xl text-gray-600 font-normal max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+            Recogemos las bolsas de basura doméstica directamente en la puerta de tu casa o trabajo en la franja horaria que elijas y las depositamos en el contenedor municipal correspondiente. Limpio, formal y 100% confiable.
+          </p>
+
+          <!-- Key Value Pillars -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 py-2 text-left max-w-xl mx-auto lg:mx-0">
+            <div class="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-gray-700 bg-white/80 p-2.5 rounded-xl border border-gray-200">
+              <i class="fa-solid fa-door-closed text-[#25815F] text-base"></i>
+              <span>Puerta a Puerta</span>
+            </div>
+            <div class="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-gray-700 bg-white/80 p-2.5 rounded-xl border border-gray-200">
+              <i class="fa-solid fa-clock text-[#25815F] text-base"></i>
+              <span>Mañanas y Tardes</span>
+            </div>
+            <div class="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-gray-700 bg-white/80 p-2.5 rounded-xl border border-gray-200 col-span-2 sm:col-span-1">
+              <i class="fa-solid fa-lock text-[#25815F] text-base"></i>
+              <span>Sin Permanencia</span>
+            </div>
+          </div>
+
+          <!-- Hero CTAs -->
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+            <a href="#tarifas" class="btn-primary w-full sm:w-auto text-base !py-3.5 !px-8 shadow-lg shadow-[#25815F]/20">
+              <i class="fa-solid fa-calendar-star"></i>
+              <span>Ver Tarifas y Planes</span>
+            </a>
+            <a href="#como-funciona" class="btn-secondary w-full sm:w-auto text-base !py-3.5 !px-6">
+              <i class="fa-solid fa-circle-play text-[#25815F]"></i>
+              <span>¿Cómo Funciona?</span>
+            </a>
+          </div>
+
+          <!-- Social Proof Snippet -->
+          <div class="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-4 text-xs sm:text-sm text-gray-500">
+            <div class="flex -space-x-2 overflow-hidden">
+              <div class="inline-block h-8 w-8 rounded-full ring-2 ring-white bg-[#25815F] text-white flex items-center justify-center font-bold text-xs">ER</div>
+              <div class="inline-block h-8 w-8 rounded-full ring-2 ring-white bg-[#1E1E1E] text-white flex items-center justify-center font-bold text-xs">CM</div>
+              <div class="inline-block h-8 w-8 rounded-full ring-2 ring-white bg-emerald-700 text-white flex items-center justify-center font-bold text-xs">MD</div>
+              <div class="inline-block h-8 w-8 rounded-full ring-2 ring-white bg-gray-700 text-white flex items-center justify-center font-bold text-xs">JG</div>
+            </div>
+            <div class="flex items-center gap-1 text-amber-500">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <span class="font-bold text-gray-800 ml-1">4.9 / 5</span>
+              <span class="text-gray-500 font-normal">(Vecinos y propietarios satisfechos)</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Hero Visual Card Mockup with Real Photos -->
+        <div class="lg:col-span-5 relative">
+          <div class="hero-visual-card p-6 sm:p-7 relative overflow-hidden space-y-5">
+            
+            <!-- Photo Switcher Header -->
+            <div class="flex items-center justify-between gap-2 border-b border-gray-100 pb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-gray-500 flex items-center gap-1.5">
+                <i class="fa-solid fa-camera text-[#25815F]"></i> Nuestro Servicio
+              </span>
+              <div class="flex items-center gap-1 bg-gray-100 p-1 rounded-full">
+                <button type="button" class="photo-tab-btn active" data-photo-target="view-entrega">
+                  <i class="fa-solid fa-hands-holding-circle mr-1"></i> En Puerta
+                </button>
+                <button type="button" class="photo-tab-btn" data-photo-target="view-felpudo">
+                  <i class="fa-solid fa-door-closed mr-1"></i> En Felpudo
+                </button>
+              </div>
+            </div>
+
+            <!-- Photo 1: Entrega en Puerta (Mujer entregando la bolsa al repartidor) -->
+            <div id="view-entrega" class="hero-photo-view relative rounded-2xl overflow-hidden shadow-md border border-gray-200 aspect-[16/10] photo-entrega">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent flex flex-col justify-end p-4 text-white">
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#25815F] text-[11px] font-bold w-max mb-1 shadow-sm">
+                  <i class="fa-solid fa-user-check"></i> Personal Propio Uniformado
+                </span>
+                <p class="text-xs text-gray-200 font-medium leading-snug">
+                  Recogida directa y cordial en tu puerta en tu turno acordado.
+                </p>
+              </div>
+            </div>
+
+            <!-- Photo 2: Bolsa en Felpudo con Colgador (Oculto por defecto) -->
+            <div id="view-felpudo" class="hero-photo-view hidden relative rounded-2xl overflow-hidden shadow-md border border-gray-200 aspect-[16/10] photo-felpudo">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent flex flex-col justify-end p-4 text-white">
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-600 text-[11px] font-bold w-max mb-1 shadow-sm">
+                  <i class="fa-solid fa-door-open"></i> Sin Esperas • Cero Molestias
+                </span>
+                <p class="text-xs text-gray-200 font-medium leading-snug">
+                  Déjala cerrada en tu felpudo o pomo. La retiramos discretamente.
+                </p>
+              </div>
+            </div>
+
+            <!-- Service Details Pills -->
+            <div class="grid grid-cols-2 gap-2 text-left bg-white p-3.5 rounded-xl border border-gray-100 text-xs shadow-sm">
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-circle-check text-[#25815F]"></i>
+                <span class="font-medium text-gray-700">Máx. 2 bolsas domésticas</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-circle-check text-[#25815F]"></i>
+                <span class="font-medium text-gray-700">Hasta 50L cada bolsa</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-circle-check text-[#25815F]"></i>
+                <span class="font-medium text-gray-700">Turnos 9-13h y 16-20h</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-circle-check text-[#25815F]"></i>
+                <span class="font-medium text-gray-700">Bolsas siempre atadas</span>
+              </div>
+            </div>
+
+            <!-- Quick Pricing Snapshot in Card -->
+            <div class="grid grid-cols-3 gap-2 text-center">
+              <div class="bg-white p-2.5 rounded-xl border-2 border-[#25815F] shadow-sm relative">
+                <span class="text-[10px] uppercase font-bold tracking-wider text-[#25815F]">Pisos</span>
+                <div class="text-base sm:text-lg font-extrabold text-[#25815F]">24,90€</div>
+                <span class="text-[10px] text-emerald-700 font-bold block">¡Desde 0,99€ / bolsa!</span>
+              </div>
+              <div class="bg-white p-2.5 rounded-xl border border-gray-200 hover:border-[#25815F] transition-all">
+                <span class="text-[10px] uppercase font-bold tracking-wider text-gray-500">Chalets</span>
+                <div class="text-base sm:text-lg font-extrabold text-[#1E1E1E]">34,90€</div>
+                <span class="text-[10px] text-[#25815F] font-semibold block">Bolsa desde 1,25€</span>
+              </div>
+              <div class="bg-white p-2.5 rounded-xl border border-gray-200 hover:border-[#25815F] transition-all">
+                <span class="text-[10px] uppercase font-bold tracking-wider text-gray-500">Puntual</span>
+                <div class="text-base sm:text-lg font-extrabold text-gray-800">4,90€</div>
+                <span class="text-[10px] text-amber-600 font-semibold block">Tarjeta / Efectivo</span>
+              </div>
+            </div>
+
+            <!-- Action button inside Card: links directly to form #solicitar -->
+            <a href="#solicitar" class="btn-primary w-full text-center text-sm py-3 justify-center shadow-md">
+              <i class="fa-solid fa-calendar-check text-lg"></i>
+              <span>Pedir Recogida</span>
+            </a>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- GUARANTEE STRIP -->
+  <section class="bg-[#1E1E1E] text-white py-8 border-y border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8 text-center sm:text-left">
+        
+        <div class="flex flex-col sm:flex-row items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-[#25815F]/20 text-[#25815F] flex items-center justify-center text-xl flex-shrink-0 border border-[#25815F]/30">
+            <i class="fa-solid fa-user-shield"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-sm sm:text-base text-white">Personal Propio</h4>
+            <p class="text-xs text-gray-400">Identificado, de total confianza y uniformado.</p>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-[#25815F]/20 text-[#25815F] flex items-center justify-center text-xl flex-shrink-0 border border-[#25815F]/30">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-sm sm:text-base text-white">Franjas Acordadas</h4>
+            <p class="text-xs text-gray-400">Mañanas 9-13h y Tardes 16-20h.</p>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-[#25815F]/20 text-[#25815F] flex items-center justify-center text-xl flex-shrink-0 border border-[#25815F]/30">
+            <i class="fa-solid fa-trash-can-check"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-sm sm:text-base text-white">Gestión Legal</h4>
+            <p class="text-xs text-gray-400">Depósito en contenedor municipal adecuado.</p>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-[#25815F]/20 text-[#25815F] flex items-center justify-center text-xl flex-shrink-0 border border-[#25815F]/30">
+            <i class="fa-solid fa-handshake-simple"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-sm sm:text-base text-white">Sin Ataduras</h4>
+            <p class="text-xs text-gray-400">Cancela cuando tú quieras.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS SECTION WITH PHOTOS -->
+  <section id="como-funciona" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <span class="text-xs sm:text-sm uppercase tracking-wider font-bold text-[#25815F]">Sencillo, Cómodo e Higiénico</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1E1E1E]">¿Cómo Funciona TeLaTiro?</h2>
+        <p class="text-gray-600 text-base sm:text-lg">
+          Olvídate para siempre de cargar con bolsas pesadas, bajar escaleras o salir por la noche al frío o con lluvia. Solo son 3 sencillos pasos.
+        </p>
+      </div>
+
+      <!-- Step-by-Step Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+        
+        <!-- Step 1 -->
+        <div class="clean-card p-6 sm:p-8 relative flex flex-col items-center text-center space-y-4">
+          <div class="step-number mb-1">1</div>
+          <div class="w-16 h-16 rounded-2xl bg-[#E8F5EF] text-[#25815F] flex items-center justify-center text-2xl">
+            <i class="fa-solid fa-mobile-screen-button"></i>
+          </div>
+          <h3 class="text-xl font-bold text-[#1E1E1E]">1. Eliges tu Plan y Horario</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">
+            Selecciona tu tarifa (Pisos, Chalets o Puntual), tu dirección y tu turno preferido: <strong>Mañanas (09-13h)</strong> o <strong>Tardes (16-20h)</strong>.
+          </p>
+          <span class="text-xs font-semibold text-[#25815F] bg-[#E8F5EF] px-3 py-1 rounded-full">
+            Alta rápida en 1 minuto
+          </span>
+        </div>
+
+        <!-- Step 2 (With Felpudo Photo) -->
+        <div class="clean-card p-6 sm:p-8 relative flex flex-col items-center text-center space-y-4">
+          <div class="step-number mb-1">2</div>
+          <div class="w-full h-32 rounded-xl overflow-hidden photo-felpudo border border-gray-200 shadow-sm relative">
+            <span class="absolute bottom-2 left-2 bg-[#1E1E1E]/80 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+              🚪 Felpudo o cancela
+            </span>
+          </div>
+          <h3 class="text-xl font-bold text-[#1E1E1E]">2. Listas a las 09:00h o 16:00h</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">
+            Ten preparadas tus bolsas en el felpudo, puerta o cancela a las <strong>09:00 h (turno mañana)</strong> o a las <strong>16:00 h (turno tarde)</strong>, ya que el recogedor puede personarse a esa misma hora para no perder tiempo ni hacerle esperar.
+          </p>
+          <span class="text-xs font-semibold text-[#25815F] bg-[#E8F5EF] px-3 py-1 rounded-full">
+            Listas a las 09:00h o 16:00h
+          </span>
+        </div>
+
+        <!-- Step 3 (With Entrega Photo) -->
+        <div class="clean-card p-6 sm:p-8 relative flex flex-col items-center text-center space-y-4">
+          <div class="step-number mb-1">3</div>
+          <div class="w-full h-32 rounded-xl overflow-hidden photo-entrega border border-gray-200 shadow-sm relative">
+            <span class="absolute bottom-2 left-2 bg-[#25815F]/90 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+              🤝 Recogida puntual
+            </span>
+          </div>
+          <h3 class="text-xl font-bold text-[#1E1E1E]">3. TeLaTiro se la Lleva</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">
+            Nuestro personal uniformado pasa puntualmente por tu puerta, recoge las bolsas y las deposita en el contenedor municipal correspondiente.
+          </p>
+          <span class="text-xs font-semibold text-[#25815F] bg-[#E8F5EF] px-3 py-1 rounded-full">
+            100% Limpio y Puntual
+          </span>
+        </div>
+
+      </div>
+
+      <!-- Action Box beneath steps -->
+      <div class="mt-12 bg-gradient-to-r from-[#E8F5EF] to-white p-6 sm:p-8 rounded-2xl border border-[#25815F]/20 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div class="space-y-1 text-center sm:text-left">
+          <h4 class="text-lg font-bold text-[#1E1E1E]">¿Quieres que empecemos hoy mismo?</h4>
+          <p class="text-sm text-gray-600">Contrata tu plan mensual o solicita una recogida puntual.</p>
+        </div>
+        <a href="#solicitar" class="btn-primary whitespace-nowrap">
+          <span>Configurar mi Recogida</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PRICING AND PLANS SECTION -->
+  <section id="tarifas" class="py-20 bg-[#F8FAF9] border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Header -->
+      <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+        <span class="text-xs sm:text-sm uppercase tracking-wider font-bold text-[#25815F]">Tarifas Claras y Transparentes</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1E1E1E]">Elige el Plan que Mejor se Adapta a Ti</h2>
+        <p class="text-gray-600 text-base sm:text-lg">
+          Sin costes ocultos. Sin contratos abusivos de permanencia. Servicio profesional garantizado.
+        </p>
+      </div>
+
+      <!-- INFORMATIVE COMMUNITY DISCOUNT BANNER -->
+      <div class="mb-10 max-w-5xl mx-auto bg-gradient-to-r from-[#25815F] to-[#164e38] rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+        <div class="space-y-2 text-center md:text-left">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
+            <i class="fa-solid fa-users"></i> Descuento Vecinal Colectivo
+          </div>
+          <h3 class="text-2xl sm:text-3xl font-extrabold">¿Sois 10 o más vecinos en el edificio o urbanización?</h3>
+          <p class="text-emerald-100 text-sm max-w-2xl leading-relaxed">
+            Si en tu comunidad de propietarios se suscriben <strong>10 vecinos o más</strong> de forma mensual a cualquiera de nuestros planes, se os aplicará automáticamente un <strong>descuento directo de 5 € al mes a cada uno</strong>.
+          </p>
+        </div>
+        <div class="bg-white/10 backdrop-blur-md border border-white/20 px-6 py-4 rounded-2xl text-center flex-shrink-0">
+          <span class="text-xs font-bold uppercase tracking-wider text-emerald-200 block">Ahorro por vecino</span>
+          <span class="text-2xl sm:text-3xl font-extrabold text-white">-5 € / mes</span>
+          <span class="text-[11px] text-emerald-200 block mt-0.5">(Para 10+ suscripciones)</span>
+        </div>
+      </div>
+
+      <!-- Category Switcher Tabs -->
+      <div class="flex items-center justify-center gap-3 mb-12 flex-wrap">
+        <button type="button" class="pricing-tab-btn active" data-pricing-target="pricing-pisos">
+          <i class="fa-solid fa-building text-base"></i>
+          <span>Pisos y Apartamentos (3 Planes)</span>
+        </button>
+        <button type="button" class="pricing-tab-btn" data-pricing-target="pricing-chalets">
+          <i class="fa-solid fa-house-chimney text-base"></i>
+          <span>Casas y Chalets (3 Planes)</span>
+        </button>
+      </div>
+
+      <!-- CONTAINER 1: PISOS Y APARTAMENTOS (3 Planes) -->
+      <div id="pricing-pisos" class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+        
+        <!-- PLAN PISO: 2 DÍAS (24,90€) -->
+        <div class="plan-card p-8 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-bold uppercase tracking-wider text-[#25815F] bg-[#E8F5EF] px-3 py-1 rounded-full">
+                2 DÍAS / SEMANA
+              </span>
+              <i class="fa-solid fa-building text-2xl text-gray-400"></i>
+            </div>
+
+            <h3 class="text-2xl font-bold text-[#1E1E1E]">Plan Piso</h3>
+            <p class="text-sm text-gray-500 mt-1">Para viviendas con necesidad de recogida moderada.</p>
+
+            <!-- Price -->
+            <div class="my-6">
+              <div class="flex items-baseline gap-1">
+                <span class="text-4xl sm:text-5xl font-extrabold text-[#1E1E1E]">24,90€</span>
+                <span class="text-gray-500 font-medium">/ mes</span>
+              </div>
+              <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-bold text-[#25815F]">
+                <i class="fa-solid fa-tag"></i> ¡Solo 1,55 € por bolsa recogida!
+              </div>
+            </div>
+
+            <!-- Features List -->
+            <ul class="space-y-3 text-sm text-gray-700 border-t border-gray-100 pt-6">
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
+                <span><strong>Recogidas semanales:</strong> 2 días a la semana (<strong>Martes y Jueves</strong>).</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
+                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio de recogida.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
+                <span><strong>2 Franjas a elegir:</strong> Mañana (09:00-13:00h) o Tarde (16:00-20:00h).</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
+                <span><strong>Pago mensual:</strong> Domiciliación SEPA o Tarjeta (no efectivo).</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
+                <span><strong>Sin permanencia:</strong> cancela cuando quieras.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Card Button -->
+          <div class="pt-8">
+            <button data-select-plan="piso_2d" class="btn-outline-green w-full py-3.5 text-center justify-center font-semibold">
+              <span>Elegir Plan Piso (24,90€)</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- PLAN PISO PLUS: 3 DÍAS (29,90€) - MÁS POPULAR -->
+        <div class="plan-card featured p-8 flex flex-col justify-between relative bg-white">
+          <div class="absolute -top-0 right-8 bg-[#25815F] text-white text-xs font-bold px-4 py-1 rounded-b-lg shadow-sm uppercase tracking-wider">
+            ⭐ MÁS POPULAR
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-bold uppercase tracking-wider text-white bg-[#25815F] px-3 py-1 rounded-full">
+                3 DÍAS / SEMANA
+              </span>
+              <i class="fa-solid fa-building text-2xl text-[#25815F]"></i>
+            </div>
+
+            <h3 class="text-2xl font-bold text-[#1E1E1E]">Plan Piso Plus</h3>
+            <p class="text-sm text-gray-500 mt-1">El equilibrio perfecto para familias y viviendas habituales.</p>
+
+            <!-- Price -->
+            <div class="my-6">
+              <div class="flex items-baseline gap-1">
+                <span class="text-4xl sm:text-5xl font-extrabold text-[#25815F]">29,90€</span>
+                <span class="text-gray-500 font-medium">/ mes</span>
+              </div>
+              <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/70 border border-emerald-300 text-xs font-bold text-[#1E5E44]">
+                <i class="fa-solid fa-tag"></i> ¡Solo 1,25 € por bolsa recogida!
+              </div>
+            </div>
+
+            <!-- Features List -->
+            <ul class="space-y-3 text-sm text-gray-700 border-t border-gray-100 pt-6">
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
+                <span><strong>Recogidas semanales:</strong> 3 días a la semana (<strong>Lunes, Miércoles y Viernes</strong>).</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
+                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio de recogida.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
+                <span><strong>2 Franjas a elegir:</strong> Mañana (09:00-13:00h) o Tarde (16:00-20:00h).</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
+                <span><strong>Pago mensual:</strong> Domiciliación SEPA o Tarjeta (no efectivo).</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
+                <span><strong>Sin permanencia:</strong> cancela cuando quieras.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Card Button -->
+          <div class="pt-8">
+            <button data-select-plan="piso_plus" class="btn-primary w-full py-3.5 text-center justify-center font-semibold shadow-md">
+              <span>Elegir Plan Piso Plus (29,90€)</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- PLAN PISO PREMIUM: 5 DÍAS (39,90€) - SERVICIO COMPLETO -->
+        <div class="plan-card p-8 flex flex-col justify-between border-purple-200 hover:border-purple-400">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-bold uppercase tracking-wider text-purple-800 bg-purple-100 px-3 py-1 rounded-full">
+                5 DÍAS / SEMANA (L-V)
+              </span>
+              <i class="fa-solid fa-crown text-2xl text-purple-600"></i>
+            </div>
+
+            <h3 class="text-2xl font-bold text-[#1E1E1E]">Plan Piso Premium</h3>
+            <p class="text-sm text-gray-500 mt-1">Servicio continuo de lunes a viernes con la máxima comodidad.</p>
+
+            <!-- Price -->
+            <div class="my-6">
+              <div class="flex items-baseline gap-1">
+                <span class="text-4xl sm:text-5xl font-extrabold text-[#1E1E1E]">39,90€</span>
+                <span class="text-gray-500 font-medium">/ mes</span>
+              </div>
+              <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-50 border border-purple-200 text-xs font-bold text-purple-800">
+                <i class="fa-solid fa-tag"></i> ¡Solo 0,99 € por bolsa (menos de 1€)!
+              </div>
+            </div>
+
+            <!-- Features List -->
+            <ul class="space-y-3 text-sm text-gray-700 border-t border-gray-100 pt-6">
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
+                <span><strong>Recogidas semanales:</strong> 5 días a la semana (<strong>Lunes, Martes, Miércoles, Jueves y Viernes</strong>).</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
+                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio de recogida.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
+                <span><strong>2 Franjas a elegir:</strong> Mañana (09:00-13:00h) o Tarde (16:00-20:00h).</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
+                <span><strong>Pago mensual:</strong> Domiciliación SEPA o Tarjeta (no efectivo).</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
+                <span><strong>Sin permanencia:</strong> cancela cuando quieras.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Card Button -->
+          <div class="pt-8">
+            <button data-select-plan="piso_premium" class="btn-outline-green w-full py-3.5 text-center justify-center font-semibold">
+              <span>Elegir Plan Piso Premium (39,90€)</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CONTAINER 2: CASAS Y CHALETS (3 Planes) - Hidden by default -->
+      <div id="pricing-chalets" class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch hidden">
+        
+        <!-- PLAN CHALET: 2 DÍAS (34,90€) -->
+        <div class="plan-card p-8 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-bold uppercase tracking-wider text-[#25815F] bg-[#E8F5EF] px-3 py-1 rounded-full">
+                2 DÍAS / SEMANA
+              </span>
+              <i class="fa-solid fa-house-chimney text-2xl text-gray-400"></i>
+            </div>
+
+            <h3 class="text-2xl font-bold text-[#1E1E1E]">Plan Casa / Chalet</h3>
+            <p class="text-sm text-gray-500 mt-1">Para chalets independientes, pareados o adosados.</p>
+
+            <!-- Price -->
+            <div class="my-6">
+              <div class="flex items-baseline gap-1">
+                <span class="text-4xl sm:text-5xl font-extrabold text-[#1E1E1E]">34,90€</span>
+                <span class="text-gray-500 font-medium">/ mes</span>
+              </div>
+              <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-bold text-[#25815F]">
+                <i class="fa-solid fa-tag"></i> ¡Solo 2,18 € por bolsa recogida!
+              </div>
+            </div>
+
+            <!-- Features List -->
+            <ul class="space-y-3 text-sm text-gray-700 border-t border-gray-100 pt-6">
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
+                <span><strong>Recogidas semanales:</strong> 2 días a la semana (<strong>Martes y Jueves</strong>).</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
+                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio de recogida.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
+                <span><strong>2 Franjas a elegir:</strong> Mañana (09:00-13:00h) o Tarde (16:00-20:00h).</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
+                <span><strong>Pago mensual:</strong> Domiciliación SEPA o Tarjeta (no efectivo).</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
+                <span><strong>Sin permanencia:</strong> cancela cuando quieras.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Card Button -->
+          <div class="pt-8">
+            <button data-select-plan="chalet_2d" class="btn-outline-green w-full py-3.5 text-center justify-center font-semibold">
+              <span>Elegir Plan Chalet (34,90€)</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- PLAN CHALET PLUS: 3 DÍAS (39,90€) - MÁS SOLICITADO -->
+        <div class="plan-card featured p-8 flex flex-col justify-between relative bg-white">
+          <div class="absolute -top-0 right-8 bg-[#25815F] text-white text-xs font-bold px-4 py-1 rounded-b-lg shadow-sm uppercase tracking-wider">
+            ⭐ MÁS SOLICITADO
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-bold uppercase tracking-wider text-white bg-[#25815F] px-3 py-1 rounded-full">
+                3 DÍAS / SEMANA
+              </span>
+              <i class="fa-solid fa-house-chimney text-2xl text-[#25815F]"></i>
+            </div>
+
+            <h3 class="text-2xl font-bold text-[#1E1E1E]">Plan Chalet Plus</h3>
+            <p class="text-sm text-gray-500 mt-1">La opción más popular y completa para viviendas unifamiliares.</p>
+
+            <!-- Price -->
+            <div class="my-6">
+              <div class="flex items-baseline gap-1">
+                <span class="text-4xl sm:text-5xl font-extrabold text-[#25815F]">39,90€</span>
+                <span class="text-gray-500 font-medium">/ mes</span>
+              </div>
+              <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/70 border border-emerald-300 text-xs font-bold text-[#1E5E44]">
+                <i class="fa-solid fa-tag"></i> ¡Solo 1,66 € por bolsa recogida!
+              </div>
+            </div>
+
+            <!-- Features List -->
+            <ul class="space-y-3 text-sm text-gray-700 border-t border-gray-100 pt-6">
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
+                <span><strong>Recogidas semanales:</strong> 3 días a la semana (<strong>Lunes, Miércoles y Viernes</strong>).</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
+                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio de recogida.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
+                <span><strong>2 Franjas a elegir:</strong> Mañana (09:00-13:00h) o Tarde (16:00-20:00h).</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
+                <span><strong>Pago mensual:</strong> Domiciliación SEPA o Tarjeta (no efectivo).</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
+                <span><strong>Sin permanencia:</strong> cancela cuando quieras.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Card Button -->
+          <div class="pt-8">
+            <button data-select-plan="chalet_plus" class="btn-primary w-full py-3.5 text-center justify-center font-semibold shadow-md">
+              <span>Elegir Plan Chalet Plus (39,90€)</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- PLAN CHALET PREMIUM: 5 DÍAS (49,90€) - MÁXIMO CONFORT -->
+        <div class="plan-card p-8 flex flex-col justify-between border-purple-200 hover:border-purple-400">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-bold uppercase tracking-wider text-purple-800 bg-purple-100 px-3 py-1 rounded-full">
+                5 DÍAS / SEMANA (L-V)
+              </span>
+              <i class="fa-solid fa-crown text-2xl text-purple-600"></i>
+            </div>
+
+            <h3 class="text-2xl font-bold text-[#1E1E1E]">Plan Chalet Premium</h3>
+            <p class="text-sm text-gray-500 mt-1">Servicio integral de lunes a viernes para total tranquilidad.</p>
+
+            <!-- Price -->
+            <div class="my-6">
+              <div class="flex items-baseline gap-1">
+                <span class="text-4xl sm:text-5xl font-extrabold text-[#1E1E1E]">49,90€</span>
+                <span class="text-gray-500 font-medium">/ mes</span>
+              </div>
+              <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-50 border border-purple-200 text-xs font-bold text-purple-800">
+                <i class="fa-solid fa-tag"></i> ¡Solo 1,25 € por bolsa recogida!
+              </div>
+            </div>
+
+            <!-- Features List -->
+            <ul class="space-y-3 text-sm text-gray-700 border-t border-gray-100 pt-6">
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
+                <span><strong>Recogidas semanales:</strong> 5 días a la semana (<strong>Lunes, Martes, Miércoles, Jueves y Viernes</strong>).</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
+                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio de recogida.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
+                <span><strong>2 Franjas a elegir:</strong> Mañana (09:00-13:00h) o Tarde (16:00-20:00h).</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
+                <span><strong>Pago mensual:</strong> Domiciliación SEPA o Tarjeta (no efectivo).</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
+                <span><strong>Sin permanencia:</strong> cancela cuando quieras.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Card Button -->
+          <div class="pt-8">
+            <button data-select-plan="chalet_premium" class="btn-outline-green w-full py-3.5 text-center justify-center font-semibold">
+              <span>Elegir Plan Chalet Premium (49,90€)</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- INFORMATIVE REFERRAL PROMO (PLAN AMIGO VECINAL) -->
+      <div class="mt-10 bg-gradient-to-r from-emerald-50 via-white to-emerald-50 rounded-3xl p-6 sm:p-7 border border-[#25815F]/30 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-start gap-4 text-center md:text-left">
+          <div class="w-12 h-12 rounded-2xl bg-[#25815F] text-white flex items-center justify-center text-xl flex-shrink-0 shadow-sm mx-auto md:mx-0">
+            <i class="fa-solid fa-gift"></i>
+          </div>
+          <div class="space-y-1">
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#E8F5EF] text-xs font-bold text-[#25815F] uppercase tracking-wider">
+              🎁 Plan Amigo Vecinal
+            </div>
+            <h3 class="text-xl sm:text-2xl font-bold text-[#1E1E1E]">¿Vienes recomendado por un vecino?</h3>
+            <p class="text-sm text-gray-600 max-w-2xl leading-relaxed">
+              Si te suscribes de parte de un vecino que ya utiliza TeLaTiro, os aplicamos <strong>5 € de descuento a cada uno</strong> (5 € en tu siguiente cuota mensual y 5 € en el próximo recibo de tu vecino recomendador).
+            </p>
+          </div>
+        </div>
+        <div class="bg-white px-5 py-3.5 rounded-2xl border border-emerald-200 shadow-sm text-center flex-shrink-0">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-gray-500 block">Doble Descuento</span>
+          <span class="text-xl sm:text-2xl font-extrabold text-[#25815F]">-5 € + -5 €</span>
+          <span class="text-[10px] text-emerald-700 font-semibold block mt-0.5">5€ para ti y 5€ para tu vecino</span>
+        </div>
+      </div>
+
+      <!-- BANNER CARD: RECOGIDA PUNTUAL (4,90€) -->
+      <div class="mt-12 bg-white rounded-3xl p-6 sm:p-8 border-2 border-dashed border-gray-300 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-sm hover:border-[#25815F] transition-colors">
+        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-left">
+          <div class="w-14 h-14 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center text-2xl flex-shrink-0">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <div class="space-y-1">
+            <div class="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
+              <span class="text-xs font-bold uppercase tracking-wider text-amber-800 bg-amber-100 px-3 py-0.5 rounded-full">Sin Suscripción</span>
+              <span class="text-xs text-gray-500">Servicio puntual de 1 día</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-bold text-[#1E1E1E]">¿Prefieres una Recogida Puntual sin cuotas?</h3>
+            <p class="text-sm text-gray-600 max-w-2xl">
+              Para días concretos, limpiezas o emergencias. <strong>4,90 € / servicio</strong> con pago por Tarjeta o Efectivo en mano. Elige cualquier día de Lunes a Viernes (solicitud para el mismo día: hasta las <strong>11:00 h</strong> en Mañana o hasta las <strong>18:00 h</strong> en Tarde).
+            </p>
+          </div>
+        </div>
+        <button data-select-plan="puntual" class="btn-secondary whitespace-nowrap !py-3.5 !px-8 shadow-sm flex-shrink-0">
+          <span>Pedir Recogida Puntual (4,90€)</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <!-- Maximum 2 Bags & Punctuality Disclaimer Alert -->
+      <div class="mt-10 max-w-4xl mx-auto bg-amber-50 border border-amber-200 rounded-2xl p-4 sm:p-5 flex items-start gap-3.5 text-amber-900 text-sm">
+        <i class="fa-solid fa-clock text-amber-600 text-lg mt-0.5 flex-shrink-0"></i>
+        <div class="space-y-1">
+          <strong class="font-bold block">Condiciones esenciales de recogida:</strong>
+          <p>
+            • <strong>Horario de colocación:</strong> Las bolsas deben estar <strong>ya preparadas en el lugar destinado a la recogida (felpudo, pomo, puerta o cancela) a las 09:00 h (turno de mañana) o a las 16:00 h (turno de tarde)</strong>, ya que el operario de TeLaTiro puede personarse en tu domicilio justo al inicio del turno para optimizar la ruta y no hacerle esperar ni perder tiempo.
+          </p>
+          <p>
+            • <strong>Capacidad:</strong> Hasta un máximo de <strong>2 bolsas de basura doméstica estándar</strong> (hasta 50L cada una) debidamente cerradas por servicio.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WHAT WE COLLECT VS WHAT WE DON'T (NORMATIVA CLARA) -->
+  <section id="que-recogemos" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <span class="text-xs sm:text-sm uppercase tracking-wider font-bold text-[#25815F]">Transparencia y Normativa</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1E1E1E]">¿Qué Recogemos y Qué No?</h2>
+        <p class="text-gray-600 text-base sm:text-lg">
+          Para garantizar la máxima higiene comunitaria y cumplir estrictamente la normativa municipal de residuos, nuestro servicio está especializado exclusivamente en basura doméstica habitual.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        
+        <!-- SÍ RECOGEMOS (GREEN BOX) -->
+        <div class="rounded-3xl border-2 border-[#25815F] bg-[#F0FAF5] p-8 shadow-sm relative overflow-hidden">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-12 h-12 rounded-2xl bg-[#25815F] text-white flex items-center justify-center text-2xl shadow-sm">
+              <i class="fa-solid fa-check"></i>
+            </div>
+            <div>
+              <span class="text-xs font-bold text-[#25815F] uppercase tracking-wider">Permitido</span>
+              <h3 class="text-2xl font-bold text-[#1E1E1E]">SÍ Recogemos</h3>
+            </div>
+          </div>
+
+          <ul class="space-y-4 text-sm text-gray-800">
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-circle-check text-[#25815F] text-lg mt-0.5"></i>
+              <div>
+                <strong>Bolsas de basura doméstica habitual</strong>: Residuos de cocina, restos de comida y fracción resto de hogar.
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-circle-check text-[#25815F] text-lg mt-0.5"></i>
+              <div>
+                <strong>Hasta un máximo de 2 bolsas por recogida</strong> (Hasta 50L cada bolsa).
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-circle-check text-[#25815F] text-lg mt-0.5"></i>
+              <div>
+                <strong>Bolsas debidamente cerradas y atadas</strong> para evitar cualquier goteo, derrame u olor.
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-circle-check text-[#25815F] text-lg mt-0.5"></i>
+              <div>
+                <strong>Ubicadas en la puerta de tu vivienda</strong> dentro de la franja horaria acordada.
+              </div>
+            </li>
+          </ul>
+
+          <div class="mt-6 pt-4 border-t border-[#25815F]/20 text-xs text-[#1F6E50] font-medium flex items-center gap-2">
+            <i class="fa-solid fa-leaf"></i>
+            <span>Depositamos tus residuos puntualmente en el contenedor municipal homologado.</span>
+          </div>
+        </div>
+
+        <!-- NO RECOGEMOS (RED/RESTRICTION BOX) -->
+        <div class="rounded-3xl border-2 border-red-300 bg-red-50/50 p-8 shadow-sm relative overflow-hidden">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-12 h-12 rounded-2xl bg-red-500 text-white flex items-center justify-center text-2xl shadow-sm">
+              <i class="fa-solid fa-ban"></i>
+            </div>
+            <div>
+              <span class="text-xs font-bold text-red-600 uppercase tracking-wider">No permitido</span>
+              <h3 class="text-2xl font-bold text-[#1E1E1E]">NO Recogemos</h3>
+            </div>
+          </div>
+
+          <ul class="space-y-4 text-sm text-gray-800">
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-circle-xmark text-red-500 text-lg mt-0.5"></i>
+              <div>
+                <strong>Cartón voluminoso o cajas</strong>: No retiramos embalajes comerciales ni cartones grandes fuera de bolsa.
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-circle-xmark text-red-500 text-lg mt-0.5"></i>
+              <div>
+                <strong>Vidrios sueltos o botellas sin embolsar</strong>: Riesgo de rotura o cortes para el personal.
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-circle-xmark text-red-500 text-lg mt-0.5"></i>
+              <div>
+                <strong>Pinturas, químicos o tóxicos</strong>: Solventes, aerosoles industriales o residuos peligrosos.
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-circle-xmark text-red-500 text-lg mt-0.5"></i>
+              <div>
+                <strong>Escombros, muebles o enseres</strong>: No realizamos vaciados de pisos ni retirada de muebles pesados.
+              </div>
+            </li>
+          </ul>
+
+          <div class="mt-6 pt-4 border-t border-red-200 text-xs text-red-700 font-medium flex items-center gap-2">
+            <i class="fa-solid fa-shield-exclamation"></i>
+            <span>Solo gestionamos basura doméstica para mantener la higiene y seguridad.</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TARGET AUDIENCE / SOLUTIONS PER PROFILE -->
+  <section id="para-quien" class="py-20 bg-[#F8FAF9]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14 space-y-3">
+        <span class="text-xs sm:text-sm uppercase tracking-wider font-bold text-[#25815F]">Diseñado a tu Medida</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1E1E1E]">Un Servicio Pensado Para Cada Hogar y Profesionales</h2>
+        <p class="text-gray-600 text-base sm:text-lg">
+          Descubre cómo TeLaTiro soluciona un problema diario y aporta comodidad, higiene, seguridad y tiempo libre.
+        </p>
+      </div>
+
+      <!-- Audience Tabs Selector (Orden Solicitado) -->
+      <div class="flex flex-wrap items-center justify-center gap-2 border-b border-gray-200 mb-10 max-w-5xl mx-auto">
+        <button class="audience-tab-btn active text-sm sm:text-base flex items-center gap-2" data-target="tab-hogares">
+          <i class="fa-solid fa-house-chimney"></i>
+          <span>Hogares</span>
+        </button>
+        <button class="audience-tab-btn text-sm sm:text-base flex items-center gap-2" data-target="tab-movilidad">
+          <i class="fa-solid fa-wheelchair"></i>
+          <span>Movilidad Reducida</span>
+        </button>
+        <button class="audience-tab-btn text-sm sm:text-base flex items-center gap-2" data-target="tab-mayores">
+          <i class="fa-solid fa-person-cane"></i>
+          <span>Personas Mayores</span>
+        </button>
+        <button class="audience-tab-btn text-sm sm:text-base flex items-center gap-2" data-target="tab-comunidades">
+          <i class="fa-solid fa-city"></i>
+          <span>Fincas y Comunidades</span>
+        </button>
+        <button class="audience-tab-btn text-sm sm:text-base flex items-center gap-2" data-target="tab-profesionales">
+          <i class="fa-solid fa-briefcase"></i>
+          <span>Profesionales</span>
+        </button>
+      </div>
+
+      <!-- Tab Contents -->
+      <div class="max-w-4xl mx-auto">
+        
+        <!-- Tab 1: Hogares -->
+        <div id="tab-hogares" class="audience-content bg-white p-8 rounded-3xl border border-gray-200 shadow-sm space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            <div class="md:col-span-8 space-y-4">
+              <span class="text-xs font-bold text-[#25815F] uppercase tracking-wider bg-[#E8F5EF] px-3 py-1 rounded-full">
+                Ahorro de Tiempo y Cero Estrés
+              </span>
+              <h3 class="text-2xl font-bold text-[#1E1E1E]">Gana tiempo para ti y olvídate de las prisas</h3>
+              <p class="text-gray-600 text-sm leading-relaxed">
+                ¿Llegas tarde a casa después de una larga jornada o tienes que salir corriendo por la mañana? Con TeLaTiro no tendrás que preocuparte de bajar la basura antes de salir de casa arreglado ni de interrumpir tu descanso nocturno.
+              </p>
+              <div class="space-y-2 text-sm text-gray-700">
+                <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> Sal de casa sin bolsas en la mano ni olores en la ropa.</div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> Horarios cómodos adaptados a tu ritmo diario.</div>
+              </div>
+            </div>
+            <div class="md:col-span-4 bg-[#F8FAF9] p-6 rounded-2xl border border-gray-100 text-center">
+              <i class="fa-solid fa-house-user text-5xl text-[#25815F] mb-3"></i>
+              <h4 class="font-bold text-gray-800 text-sm">Comodidad Absoluta</h4>
+              <p class="text-xs text-gray-500 mt-1">Por poco más de 1€ al día, tu casa siempre limpia y sin esfuerzo.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Movilidad Reducida -->
+        <div id="tab-movilidad" class="audience-content hidden bg-white p-8 rounded-3xl border border-gray-200 shadow-sm space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            <div class="md:col-span-8 space-y-4">
+              <span class="text-xs font-bold text-[#25815F] uppercase tracking-wider bg-[#E8F5EF] px-3 py-1 rounded-full">
+                Autonomía e Independencia
+              </span>
+              <h3 class="text-2xl font-bold text-[#1E1E1E]">Eliminamos barreras arquitectónicas de tu día a día</h3>
+              <p class="text-gray-600 text-sm leading-relaxed">
+                Para personas en silla de ruedas, con muletas o dificultades de movilidad temporal o permanente, llegar al contenedor de la calle puede ser una auténtica carrera de obstáculos. Nosotros lo hacemos fácil y accesible.
+              </p>
+              <div class="space-y-2 text-sm text-gray-700">
+                <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> Recogida en el mismo pomo o rellano de tu puerta.</div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> Flexibilidad y trato humano personalizado.</div>
+              </div>
+            </div>
+            <div class="md:col-span-4 bg-[#F8FAF9] p-6 rounded-2xl border border-gray-100 text-center">
+              <i class="fa-solid fa-universal-access text-5xl text-[#25815F] mb-3"></i>
+              <h4 class="font-bold text-gray-800 text-sm">Hogar 100% Accesible</h4>
+              <p class="text-xs text-gray-500 mt-1">Un servicio asistencial privado de alta calidad en tu propia puerta.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Personas Mayores -->
+        <div id="tab-mayores" class="audience-content hidden bg-white p-8 rounded-3xl border border-gray-200 shadow-sm space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            <div class="md:col-span-8 space-y-4">
+              <span class="text-xs font-bold text-[#25815F] uppercase tracking-wider bg-[#E8F5EF] px-3 py-1 rounded-full">
+                Seguridad y Cuidado Familiar
+              </span>
+              <h3 class="text-2xl font-bold text-[#1E1E1E]">Cero peso, sin escaleras y máxima tranquilidad</h3>
+              <p class="text-gray-600 text-sm leading-relaxed">
+                Bajar bolsas de basura puede suponer un riesgo de caídas, esfuerzo físico innecesario y la incomodidad de salir a la calle de noche con frío o lluvia. Es el regalo perfecto de tranquilidad para padres o abuelos.
+              </p>
+              <div class="space-y-2 text-sm text-gray-700">
+                <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> Evita cargar pesos pesados y bajar peldaños o rampas.</div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> Personal de confianza, educado e identificado.</div>
+              </div>
+            </div>
+            <div class="md:col-span-4 bg-[#F8FAF9] p-6 rounded-2xl border border-gray-100 text-center">
+              <i class="fa-solid fa-heart-pulse text-5xl text-[#25815F] mb-3"></i>
+              <h4 class="font-bold text-gray-800 text-sm">Tranquilidad Familiar</h4>
+              <p class="text-xs text-gray-500 mt-1">Contrata el servicio para tus familiares mayores con total confianza.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Fincas y Comunidades -->
+        <div id="tab-comunidades" class="audience-content hidden bg-white p-8 rounded-3xl border border-gray-200 shadow-sm space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            <div class="md:col-span-8 space-y-4">
+              <span class="text-xs font-bold text-[#25815F] uppercase tracking-wider bg-[#E8F5EF] px-3 py-1 rounded-full">
+                Plan Especial Comunidades (10+ Vecinos)
+              </span>
+              <h3 class="text-2xl font-bold text-[#1E1E1E]">5 € menos al mes para cada vecino y rellanos impecables</h3>
+              <p class="text-gray-600 text-sm leading-relaxed">
+                ¿Eres presidente de comunidad, administrador de fincas o un vecino con ganas de ahorrar? Si en tu edificio o urbanización se suscriben <strong>10 vecinos o más</strong>, cada vivienda recibe un <strong>descuento directo de 5 €/mes</strong> en su suscripción, evitando olores, manchas en ascensores o acumulación de residuos en zonas comunes.
+              </p>
+              <div class="space-y-2 text-sm text-gray-700">
+                <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> <strong>5 € de ahorro mensual</strong> por cada vecino suscrito (60 €/año de ahorro por vivienda).</div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> Coordinación fluida para acceso seguro a la finca o cancela comunitaria.</div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> Mayor higiene, revalorización y confort para toda la comunidad.</div>
+              </div>
+            </div>
+            <div class="md:col-span-4 bg-[#F8FAF9] p-6 rounded-2xl border border-gray-100 text-center">
+              <i class="fa-solid fa-city text-5xl text-[#25815F] mb-3"></i>
+              <h4 class="font-bold text-gray-800 text-sm">Convenios de Comunidad</h4>
+              <p class="text-xs text-gray-500 mt-1">¡Ahorrad 5€/mes cada vecino suscribiendo 10 o más viviendas en la misma finca!</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 5: Profesionales -->
+        <div id="tab-profesionales" class="audience-content hidden bg-white p-8 rounded-3xl border border-gray-200 shadow-sm space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            <div class="md:col-span-8 space-y-4">
+              <span class="text-xs font-bold text-[#25815F] uppercase tracking-wider bg-[#E8F5EF] px-3 py-1 rounded-full">
+                Despachos, Oficinas y Comercios
+              </span>
+              <h3 class="text-2xl font-bold text-[#1E1E1E]">Cierre de jornada limpio, rápido y profesional</h3>
+              <p class="text-gray-600 text-sm leading-relaxed">
+                Para pequeños comercios, despachos profesionales, estudios, agencias, consultas y oficinas. Al finalizar la jornada laboral no tendrás que cargar con bolsas de papelera ni salir en busca de contenedores al cerrar. Déjala en tu puerta o cancela y nosotros nos encargamos.
+              </p>
+              <div class="space-y-2 text-sm text-gray-700">
+                <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> Espacios de trabajo siempre higiénicos y sin acumulación de basura.</div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> Factura mensual formal deducible para autónomos y empresas.</div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> Recogida puntual o recurrente en turnos de mañana (09:00 - 13:00 h) o tarde (16:00 - 20:00 h).</div>
+              </div>
+            </div>
+            <div class="md:col-span-4 bg-[#F8FAF9] p-6 rounded-2xl border border-gray-100 text-center">
+              <i class="fa-solid fa-briefcase text-5xl text-[#25815F] mb-3"></i>
+              <h4 class="font-bold text-gray-800 text-sm">Tu Espacio Impecable</h4>
+              <p class="text-xs text-gray-500 mt-1">Servicio cómodo y puntual para profesionales, despachos y locales.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COVERAGE AND SECTORS SECTION (RIVAS-VACIAMADRID) -->
+  <section class="py-16 bg-white border-t border-gray-200">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      
+      <div class="text-center space-y-3 max-w-3xl mx-auto">
+        <span class="text-xs uppercase tracking-wider font-bold text-[#25815F] bg-emerald-50 px-3.5 py-1.5 rounded-full border border-emerald-200">
+          <i class="fa-solid fa-route mr-1"></i> COBERTURA Y RUTAS ACTIVAS
+        </span>
+        <h3 class="text-3xl font-extrabold text-[#1E1E1E]">Comprueba la Cobertura en tu Zona</h3>
+        <p class="text-gray-600 text-sm sm:text-base">
+          De momento el servicio está disponible para <strong>Rivas-Vaciamadrid</strong> organizado en los siguientes sectores:
+        </p>
+      </div>
+
+      <!-- 4 Sectors of Rivas Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        
+        <!-- Zone 1: 28521 -->
+        <div class="p-5 rounded-2xl border-2 border-gray-100 hover:border-[#25815F] bg-[#F8FAF9] transition-all hover:shadow-md space-y-2 cursor-pointer zone-card" data-cp="28521">
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-1 rounded-lg bg-[#25815F] text-white font-extrabold text-sm tracking-wider">CP 28521</span>
+            <i class="fa-solid fa-landmark text-gray-400"></i>
+          </div>
+          <h4 class="font-bold text-gray-900 text-base">Casco Antiguo y Este</h4>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            Casco Antiguo y zona este de Vaciamadrid.
+          </p>
+        </div>
+
+        <!-- Zone 2: 28522 -->
+        <div class="p-5 rounded-2xl border-2 border-gray-100 hover:border-[#25815F] bg-[#F8FAF9] transition-all hover:shadow-md space-y-2 cursor-pointer zone-card" data-cp="28522">
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-1 rounded-lg bg-[#25815F] text-white font-extrabold text-sm tracking-wider">CP 28522</span>
+            <i class="fa-solid fa-shop text-gray-400"></i>
+          </div>
+          <h4 class="font-bold text-gray-900 text-base">Sector Central y Futura</h4>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            Sector Central y la zona comercial de Rivas Futura.
+          </p>
+        </div>
+
+        <!-- Zone 3: 28523 -->
+        <div class="p-5 rounded-2xl border-2 border-[#25815F] bg-emerald-50/40 shadow-sm space-y-2 relative cursor-pointer zone-card" data-cp="28523">
+          <span class="absolute -top-2.5 right-4 bg-[#1E1E1E] text-white text-[9px] font-bold px-2 py-0.5 rounded-full">ALTA DEMANDA</span>
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-1 rounded-lg bg-[#25815F] text-white font-extrabold text-sm tracking-wider">CP 28523</span>
+            <i class="fa-solid fa-tree-city text-[#25815F]"></i>
+          </div>
+          <h4 class="font-bold text-gray-900 text-base">Covibar y Almendros</h4>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            Avenida de los Almendros, urbanización Pablo Iglesias, barrio de Covibar y La Partija.
+          </p>
+        </div>
+
+        <!-- Zone 4: 28524 / 28525 -->
+        <div class="p-5 rounded-2xl border-2 border-gray-100 hover:border-[#25815F] bg-[#F8FAF9] transition-all hover:shadow-md space-y-2 cursor-pointer zone-card" data-cp="28524">
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-1 rounded-lg bg-[#25815F] text-white font-extrabold text-sm tracking-wider">CP 28524 / 28525</span>
+            <i class="fa-solid fa-city text-gray-400"></i>
+          </div>
+          <h4 class="font-bold text-gray-900 text-base">Nuevos Desarrollos</h4>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            Nuevos desarrollos urbanísticos, zonas industriales y áreas de expansión reciente.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Quick Interactive CP Verifier -->
+      <div class="max-w-md mx-auto text-center space-y-3">
+        <label for="coverageZipInput" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Comprobar tu Código Postal o Barrio:</label>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input type="text" id="coverageZipInput" placeholder="Ej. 28521, 28522, 28523, Covibar, Pablo Iglesias..." class="custom-input !py-3 text-center sm:text-left flex-1" maxlength="40">
+          <button id="checkCoverageBtn" class="btn-primary !py-3 whitespace-nowrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Verificar Cobertura</span>
+          </button>
+        </div>
+        <div id="coverageResult" class="hidden"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INTERACTIVE BOOKING / REQUEST FORM SECTION -->
+  <section id="solicitar" class="py-20 bg-[#F8FAF9] border-t border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14 space-y-3">
+        <span class="text-xs sm:text-sm uppercase tracking-wider font-bold text-[#25815F]">Solicitud Inmediata</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1E1E1E]">Contrata o Solicita tu Recogida</h2>
+        <p class="text-gray-600 text-base sm:text-lg">
+          Completa el formulario para tu vivienda o solicita atención directa por WhatsApp en 1 solo clic.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Left: Booking Form -->
+        <div class="lg:col-span-8 bg-white p-6 sm:p-8 rounded-3xl border border-gray-200 shadow-sm">
+          <form id="bookingForm" class="space-y-6">
+            
+            <!-- 1. Selection of Plan -->
+            <div class="space-y-4">
+              <label class="block text-sm font-bold text-[#1E1E1E]">
+                1. Selecciona tu Tipo de Vivienda y Tarifa:
+              </label>
+              
+              <!-- Housing Type Tabs in Form -->
+              <div class="flex items-center gap-2 border-b border-gray-200 pb-3 flex-wrap">
+                <button type="button" class="form-category-tab font-bold text-xs sm:text-sm px-4 py-2 rounded-xl transition-all bg-[#E8F5EF] text-[#25815F] border border-[#25815F]/30" data-form-category="pisos">
+                  <i class="fa-solid fa-building mr-1.5"></i> Pisos y Apartamentos
+                </button>
+                <button type="button" class="form-category-tab font-bold text-xs sm:text-sm px-4 py-2 rounded-xl transition-all text-gray-600 hover:text-gray-900 border border-transparent" data-form-category="chalets">
+                  <i class="fa-solid fa-house-chimney mr-1.5"></i> Casas y Chalets
+                </button>
+                <button type="button" class="form-category-tab font-bold text-xs sm:text-sm px-4 py-2 rounded-xl transition-all text-gray-600 hover:text-gray-900 border border-transparent" data-form-category="puntual">
+                  <i class="fa-solid fa-bolt mr-1.5"></i> Recogida Puntual
+                </button>
+              </div>
+
+              <!-- Radios for Pisos (3 tiers) -->
+              <div id="form-group-pisos" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                
+                <!-- Piso 2 días -->
+                <div>
+                  <input type="radio" name="service_plan" id="plan_piso_2d" value="piso_2d" class="sr-only plan-radio-input">
+                  <label for="plan_piso_2d" class="plan-radio-label flex-col text-left h-full">
+                    <div class="flex items-center justify-between w-full mb-1">
+                      <span class="font-bold text-sm text-[#1E1E1E]">Piso (2 días)</span>
+                      <span class="text-[10px] font-bold bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded">M y J</span>
+                    </div>
+                    <span class="text-lg font-extrabold text-[#25815F]">24,90€<span class="text-xs font-normal text-gray-500">/mes</span></span>
+                    <span class="text-[11px] text-gray-500 mt-1">Martes y Jueves</span>
+                  </label>
+                </div>
+
+                <!-- Piso Plus 3 días (checked by default) -->
+                <div>
+                  <input type="radio" name="service_plan" id="plan_piso_plus" value="piso_plus" class="sr-only plan-radio-input" checked>
+                  <label for="plan_piso_plus" class="plan-radio-label flex-col text-left h-full">
+                    <div class="flex items-center justify-between w-full mb-1">
+                      <span class="font-bold text-sm text-[#1E1E1E]">Piso Plus (3 días)</span>
+                      <span class="text-[10px] font-bold bg-emerald-100 text-[#25815F] px-1.5 py-0.5 rounded">⭐ L, X, V</span>
+                    </div>
+                    <span class="text-lg font-extrabold text-[#25815F]">29,90€<span class="text-xs font-normal text-gray-500">/mes</span></span>
+                    <span class="text-[11px] text-gray-500 mt-1">Lunes, Miérc. y Viernes</span>
+                  </label>
+                </div>
+
+                <!-- Piso Premium 5 días -->
+                <div>
+                  <input type="radio" name="service_plan" id="plan_piso_premium" value="piso_premium" class="sr-only plan-radio-input">
+                  <label for="plan_piso_premium" class="plan-radio-label flex-col text-left h-full">
+                    <div class="flex items-center justify-between w-full mb-1">
+                      <span class="font-bold text-sm text-[#1E1E1E]">Piso Premium</span>
+                      <span class="text-[10px] font-bold bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded">💎 5 días</span>
+                    </div>
+                    <span class="text-lg font-extrabold text-[#25815F]">39,90€<span class="text-xs font-normal text-gray-500">/mes</span></span>
+                    <span class="text-[11px] text-gray-500 mt-1">Lunes a Viernes completo</span>
+                  </label>
+                </div>
+
+              </div>
+
+              <!-- Radios for Chalets (3 tiers, hidden initially) -->
+              <div id="form-group-chalets" class="grid grid-cols-1 sm:grid-cols-3 gap-3 hidden">
+                
+                <!-- Chalet 2 días -->
+                <div>
+                  <input type="radio" name="service_plan" id="plan_chalet_2d" value="chalet_2d" class="sr-only plan-radio-input">
+                  <label for="plan_chalet_2d" class="plan-radio-label flex-col text-left h-full">
+                    <div class="flex items-center justify-between w-full mb-1">
+                      <span class="font-bold text-sm text-[#1E1E1E]">Chalet (2 días)</span>
+                      <span class="text-[10px] font-bold bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded">M y J</span>
+                    </div>
+                    <span class="text-lg font-extrabold text-[#25815F]">34,90€<span class="text-xs font-normal text-gray-500">/mes</span></span>
+                    <span class="text-[11px] text-gray-500 mt-1">Martes y Jueves</span>
+                  </label>
+                </div>
+
+                <!-- Chalet Plus 3 días -->
+                <div>
+                  <input type="radio" name="service_plan" id="plan_chalet_plus" value="chalet_plus" class="sr-only plan-radio-input">
+                  <label for="plan_chalet_plus" class="plan-radio-label flex-col text-left h-full">
+                    <div class="flex items-center justify-between w-full mb-1">
+                      <span class="font-bold text-sm text-[#1E1E1E]">Chalet Plus (3 d)</span>
+                      <span class="text-[10px] font-bold bg-emerald-100 text-[#25815F] px-1.5 py-0.5 rounded">⭐ L, X, V</span>
+                    </div>
+                    <span class="text-lg font-extrabold text-[#25815F]">39,90€<span class="text-xs font-normal text-gray-500">/mes</span></span>
+                    <span class="text-[11px] text-gray-500 mt-1">Lunes, Miérc. y Viernes</span>
+                  </label>
+                </div>
+
+                <!-- Chalet Premium 5 días -->
+                <div>
+                  <input type="radio" name="service_plan" id="plan_chalet_premium" value="chalet_premium" class="sr-only plan-radio-input">
+                  <label for="plan_chalet_premium" class="plan-radio-label flex-col text-left h-full">
+                    <div class="flex items-center justify-between w-full mb-1">
+                      <span class="font-bold text-sm text-[#1E1E1E]">Chalet Premium</span>
+                      <span class="text-[10px] font-bold bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded">💎 5 días</span>
+                    </div>
+                    <span class="text-lg font-extrabold text-[#25815F]">49,90€<span class="text-xs font-normal text-gray-500">/mes</span></span>
+                    <span class="text-[11px] text-gray-500 mt-1">Lunes a Viernes completo</span>
+                  </label>
+                </div>
+
+              </div>
+
+              <!-- Radios for Puntual (hidden initially) -->
+              <div id="form-group-puntual" class="hidden">
+                <input type="radio" name="service_plan" id="plan_puntual" value="puntual" class="sr-only plan-radio-input">
+                <label for="plan_puntual" class="plan-radio-label flex-col text-left max-w-sm">
+                  <div class="flex items-center justify-between w-full mb-1">
+                    <span class="font-bold text-sm text-[#1E1E1E]">Recogida Puntual (1 día)</span>
+                    <i class="fa-solid fa-bolt text-amber-500"></i>
+                  </div>
+                  <span class="text-lg font-extrabold text-gray-800">4,90€<span class="text-xs font-normal text-gray-500">/servicio</span></span>
+                  <span class="text-[11px] text-gray-500 mt-1">1 solo servicio sin suscripción</span>
+                </label>
+              </div>
+
+            </div>
+
+            <!-- 2. Customer Personal Info -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="clientName" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Nombre y Apellidos *</label>
+                <input type="text" id="clientName" name="name" autocomplete="name" required placeholder="Ej. Carlos Martínez Gómez" class="custom-input">
+              </div>
+              <div>
+                <label for="clientPhone" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Teléfono / WhatsApp (9 dígitos) *</label>
+                <input type="tel" id="clientPhone" name="tel" autocomplete="tel" required placeholder="Ej. 612345678" class="custom-input" inputmode="numeric" pattern="[0-9]{9}" minlength="9" maxlength="9" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 9)">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="clientEmail" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Correo Electrónico</label>
+                <input type="email" id="clientEmail" name="email" autocomplete="email" list="savedEmailsList" placeholder="tu-email@ejemplo.com" class="custom-input">
+                <datalist id="savedEmailsList"></datalist>
+              </div>
+              <div>
+                <label for="clientZip" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Sector / Código Postal de Rivas *</label>
+                <select id="clientZip" name="postal-code" class="custom-input font-medium">
+                  <option value="28523 - Av. Almendros, Pablo Iglesias, Covibar y La Partija" selected>28523 - Av. Almendros, Pablo Iglesias, Covibar y La Partija</option>
+                  <option value="28522 - Sector Central y Rivas Futura">28522 - Sector Central y Rivas Futura</option>
+                  <option value="28521 - Casco Antiguo y Zona Este de Vaciamadrid">28521 - Casco Antiguo y Zona Este de Vaciamadrid</option>
+                  <option value="28524 / 28525 - Nuevos Desarrollos e Industrial">28524 / 28525 - Nuevos desarrollos y áreas de expansión</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label for="clientAddress" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Dirección Completa (Calle, Nº, Piso, Puerta) *</label>
+              <input type="text" id="clientAddress" name="street-address" autocomplete="street-address" required placeholder="Ej. Av. de los Almendros 18, 3º B" class="custom-input">
+            </div>
+
+            <!-- 3. Time Slots, Days and Payment Method -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div>
+                <label for="clientTimeSlot" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Franja Horaria *</label>
+                <select id="clientTimeSlot" class="custom-input">
+                  <option value="Turno Mañana (09:00 - 13:00 h)" selected>Mañana (09:00 - 13:00 h)</option>
+                  <option value="Turno Tarde (16:00 - 20:00 h)">Tarde (16:00 - 20:00 h)</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="clientDays" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Frecuencia semanal / Días *</label>
+                <select id="clientDays" name="frequency" class="custom-input">
+                  <option value="3 Recogidas semanales: Lunes, Miércoles y Viernes" selected>3 Recogidas semanales: Lunes, Miércoles y Viernes</option>
+                  <option value="2 Recogidas semanales: Martes y Jueves">2 Recogidas semanales: Martes y Jueves</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="clientPayment" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Forma de Pago *</label>
+                <select id="clientPayment" name="payment-method" class="custom-input">
+                  <option value="Domiciliación bancaria (SEPA)" selected>Domiciliación bancaria (SEPA)</option>
+                  <option value="Tarjeta bancaria (Débito / Crédito)">Tarjeta bancaria</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Informative Community Note in Form -->
+            <div class="p-4 rounded-2xl border border-emerald-200 bg-emerald-50/60 flex items-start gap-3">
+              <i class="fa-solid fa-users text-[#25815F] text-lg mt-0.5 flex-shrink-0"></i>
+              <div class="text-xs text-gray-700">
+                <span class="font-bold text-emerald-900 text-sm block mb-0.5">¿Sois 10 o más vecinos en tu edificio o urbanización?</span>
+                <p>
+                  Si en tu finca se suscriben 10 o más vecinos de forma mensual, se aplicará automáticamente el <strong>descuento de 5 €/mes</strong> a cada vivienda.
+                </p>
+              </div>
+            </div>
+
+            <!-- Service Start Date Notice -->
+            <div id="serviceStartDateNotice"></div>
+
+            <!-- Punctual Time Notice / Limit Alert -->
+            <div id="punctualTimeNotice" class="hidden"></div>
+
+            <!-- Bag Readiness Punctuality Notice -->
+            <div class="bg-amber-50/80 border border-amber-200/80 rounded-2xl p-3.5 flex items-start gap-2.5 text-xs text-amber-900">
+              <i class="fa-solid fa-clock text-amber-600 mt-0.5 flex-shrink-0"></i>
+              <div>
+                <strong>Puntualidad en la entrega:</strong> Las bolsas deben estar depositadas en tu felpudo, pomo, puerta o cancela <strong>a las 09:00 h (turno mañana) o a las 16:00 h (turno tarde)</strong>, ya que el recogedor de TeLaTiro puede llegar a esa misma hora para no hacerle esperar ni perder tiempo.
+              </div>
+            </div>
+
+            <p id="paymentNotice" class="text-[11px] text-gray-500 italic">
+              <i class="fa-solid fa-circle-info text-[#25815F]"></i> Para los <strong>planes mensuales</strong> el pago se realiza mediante <strong>Domiciliación bancaria o Tarjeta</strong> (el pago en efectivo <em>no</em> está admitido en suscripciones).
+            </p>
+
+            <!-- Plan Amigo Vecinal (Recomendación de Vecino) Field -->
+            <div class="p-4 rounded-2xl border border-emerald-200 bg-emerald-50/50 space-y-2">
+              <label for="clientReferral" class="block text-xs font-bold uppercase tracking-wider text-emerald-900 flex items-center justify-between flex-wrap gap-1">
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-gift text-[#25815F]"></i> ¿Vienes recomendado por un vecino? (Opcional)</span>
+                <span class="bg-[#25815F] text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">-5 € para ti y -5 € para tu vecino</span>
+              </label>
+              <input type="text" id="clientReferral" name="referral" placeholder="Ej. Nombre, teléfono o portal/piso del vecino que te recomendó" class="custom-input !py-2 text-xs bg-white">
+              <p class="text-[11px] text-gray-600 leading-snug">
+                Si te suscribes de parte de un cliente activo de TeLaTiro, os aplicaremos <strong>5 € de descuento a cada uno</strong> (5 € en tu siguiente mensualidad y 5 € en el próximo recibo de tu vecino recomendador).
+              </p>
+            </div>
+
+            <div>
+              <label for="clientNotes" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Observaciones</label>
+              <textarea id="clientNotes" rows="2" placeholder="Ej. Código de telefonillo, dejar en el pomo, vivienda con cancela exterior..." class="custom-input"></textarea>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="pt-4">
+              <button type="submit" class="btn-primary w-full text-center justify-center !py-4 text-base shadow-lg shadow-[#25815F]/20">
+                <i class="fa-solid fa-paper-plane text-lg"></i>
+                <span>Enviar Solicitud</span>
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- Right: Live Summary & Direct WhatsApp Card -->
+        <div class="lg:col-span-4 space-y-6">
+          
+          <!-- Summary Box -->
+          <div class="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm space-y-4">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-gray-500 border-b border-gray-100 pb-3">Resumen de tu Selección</h4>
+            
+            <div>
+              <div id="summaryPlanName" class="text-xl font-bold text-[#1E1E1E]">Plan Pisos y Apartamentos</div>
+              <div id="summaryPlanPrice" class="text-3xl font-extrabold text-[#25815F] mt-1">29,90 € <span class="text-sm font-normal text-gray-500">/ mes</span></div>
+              <div id="summaryCostPerBag" class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-xs font-bold text-[#25815F]">
+                <i class="fa-solid fa-tag"></i> ¡Solo 1,25 € por bolsa recogida!
+              </div>
+
+              <p id="summaryPlanDetails" class="text-xs text-gray-500 mt-2">3 recogidas semanales • Hasta 2 bolsas por recogida • En tu rellano</p>
+            </div>
+
+            <div class="bg-gray-50 p-4 rounded-xl space-y-2 text-xs text-gray-700">
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-calendar-check text-[#25815F]"></i>
+                <span id="summaryStartDate">Inicio: 1 del mes siguiente</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-calendar-week text-[#25815F]"></i>
+                <span id="summaryFrequency">Recogidas semanales: 3 días a la semana</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-clock text-[#25815F]"></i>
+                <span>Turnos: Mañanas (09-13h) o Tardes (16-20h)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-wallet text-[#25815F]"></i>
+                <span id="summaryPaymentMethods">Pago: Domiciliación o Tarjeta</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-shield-check text-[#25815F]"></i>
+                <span>Sin permanencia • Cancela cuando quieras</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-bag-shopping text-[#25815F]"></i>
+                <span>Máx. 2 bolsas (Hasta 50L cada bolsa)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Direct WhatsApp Contact Box -->
+          <div class="bg-gradient-to-br from-[#25815F] to-[#1A5E44] text-white p-6 rounded-3xl shadow-lg space-y-4">
+            <div class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-2xl">
+              <i class="fa-brands fa-whatsapp"></i>
+            </div>
+            
+            <h4 class="text-xl font-bold">¿Prefieres consultar directamente por WhatsApp?</h4>
+            <p class="text-xs text-emerald-100 leading-relaxed">
+              Escríbenos directamente y uno de nuestros coordinadores gestionará tu alta o resolverá tus dudas al instante.
+            </p>
+
+            <a href="https://wa.me/34600000000?text=Hola%20TeLaTiro%2C%20quiero%20contratar%20el%20servicio%20de%20recogida" target="_blank" class="bg-white text-[#25815F] hover:bg-emerald-50 font-bold text-sm py-3 px-6 rounded-full inline-flex items-center justify-center w-full gap-2 transition-all shadow-md">
+              <i class="fa-brands fa-whatsapp text-lg"></i>
+              <span>Abrir WhatsApp (+34 600 000 000)</span>
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS SECTION -->
+  <section class="py-20 bg-white border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <span class="text-xs sm:text-sm uppercase tracking-wider font-bold text-[#25815F]">Clientes Satisfechos</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1E1E1E]">Lo que Opinan de TeLaTiro</h2>
+        <p class="text-gray-600 text-base sm:text-lg">
+          La tranquilidad de llegar a casa y saber que la basura ya no es un problema diario.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Review 1 -->
+        <div class="clean-card p-6 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex text-amber-400 text-sm">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-sm text-gray-700 italic leading-relaxed">
+              "Trabajo todo el día en turnos rotativos y siempre se me pasaba la hora de bajar la basura. Con el Plan Pisos me he quitado un dolor de cabeza. Puntuales, discretos y súper educados."
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-6 border-t border-gray-100 mt-4">
+            <div class="w-10 h-10 rounded-full bg-[#25815F] text-white font-bold flex items-center justify-center text-sm">ER</div>
+            <div>
+              <h5 class="text-sm font-bold text-gray-900">Elena Ramos</h5>
+              <span class="text-xs text-gray-500">Plan Pisos • Cliente Verificado</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="clean-card p-6 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex text-amber-400 text-sm">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-sm text-gray-700 italic leading-relaxed">
+              "Vivimos en un chalet adosado y el contenedor municipal nos queda bastante retirado de la cuesta. El Plan Chalets es una maravilla: dejamos las dos bolsas en la cancela y se las llevan cada noche."
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-6 border-t border-gray-100 mt-4">
+            <div class="w-10 h-10 rounded-full bg-[#1E1E1E] text-white font-bold flex items-center justify-center text-sm">CM</div>
+            <div>
+              <h5 class="text-sm font-bold text-gray-900">Carlos Molina</h5>
+              <span class="text-xs text-gray-500">Plan Casas y Chalets • Cliente Verificado</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="clean-card p-6 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex text-amber-400 text-sm">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-sm text-gray-700 italic leading-relaxed">
+              "Lo contraté para mi madre, que ya es mayor y le cuesta mucho bajar escaleras con peso. Es la mejor inversión en seguridad para ella y tranquilidad para mí. Trato inmejorable."
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-6 border-t border-gray-100 mt-4">
+            <div class="w-10 h-10 rounded-full bg-emerald-700 text-white font-bold flex items-center justify-center text-sm">MD</div>
+            <div>
+              <h5 class="text-sm font-bold text-gray-900">María Dolores Vázquez</h5>
+              <span class="text-xs text-gray-500">Plan Pisos Familiar • Cliente Verificado</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAQ SECTION -->
+  <section id="preguntas-frecuentes" class="py-20 bg-[#F8FAF9] border-t border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14 space-y-3">
+        <span class="text-xs sm:text-sm uppercase tracking-wider font-bold text-[#25815F]">Resolvemos tus Dudas</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1E1E1E]">Preguntas Frecuentes</h2>
+        <p class="text-gray-600 text-base">
+          Todo lo que necesitas saber sobre el funcionamiento del servicio TeLaTiro.
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        
+        <!-- FAQ 1: Horarios y Días -->
+        <div class="faq-item clean-card overflow-hidden">
+          <button class="faq-header w-full p-6 text-left flex items-center justify-between gap-4 font-bold text-gray-900 hover:text-[#25815F] transition-colors focus:outline-none">
+            <span class="text-base sm:text-lg">¿Cuáles son las franjas horarias y días disponibles según mi plan?</span>
+            <i class="fa-solid fa-chevron-down faq-chevron text-gray-400 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content px-6 pb-6 text-sm text-gray-600 leading-relaxed">
+            Disponemos de <strong>2 turnos diarios</strong> para tu máxima comodidad:<br>
+            • <strong>Turno de Mañana:</strong> de 09:00 a 13:00 h.<br>
+            • <strong>Turno de Tarde:</strong> de 16:00 a 20:00 h.<br><br>
+            ⏰ <strong>Importante sobre la colocación de las bolsas:</strong> Las bolsas deben estar <strong>ya depositadas en tu felpudo, pomo, puerta o cancela a las 09:00 h (si elegiste mañana) o a las 16:00 h (si elegiste tarde)</strong>. El recogedor de TeLaTiro puede llegar a esa misma hora para iniciar su ruta sin demoras ni esperas.<br><br>
+            Los días de recogida están organizados de forma fija según el plan que elijas:<br>
+            • <strong>Planes de 2 días (Pisos 24,90€ / Chalets 34,90€):</strong> Martes y Jueves.<br>
+            • <strong>Planes Plus de 3 días (Pisos 29,90€ / Chalets 39,90€):</strong> Lunes, Miércoles y Viernes.<br>
+            • <strong>Planes Premium de 5 días (Pisos 39,90€ / Chalets 49,90€):</strong> Lunes a Viernes completo.<br><br>
+            Para la <strong>recogida puntual (4,90 €)</strong> puedes solicitarla para cualquier día de Lunes a Viernes. Si deseas la recogida para ese mismo día, la solicitud debe realizarse con al menos 2 horas de antelación al fin del turno (<strong>hora tope para Mañana: 11:00 h</strong> / <strong>hora tope para Tarde: 18:00 h</strong>).
+          </div>
+        </div>
+
+        <!-- FAQ 2: Portal -->
+        <div class="faq-item clean-card overflow-hidden">
+          <button class="faq-header w-full p-6 text-left flex items-center justify-between gap-4 font-bold text-gray-900 hover:text-[#25815F] transition-colors focus:outline-none">
+            <span class="text-base sm:text-lg">¿Cómo accede el personal al portal si vivo en un piso?</span>
+            <i class="fa-solid fa-chevron-down faq-chevron text-gray-400 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content px-6 pb-6 text-sm text-gray-600 leading-relaxed">
+            Coordinamos el acceso de forma segura y discreta: mediante código de portal, llamada al telefonillo concertada en tu turno elegido, o acuerdos con la portería/administrador de finca. Todo nuestro personal está identificado, asegurado y uniformado.
+          </div>
+        </div>
+
+        <!-- FAQ 3: Bolsas -->
+        <div class="faq-item clean-card overflow-hidden">
+          <button class="faq-header w-full p-6 text-left flex items-center justify-between gap-4 font-bold text-gray-900 hover:text-[#25815F] transition-colors focus:outline-none">
+            <span class="text-base sm:text-lg">¿Cuántas bolsas puedo dejar por recogida?</span>
+            <i class="fa-solid fa-chevron-down faq-chevron text-gray-400 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content px-6 pb-6 text-sm text-gray-600 leading-relaxed">
+            Todos nuestros planes incluyen hasta un máximo de <strong>2 bolsas de basura doméstica estándar (hasta 50L cada bolsa)</strong> por servicio de recogida. Deben estar debidamente cerradas. ¡En los planes Premium la bolsa te sale por menos de 1 €!
+          </div>
+        </div>
+
+        <!-- FAQ 4: Formas de pago -->
+        <div class="faq-item clean-card overflow-hidden">
+          <button class="faq-header w-full p-6 text-left flex items-center justify-between gap-4 font-bold text-gray-900 hover:text-[#25815F] transition-colors focus:outline-none">
+            <span class="text-base sm:text-lg">¿Cómo se realizan los pagos? (Tarjeta, Efectivo, Domiciliación)</span>
+            <i class="fa-solid fa-chevron-down faq-chevron text-gray-400 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content px-6 pb-6 text-sm text-gray-600 leading-relaxed">
+            • <strong>Planes Mensuales (Suscripciones Pisos y Chalets):</strong> Se abonan cómodamente mediante <strong>Domiciliación bancaria (SEPA)</strong> o <strong>Tarjeta bancaria</strong> con factura mensual automática. <em>No se admite pago en efectivo para suscripciones mensuales</em>.<br><br>
+            • <strong>Recogida Puntual (4,90 €):</strong> Se abona mediante <strong>Tarjeta bancaria</strong> o <strong>Efectivo en mano</strong> en el momento de la recogida (la domiciliación bancaria <em>no</em> está disponible para servicios puntuales).
+          </div>
+        </div>
+
+        <!-- FAQ 5: Fecha de Inicio del Servicio -->
+        <div class="faq-item clean-card overflow-hidden">
+          <button class="faq-header w-full p-6 text-left flex items-center justify-between gap-4 font-bold text-gray-900 hover:text-[#25815F] transition-colors focus:outline-none">
+            <span class="text-base sm:text-lg">¿A partir de qué fecha comienza mi servicio tras darme de alta?</span>
+            <i class="fa-solid fa-chevron-down faq-chevron text-gray-400 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content px-6 pb-6 text-sm text-gray-600 leading-relaxed">
+            • <strong>Planes Mensuales (Suscripciones):</strong> Si tramitas tu alta <strong>entre los días 1 y 5 del mes</strong> (ambos inclusive), tu servicio comenzará en ese mismo mes en curso. Si solicitas el alta <strong>a partir del día 6 del mes</strong>, el servicio comenzará a partir del <strong>día 1 del mes siguiente</strong> para poder organizar, optimizar y asignar las rutas de los operarios de forma eficiente.<br><br>
+            • <strong>¿Necesitas recogidas antes del día 1?</strong> Puedes solicitar tantas <strong>Recogidas Puntuales (4,90 €)</strong> como necesites para cualquier día laborable sin esperar al inicio de tu mensualidad.<br><br>
+            • <strong>Recogida Puntual:</strong> Se realiza de forma inmediata en el día hábil elegido (incluso en el mismo día si se solicita antes de la hora límite).
+          </div>
+        </div>
+
+        <!-- FAQ 6: Plan Especial Comunidades (10+ Vecinos) -->
+        <div class="faq-item clean-card overflow-hidden">
+          <button class="faq-header w-full p-6 text-left flex items-center justify-between gap-4 font-bold text-gray-900 hover:text-[#25815F] transition-colors focus:outline-none">
+            <span class="text-base sm:text-lg">¿Cómo funciona el Plan para Comunidades de Propietarios (Descuento de 5 €/mes)?</span>
+            <i class="fa-solid fa-chevron-down faq-chevron text-gray-400 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content px-6 pb-6 text-sm text-gray-600 leading-relaxed">
+            • <strong>Descuento Directo:</strong> Si en tu edificio, bloque residencial, mancomunidad o urbanización se suscriben <strong>10 vecinos o más</strong> a cualquiera de los planes mensuales, a cada una de las viviendas se le aplican <strong>5 € de descuento directo cada mes</strong> en su cuota de servicio.<br><br>
+            • <strong>Precios bonificados resultantes:</strong><br>
+            - <strong>Piso 2 días:</strong> 19,90 € / mes (en lugar de 24,90 €).<br>
+            - <strong>Piso Plus 3 días:</strong> 24,90 € / mes (en lugar de 29,90 €).<br>
+            - <strong>Piso Premium 5 días:</strong> 34,90 € / mes (en lugar de 39,90 €).<br>
+            - <em>También aplicable a chalets y urbanizaciones: 29,90 € (2d), 34,90 € (3d) y 44,90 € (5d).</em><br><br>
+            • <strong>Coordinación y Acceso:</strong> Trabajamos en colaboración con presidentes de comunidad y administradores de fincas para coordinar el acceso ágil de nuestros operarios uniformados, garantizando rellanos limpios, sin malos olores ni manchas en ascensores.
+          </div>
+        </div>
+
+        <!-- FAQ 7: Plan Amigo Vecinal (Recomendación) -->
+        <div class="faq-item clean-card overflow-hidden">
+          <button class="faq-header w-full p-6 text-left flex items-center justify-between gap-4 font-bold text-gray-900 hover:text-[#25815F] transition-colors focus:outline-none">
+            <span class="text-base sm:text-lg">¿Cómo funciona el descuento por recomendación de un vecino (Plan Amigo)?</span>
+            <i class="fa-solid fa-chevron-down faq-chevron text-gray-400 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content px-6 pb-6 text-sm text-gray-600 leading-relaxed">
+            • <strong>5 € de descuento para cada uno:</strong> Si te suscribes a cualquiera de nuestros planes mensuales viniendo recomendado por un vecino que ya es cliente activo de TeLaTiro, os beneficiáis los dos de un descuento puntual de 5 €.<br><br>
+            • <strong>¿Cuándo se aplica?:</strong><br>
+            - <strong>Para el nuevo vecino (tú):</strong> Se te descuentan <strong>5 € en tu segunda mensualidad</strong> (el siguiente mes tras darte de alta).<br>
+            - <strong>Para el vecino recomendador:</strong> Se le descuentan <strong>5 € en su próximo recibo mensual</strong> como agradecimiento.<br><br>
+            • <strong>¿Cómo indicarlo?:</strong> Solo tienes que rellenar el campo opcional <em>«¿Vienes recomendado por un vecino?»</em> en nuestro formulario de alta o comunicárnoslo por WhatsApp al tramitar tu suscripción.
+          </div>
+        </div>
+
+        <!-- FAQ 8: Cobertura Ampliable -->
+        <div class="faq-item clean-card overflow-hidden">
+          <button class="faq-header w-full p-6 text-left flex items-center justify-between gap-4 font-bold text-gray-900 hover:text-[#25815F] transition-colors focus:outline-none">
+            <span class="text-base sm:text-lg">¿En qué zonas y códigos postales está disponible el servicio?</span>
+            <i class="fa-solid fa-chevron-down faq-chevron text-gray-400 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content px-6 pb-6 text-sm text-gray-600 leading-relaxed">
+            Disponemos de <strong>rutas activas en constante ampliación de zonas</strong>. Puedes verificar la cobertura de tu calle en nuestro comprobador de código postal o enviarnos tu solicitud directamente a través del formulario para coordinar tu servicio.
+          </div>
+        </div>
+
+        <!-- FAQ 8: Qué NO se recoge -->
+        <div class="faq-item clean-card overflow-hidden">
+          <button class="faq-header w-full p-6 text-left flex items-center justify-between gap-4 font-bold text-gray-900 hover:text-[#25815F] transition-colors focus:outline-none">
+            <span class="text-base sm:text-lg">¿Puedo pedir que recojan cartones grandes, vidrios o muebles?</span>
+            <i class="fa-solid fa-chevron-down faq-chevron text-gray-400 transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content px-6 pb-6 text-sm text-gray-600 leading-relaxed">
+            <strong>No</strong>. Solo recogemos <strong>basura doméstica habitual</strong> en bolsa cerrada. No retiramos cartón voluminoso fuera de bolsa, vidrios sueltos, muebles, escombros ni pinturas para garantizar la higiene y cumplir las ordenanzas municipales.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT & FOOTER SECTION -->
+  <footer id="contacto" class="bg-[#1E1E1E] text-white pt-16 pb-12 border-t border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-gray-800">
+        
+        <!-- Col 1 & 2: Brand Info -->
+        <div class="lg:col-span-2 space-y-4">
+          <div class="w-48 bg-white p-2.5 rounded-xl inline-block">
+            <img src="assets/logo.svg" alt="TeLaTiro" class="h-9 w-auto">
+          </div>
+          <p class="text-xs sm:text-sm text-gray-400 max-w-sm leading-relaxed">
+            Servicio premium privado de recogida de bolsas de basura a domicilio. Tu solución higiénica, puntual y profesional para mantener tu hogar siempre limpio.
+          </p>
+          <div class="flex items-center gap-3 pt-2 text-gray-400">
+            <a href="https://wa.me/34600000000" target="_blank" class="w-9 h-9 rounded-full bg-gray-800 hover:bg-[#25D366] hover:text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="mailto:hola@telatiro.es" class="w-9 h-9 rounded-full bg-gray-800 hover:bg-[#25815F] hover:text-white flex items-center justify-center transition-colors"><i class="fa-solid fa-envelope"></i></a>
+            <a href="tel:+34600000000" class="w-9 h-9 rounded-full bg-gray-800 hover:bg-[#25815F] hover:text-white flex items-center justify-center transition-colors"><i class="fa-solid fa-phone"></i></a>
+          </div>
+        </div>
+
+        <!-- Col 3: Planes y Tarifas -->
+        <div class="space-y-3">
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider">Tarifas Oficiales</h4>
+          <ul class="space-y-2 text-xs text-gray-400">
+            <li><a href="#tarifas" class="hover:text-[#25815F] transition-colors">Planes Pisos (Desde 24,90 €/mes • ¡Bolsa desde 0,99€!)</a></li>
+            <li><a href="#tarifas" class="hover:text-[#25815F] transition-colors">Planes Chalets (Desde 34,90 €/mes • Bolsa desde 1,25€)</a></li>
+            <li><a href="#tarifas" class="hover:text-[#25815F] transition-colors">Recogida Puntual (4,90 € • Tarjeta/Efectivo)</a></li>
+            <li><a href="#para-quien" class="hover:text-[#25815F] transition-colors">Profesionales</a></li>
+            <li><a href="#para-quien" class="hover:text-[#25815F] transition-colors">Comunidades de Vecinos</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Normativa y Ayuda -->
+        <div class="space-y-3">
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider">Normativa y Guía</h4>
+          <ul class="space-y-2 text-xs text-gray-400">
+            <li><a href="#que-recogemos" class="hover:text-[#25815F] transition-colors">Residuos Aceptados</a></li>
+            <li><a href="#como-funciona" class="hover:text-[#25815F] transition-colors">Paso a Paso del Servicio</a></li>
+            <li><a href="#preguntas-frecuentes" class="hover:text-[#25815F] transition-colors">Preguntas Frecuentes</a></li>
+            <li><a href="#solicitar" class="hover:text-[#25815F] transition-colors">Formulario de Alta</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 5: Horarios y Contacto -->
+        <div class="space-y-3">
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider">Atención al Cliente</h4>
+          <div class="space-y-2 text-xs text-gray-400">
+            <p><i class="fa-solid fa-phone text-[#25815F] mr-1.5"></i> +34 600 000 000</p>
+            <p><i class="fa-brands fa-whatsapp text-[#25D366] mr-1.5"></i> WhatsApp</p>
+            <p><i class="fa-solid fa-envelope text-[#25815F] mr-1.5"></i> hola@telatiro.es</p>
+            <p class="pt-2 text-gray-400 font-medium">Lunes a Sábado</p>
+            <p class="text-gray-500">Mañanas: 09:00 - 13:00 h<br>Tardes: 16:00 - 20:00 h</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom copyright & legal disclaimer -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-4">
+        <div>
+          © 2026 TeLaTiro Servicios Privados S.L. Todos los derechos reservados.
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="#" class="hover:text-gray-300 transition-colors">Aviso Legal</a>
+          <a href="#" class="hover:text-gray-300 transition-colors">Política de Privacidad</a>
+          <a href="#" class="hover:text-gray-300 transition-colors">Términos y Condiciones</a>
+          <a href="#" class="hover:text-gray-300 transition-colors">Cookies</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- FLOATING WHATSAPP BUTTON -->
+  <div class="floating-whatsapp">
+    <div class="whatsapp-bubble">
+      <span>¿Dudas? ¡Escríbenos por WhatsApp!</span>
+    </div>
+    <a href="https://wa.me/34600000000?text=Hola%20TeLaTiro%2C%20deseo%20hacer%20una%20consulta" target="_blank" class="whatsapp-circle-btn animate-pulse-subtle" title="Contactar por WhatsApp">
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+  </div>
+
+  <!-- CONFIRMATION MODAL -->
+  <div id="confirmationModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl p-8 max-w-md w-full text-center space-y-4 shadow-2xl relative animate-slideDown">
+      <div class="w-16 h-16 rounded-full bg-emerald-100 text-[#25815F] flex items-center justify-center text-3xl mx-auto">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <h3 class="text-2xl font-bold text-[#1E1E1E]">¡Solicitud Recibida!</h3>
+      <p class="text-sm text-gray-600">
+        Gracias <strong id="modalClientName">Cliente</strong> por confiar en TeLaTiro. Hemos registrado tu solicitud para el <strong id="modalPlanSelected">Plan Pisos</strong>.
+      </p>
+
+      <!-- Start Date Info in modal -->
+      <div id="modalStartDateBox" class="bg-emerald-50 border border-emerald-200 p-3.5 rounded-2xl text-left text-xs text-emerald-900 flex items-start gap-2.5">
+        <i class="fa-solid fa-calendar-check text-emerald-600 mt-0.5 flex-shrink-0 text-base"></i>
+        <div>
+          <strong>Fecha estimada de inicio:</strong> <span id="modalStartDateText" class="font-bold text-[#1E5E44]">1 del próximo mes</span>
+          <p class="text-[11px] text-emerald-700 mt-0.5">Te contactaremos para ultimar los detalles de acceso y confirmación de ruta.</p>
+        </div>
+      </div>
+
+      <!-- Punctuality reminder in modal -->
+      <div class="bg-amber-50 border border-amber-200 p-3.5 rounded-2xl text-left text-xs text-amber-900 space-y-1">
+        <div class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-clock text-amber-600"></i> Recuerda tener las bolsas listas:</div>
+        <p>A las <strong>09:00 h</strong> (turno mañana) o a las <strong>16:00 h</strong> (turno tarde) en tu felpudo, puerta o cancela para que el recogedor no tenga que esperar.</p>
+      </div>
+
+      <p class="text-xs text-gray-500">
+        Nuestro equipo contactará contigo en breve para verificar tu franja horaria y formalizar el alta.
+      </p>
+      <div class="pt-2">
+        <button id="closeModalBtn" class="btn-primary w-full py-3">
+          Entendido
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Javascript -->
+  <script src="js/app.js"></script>
+</body>
+</html>
