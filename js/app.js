@@ -732,9 +732,37 @@ function initBookingForm() {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
+    const zipSelect = document.getElementById('clientZip');
+    const addressInput = document.getElementById('clientAddress');
+
     const formData = getFormData();
-    if (!formData.name || !formData.phone || !formData.address || !formData.zip) {
-      showToast('⚠️ Por favor completa tu nombre, teléfono, código postal y dirección.', 'warning');
+
+    if (!formData.name) {
+      showToast('⚠️ Por favor indica tu nombre y apellidos.', 'warning');
+      document.getElementById('clientName')?.focus();
+      return;
+    }
+
+    if (!formData.phone) {
+      showToast('⚠️ Por favor indica tu número de teléfono de contacto.', 'warning');
+      if (phoneInput) phoneInput.focus();
+      return;
+    }
+
+    // Validación estricta de selección de código postal obligatorio
+    if (!formData.zip || formData.zip.trim() === '') {
+      showToast('⚠️ Por favor selecciona tu Código Postal / Sector de Rivas obligatorio.', 'warning');
+      if (zipSelect) {
+        zipSelect.focus();
+        zipSelect.classList.add('border-red-500', 'ring-2', 'ring-red-200');
+        setTimeout(() => zipSelect.classList.remove('border-red-500', 'ring-2', 'ring-red-200'), 3000);
+      }
+      return;
+    }
+
+    if (!formData.rawAddress || formData.rawAddress.trim() === '') {
+      showToast('⚠️ Por favor indica tu calle, número, piso y puerta en Rivas.', 'warning');
+      if (addressInput) addressInput.focus();
       return;
     }
 
@@ -846,15 +874,25 @@ function getFormData() {
   const name = document.getElementById('clientName')?.value.trim() || '';
   const phone = document.getElementById('clientPhone')?.value.trim() || '';
   const email = document.getElementById('clientEmail')?.value.trim() || '';
-  const address = document.getElementById('clientAddress')?.value.trim() || '';
-  const zip = document.getElementById('clientZip')?.value || '28523 - Av. Almendros, Pablo Iglesias, Covibar y La Partija';
+  const rawAddress = document.getElementById('clientAddress')?.value.trim() || '';
+  const zip = document.getElementById('clientZip')?.value || '';
+  
+  // Extraer el código postal de 5 dígitos para geolocalización exacta en Google Maps
+  const cpDigits = zip.match(/\b2852[1-5]\b/)?.[0] || '28523';
+  
+  // Si la dirección no contiene ya 'Rivas', le adjuntamos el CP y localidad para que Google Maps nunca la confunda con Madrid capital
+  let address = rawAddress;
+  if (address && !address.toLowerCase().includes('rivas')) {
+    address = `${address}, ${cpDigits} Rivas-Vaciamadrid`;
+  }
+
   const timeSlot = document.getElementById('clientTimeSlot')?.value || 'Turno Mañana (09:00 - 13:00 h)';
   const days = document.getElementById('clientDays')?.value || '3 Recogidas semanales: Lunes, Miércoles y Viernes';
   const paymentMethod = document.getElementById('clientPayment')?.value || 'Domiciliación bancaria (SEPA)';
   const referral = document.getElementById('clientReferral')?.value.trim() || '';
   const notes = document.getElementById('clientNotes')?.value.trim() || '';
 
-  return { plan: selectedPlan, planName, startDate, name, phone, email, address, zip, timeSlot, days, paymentMethod, referral, notes };
+  return { plan: selectedPlan, planName, startDate, name, phone, email, rawAddress, address, zip, timeSlot, days, paymentMethod, referral, notes };
 }
 
 /**
