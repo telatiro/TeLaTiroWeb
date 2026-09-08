@@ -5,6 +5,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initPWA();
   initHeader();
   initMobileMenu();
   initFaqAccordion();
@@ -16,6 +17,19 @@ document.addEventListener('DOMContentLoaded', () => {
   initPlanSelectors();
   initHeroPhotoSwitcher();
 });
+
+/**
+ * Registro de Service Worker para PWA (Instalación de App en Android e iOS)
+ */
+function initPWA() {
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(reg => console.log('TeLaTiro Service Worker activo:', reg.scope))
+        .catch(err => console.log('Error al registrar Service Worker:', err));
+    });
+  }
+}
 
 // Configuración Global, Sectores de Rivas y Tarifas Oficiales
 const CONFIG = {
