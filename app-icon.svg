@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" fill="none">
   <defs>
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -57,6 +58,6 @@
   <!-- Centered Subtitle Tagline Badge -->
   <rect x="76" y="405" width="360" height="30" rx="15" fill="#0C281D" opacity="0.45" />
   <text x="256" y="425" text-anchor="middle" font-family="'Poppins', 'Inter', -apple-system, sans-serif" font-weight="600" font-size="14.5" fill="#D1EBE0" letter-spacing="0.8">
-    Tú la dejas, nosotros la tiramos
+    T&#250; la dejas, nosotros la tiramos
   </text>
 </svg>
