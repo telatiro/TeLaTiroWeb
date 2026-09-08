@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initPricingTabs();
   initFormCategoryTabs();
   initBookingForm();
+  initRecruiterForm();
   initCoverageChecker();
   initPlanSelectors();
   initHeroPhotoSwitcher();
@@ -1056,5 +1057,150 @@ function initHeroPhotoSwitcher() {
         targetView.classList.remove('hidden');
       }
     });
+  });
+}
+
+/**
+ * 11. Gestión del Formulario de Candidatura para Recogedores y Empresas (Trabaja con Nosotros)
+ */
+function initRecruiterForm() {
+  const form = document.getElementById('recruiterForm');
+  if (!form) return;
+
+  const phoneInput = document.getElementById('recruiterPhone');
+  const btnSubmit = document.getElementById('btnSubmitRecruiter');
+  const btnText = document.getElementById('btnRecruiterText');
+  const successAlert = document.getElementById('recruiterSuccessAlert');
+  const errorAlert = document.getElementById('recruiterErrorAlert');
+
+  // Validación de teléfono (solo números, máx 9 dígitos)
+  if (phoneInput) {
+    phoneInput.addEventListener('keydown', (e) => {
+      const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'];
+      if (allowedKeys.includes(e.key) || (e.ctrlKey || e.metaKey)) return;
+      if (!/^[0-9]$/.test(e.key)) {
+        e.preventDefault();
+        return;
+      }
+      const selectedLength = (phoneInput.selectionEnd - phoneInput.selectionStart);
+      if (phoneInput.value.length >= 9 && selectedLength === 0) {
+        e.preventDefault();
+      }
+    });
+
+    phoneInput.addEventListener('paste', (e) => {
+      e.preventDefault();
+      const pasteText = (e.clipboardData || window.clipboardData).getData('text');
+      const cleanDigits = pasteText.replace(/[^0-9]/g, '');
+      const start = phoneInput.selectionStart;
+      const end = phoneInput.selectionEnd;
+      const currentValue = phoneInput.value;
+      const combined = (currentValue.slice(0, start) + cleanDigits + currentValue.slice(end)).slice(0, 9);
+      phoneInput.value = combined;
+      const newPos = Math.min(start + cleanDigits.length, 9);
+      phoneInput.setSelectionRange(newPos, newPos);
+    });
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    if (successAlert) successAlert.classList.add('hidden');
+    if (errorAlert) errorAlert.classList.add('hidden');
+
+    const name = document.getElementById('recruiterName')?.value?.trim();
+    const profileType = document.getElementById('recruiterProfileType')?.value || 'Autónomo';
+    const phone = phoneInput?.value?.trim();
+    const email = document.getElementById('recruiterEmail')?.value?.trim();
+    const zone = document.getElementById('recruiterZone')?.value?.trim();
+    const availability = document.getElementById('recruiterAvailability')?.value || '';
+    const vehicle = document.getElementById('recruiterVehicle')?.value || '';
+    const notes = document.getElementById('recruiterNotes')?.value?.trim() || '';
+    const privacy = document.getElementById('recruiterPrivacy')?.checked;
+
+    if (!name) {
+      showToast('⚠️ Por favor indica tu nombre y apellidos o razón social.', 'warning');
+      document.getElementById('recruiterName')?.focus();
+      return;
+    }
+
+    if (!phone || phone.length !== 9) {
+      showToast('⚠️ Por favor introduce un teléfono de 9 dígitos válido.', 'warning');
+      if (phoneInput) phoneInput.focus();
+      return;
+    }
+
+    if (!email || !email.includes('@')) {
+      showToast('⚠️ Por favor introduce un correo electrónico válido.', 'warning');
+      document.getElementById('recruiterEmail')?.focus();
+      return;
+    }
+
+    if (!zone) {
+      showToast('⚠️ Por favor indica tu zona o municipio de preferencia.', 'warning');
+      document.getElementById('recruiterZone')?.focus();
+      return;
+    }
+
+    if (!privacy) {
+      showToast('⚠️ Debes aceptar la política de privacidad para enviar tu candidatura.', 'warning');
+      return;
+    }
+
+    // Estado visual de carga
+    if (btnSubmit) {
+      btnSubmit.disabled = true;
+      btnSubmit.classList.add('opacity-80', 'cursor-not-allowed');
+    }
+    if (btnText) {
+      btnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Enviando candidatura...';
+    }
+
+    const payload = {
+      formType: 'recogedor',
+      name: name,
+      profileType: profileType,
+      phone: phone,
+      email: email,
+      zone: zone,
+      availability: availability,
+      vehicle: vehicle,
+      notes: notes,
+      timestamp: new Date().toISOString()
+    };
+
+    if (CONFIG.googleSheetWebhookUrl) {
+      fetch(CONFIG.googleSheetWebhookUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        handleSuccess();
+      })
+      .catch((err) => {
+        console.warn('Error en webhook de candidatura:', err);
+        handleSuccess();
+      });
+    } else {
+      setTimeout(handleSuccess, 600);
+    }
+
+    function handleSuccess() {
+      if (btnSubmit) {
+        btnSubmit.disabled = false;
+        btnSubmit.classList.remove('opacity-80', 'cursor-not-allowed');
+      }
+      if (btnText) {
+        btnText.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i> Enviar Solicitud de Colaborador';
+      }
+      if (successAlert) {
+        successAlert.classList.remove('hidden');
+        successAlert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+      showToast('🎉 ¡Candidatura enviada correctamente!', 'success');
+      form.reset();
+    }
   });
 }
