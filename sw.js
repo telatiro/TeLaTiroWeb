@@ -1,12 +1,14 @@
 // TeLaTiro - Service Worker para PWA (Instalación Standalone en Android e iOS)
-const CACHE_NAME = 'telatiro-pwa-v1';
+const CACHE_NAME = 'telatiro-pwa-v2';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
   '/css/styles.css',
   '/js/app.js',
   '/manifest.json',
-  '/assets/app-icon.svg',
+  '/app-icon.svg',
+  '/icon-192.png',
+  '/icon-512.png',
   '/assets/logo.svg'
 ];
 
@@ -31,7 +33,6 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Estrategia Network first con fallback a caché
   if (event.request.method !== 'GET') return;
   
   event.respondWith(
