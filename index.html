@@ -195,7 +195,7 @@
 
           <!-- Subtitle -->
           <p class="text-lg sm:text-xl text-gray-600 font-normal max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-            Retiramos las bolsas cerradas de basura doméstica directamente en la puerta de tu vivienda en la franja horaria acordada y las depositamos inmediatamente en el contenedor municipal correspondiente. Cómodo, formal, puntual y discreto.
+            Trasladamos las bolsas cerradas de basura doméstica desde la puerta de tu vivienda y las depositamos inmediatamente en el contenedor municipal correspondiente.
           </p>
 
           <!-- Key Value Pillars -->
@@ -247,21 +247,24 @@
 
         </div>
 
-        <!-- Right Hero Visual Card Mockup with Real Photos -->
-        <div class="lg:col-span-5 relative">
-          <div class="hero-visual-card p-6 sm:p-7 relative overflow-hidden space-y-5">
+        <!-- Right Column: Interactive Visual Card & Direct Pricing Links -->
+        <div class="lg:col-span-5">
+          <div class="clean-card p-6 sm:p-8 space-y-6 relative border-2 border-[#25815F]/20 shadow-xl bg-gradient-to-b from-white to-[#F8FAF9]">
             
-            <!-- Photo Switcher Header -->
-            <div class="flex items-center justify-between gap-2 border-b border-gray-100 pb-3">
-              <span class="text-xs font-bold uppercase tracking-wider text-gray-500 flex items-center gap-1.5">
-                <i class="fa-solid fa-camera text-[#25815F]"></i> Nuestro Servicio
-              </span>
-              <div class="flex items-center gap-1 bg-gray-100 p-1 rounded-full">
-                <button type="button" class="photo-tab-btn active" data-photo-target="view-entrega">
-                  <i class="fa-solid fa-hands-holding-circle mr-1"></i> En Puerta
+            <!-- Dynamic Photo Switcher Header -->
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-gray-500">¿Cómo entregas la bolsa?</span>
+                <span class="text-[11px] text-[#25815F] font-semibold bg-[#E8F5EF] px-2.5 py-0.5 rounded-full">2 Formas de entrega</span>
+              </div>
+
+              <!-- Switcher Tabs (Entregar en mano vs Felpudo) -->
+              <div class="grid grid-cols-2 gap-2 p-1 bg-gray-100 rounded-xl">
+                <button type="button" id="tab-entrega" class="hero-photo-tab active text-xs font-bold py-2 px-3 rounded-lg transition-all text-center flex items-center justify-center gap-1.5 bg-white text-[#25815F] shadow-sm">
+                  <i class="fa-solid fa-handshake"></i> En mano en puerta
                 </button>
-                <button type="button" class="photo-tab-btn" data-photo-target="view-felpudo">
-                  <i class="fa-solid fa-door-closed mr-1"></i> En Felpudo
+                <button type="button" id="tab-felpudo" class="hero-photo-tab text-xs font-bold py-2 px-3 rounded-lg transition-all text-center flex items-center justify-center gap-1.5 text-gray-600 hover:text-gray-900">
+                  <i class="fa-solid fa-door-open"></i> En felpudo / pomo
                 </button>
               </div>
             </div>
@@ -273,7 +276,7 @@
                   <i class="fa-solid fa-user-check"></i> Personal Propio Uniformado
                 </span>
                 <p class="text-xs text-gray-200 font-medium leading-snug">
-                  Recogida directa y cordial en tu puerta en tu turno acordado.
+                  Asistencia directa y cordial en tu puerta en tu turno acordado.
                 </p>
               </div>
             </div>
@@ -285,11 +288,11 @@
                   <i class="fa-solid fa-door-open"></i> Sin Esperas • Cero Molestias
                 </span>
                 <p class="text-xs text-gray-200 font-medium leading-snug">
-                  Déjala cerrada en tu felpudo o pomo. La retiramos discretamente.
+                  Déjala cerrada en tu felpudo o pomo. Nuestro asistente la traslada directamente al contenedor municipal.
                 </p>
               </div>
             </div>
-
+            
             <!-- Service Details Pills -->
             <div class="grid grid-cols-2 gap-2 text-left bg-white p-3.5 rounded-xl border border-gray-100 text-xs shadow-sm">
               <div class="flex items-center gap-2">
@@ -315,12 +318,12 @@
               <div class="bg-white p-2.5 rounded-xl border-2 border-[#25815F] shadow-sm relative">
                 <span class="text-[10px] uppercase font-bold tracking-wider text-[#25815F]">Pisos</span>
                 <div class="text-base sm:text-lg font-extrabold text-[#25815F]">24,90€</div>
-                <span class="text-[10px] text-emerald-700 font-bold block">¡Desde 0,99€ / bolsa!</span>
+                <span class="text-[10px] text-emerald-700 font-bold block">¡Desde 0,99€ por depósito!</span>
               </div>
               <div class="bg-white p-2.5 rounded-xl border border-gray-200 hover:border-[#25815F] transition-all">
                 <span class="text-[10px] uppercase font-bold tracking-wider text-gray-500">Chalets</span>
                 <div class="text-base sm:text-lg font-extrabold text-[#1E1E1E]">34,90€</div>
-                <span class="text-[10px] text-[#25815F] font-semibold block">Bolsa desde 1,25€</span>
+                <span class="text-[10px] text-[#25815F] font-semibold block">Desde 1,25€ por depósito</span>
               </div>
               <div class="bg-white p-2.5 rounded-xl border border-gray-200 hover:border-[#25815F] transition-all">
                 <span class="text-[10px] uppercase font-bold tracking-wider text-gray-500">Puntual</span>
@@ -610,7 +613,7 @@
                 <span class="text-gray-500 font-medium">/ mes</span>
               </div>
               <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-bold text-[#25815F]">
-                <i class="fa-solid fa-tag"></i> ¡Solo 1,55 € por bolsa recogida!
+                <i class="fa-solid fa-tag"></i> ¡Desde 1,55 € por depósito!
               </div>
             </div>
 
@@ -622,7 +625,7 @@
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
-                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio de recogida.</span>
+                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio.</span>
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
@@ -672,7 +675,7 @@
                 <span class="text-gray-500 font-medium">/ mes</span>
               </div>
               <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/70 border border-emerald-300 text-xs font-bold text-[#1E5E44]">
-                <i class="fa-solid fa-tag"></i> ¡Solo 1,25 € por bolsa recogida!
+                <i class="fa-solid fa-tag"></i> ¡Desde 1,25 € por depósito!
               </div>
             </div>
 
@@ -684,7 +687,7 @@
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
-                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio de recogida.</span>
+                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio.</span>
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
@@ -730,7 +733,7 @@
                 <span class="text-gray-500 font-medium">/ mes</span>
               </div>
               <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-50 border border-purple-200 text-xs font-bold text-purple-800">
-                <i class="fa-solid fa-tag"></i> ¡Solo 0,99 € por bolsa (menos de 1€)!
+                <i class="fa-solid fa-tag"></i> ¡Desde 0,99 € por depósito!
               </div>
             </div>
 
@@ -742,7 +745,7 @@
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
-                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio de recogida.</span>
+                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio.</span>
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
@@ -793,7 +796,7 @@
                 <span class="text-gray-500 font-medium">/ mes</span>
               </div>
               <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-bold text-[#25815F]">
-                <i class="fa-solid fa-tag"></i> ¡Solo 2,18 € por bolsa recogida!
+                <i class="fa-solid fa-tag"></i> ¡Desde 2,18 € por depósito!
               </div>
             </div>
 
@@ -805,7 +808,7 @@
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
-                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio de recogida.</span>
+                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio.</span>
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
@@ -855,7 +858,7 @@
                 <span class="text-gray-500 font-medium">/ mes</span>
               </div>
               <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/70 border border-emerald-300 text-xs font-bold text-[#1E5E44]">
-                <i class="fa-solid fa-tag"></i> ¡Solo 1,66 € por bolsa recogida!
+                <i class="fa-solid fa-tag"></i> ¡Desde 1,66 € por depósito!
               </div>
             </div>
 
@@ -867,7 +870,7 @@
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
-                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio de recogida.</span>
+                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio.</span>
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
@@ -913,7 +916,7 @@
                 <span class="text-gray-500 font-medium">/ mes</span>
               </div>
               <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-50 border border-purple-200 text-xs font-bold text-purple-800">
-                <i class="fa-solid fa-tag"></i> ¡Solo 1,25 € por bolsa recogida!
+                <i class="fa-solid fa-tag"></i> ¡Desde 1,25 € por depósito!
               </div>
             </div>
 
@@ -925,7 +928,7 @@
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
-                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio de recogida.</span>
+                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio.</span>
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
@@ -1022,7 +1025,7 @@
       
       <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
         <span class="text-xs sm:text-sm uppercase tracking-wider font-bold text-[#25815F]">Transparencia y Normativa</span>
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1E1E1E]">¿Qué Bolsas Retiramos y Cuáles No?</h2>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1E1E1E]">¿Qué bolsas aceptamos y cuáles no?</h2>
         <p class="text-gray-600 text-base sm:text-lg">
           Para garantizar la higiene comunitaria y conforme al sistema municipal, nuestro servicio se limita a bolsas cerradas y separadas por el propio usuario.
         </p>
@@ -1038,7 +1041,7 @@
             </div>
             <div>
               <span class="text-xs font-bold text-[#25815F] uppercase tracking-wider">Permitido</span>
-              <h3 class="text-2xl font-bold text-[#1E1E1E]">SÍ Retiramos</h3>
+              <h3 class="text-2xl font-bold text-[#1E1E1E]">SÍ Aceptamos</h3>
             </div>
           </div>
 
@@ -1083,7 +1086,7 @@
             </div>
             <div>
               <span class="text-xs font-bold text-red-600 uppercase tracking-wider">No permitido</span>
-              <h3 class="text-2xl font-bold text-[#1E1E1E]">NO Retiramos</h3>
+              <h3 class="text-2xl font-bold text-[#1E1E1E]">NO Aceptamos</h3>
             </div>
           </div>
 
@@ -1352,9 +1355,9 @@
       
       <div class="text-center max-w-3xl mx-auto mb-14 space-y-3">
         <span class="text-xs sm:text-sm uppercase tracking-wider font-bold text-[#25815F]">Solicitud Inmediata</span>
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1E1E1E]">Contrata o Solicita tu Recogida</h2>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1E1E1E]">Contrata o Solicita tu Servicio</h2>
         <p class="text-gray-600 text-base sm:text-lg">
-          Completa el formulario oficial para asignar tu ruta y activar el servicio de forma inmediata.
+          Completa el formulario oficial para activar tu servicio.
         </p>
       </div>
 
@@ -1616,7 +1619,7 @@
               <div id="summaryPlanName" class="text-xl font-bold text-[#1E1E1E]">Plan Pisos y Apartamentos</div>
               <div id="summaryPlanPrice" class="text-3xl font-extrabold text-[#25815F] mt-1">29,90 € <span class="text-sm font-normal text-gray-500">/ mes</span></div>
               <div id="summaryCostPerBag" class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-xs font-bold text-[#25815F]">
-                <i class="fa-solid fa-tag"></i> ¡Solo 1,25 € por bolsa recogida!
+                <i class="fa-solid fa-tag"></i> ¡Desde 1,25 € por depósito!
               </div>
 
               <p id="summaryPlanDetails" class="text-xs text-gray-500 mt-2">3 servicios semanales • Hasta 2 bolsas por servicio • Depósito en contenedor</p>
@@ -1809,11 +1812,11 @@
         <!-- FAQ 3: Bolsas -->
         <div class="faq-item clean-card overflow-hidden">
           <button class="faq-header w-full p-6 text-left flex items-center justify-between gap-4 font-bold text-gray-900 hover:text-[#25815F] transition-colors focus:outline-none">
-            <span class="text-base sm:text-lg">¿Cuántas bolsas puedo dejar por recogida?</span>
+            <span class="text-base sm:text-lg">¿Cuántas bolsas puedo dejar por servicio?</span>
             <i class="fa-solid fa-chevron-down faq-chevron text-gray-400 transition-transform duration-300"></i>
           </button>
           <div class="faq-content px-6 pb-6 text-sm text-gray-600 leading-relaxed">
-            Todos nuestros planes incluyen hasta un máximo de <strong>2 bolsas de basura doméstica estándar (hasta 50L cada bolsa)</strong> por servicio de recogida. Deben estar debidamente cerradas. ¡En los planes Premium la bolsa te sale por menos de 1 €!
+            Todos nuestros planes incluyen hasta un máximo de <strong>2 bolsas de basura doméstica estándar (hasta 50L cada bolsa)</strong> por servicio. Deben estar debidamente cerradas. ¡En los planes Premium el depósito te sale por menos de 1 €!
           </div>
         </div>
 
@@ -2309,7 +2312,7 @@ const CONFIG = {
       category: 'pisos',
       price: '24,90 €',
       period: '/ mes',
-      costPerBag: '¡Solo 1,55 € por bolsa recogida!',
+      costPerBag: '¡Desde 1,55 € por depósito!',
       frequency: 'Nº de Servicios: 2 días a la semana (Martes y Jueves)',
       days: 'Martes y Jueves',
       details: '2 servicios semanales • Martes y Jueves • Domiciliación SEPA o Tarjeta (no efectivo)'
@@ -2319,7 +2322,7 @@ const CONFIG = {
       category: 'pisos',
       price: '29,90 €',
       period: '/ mes',
-      costPerBag: '¡Solo 1,25 € por bolsa recogida!',
+      costPerBag: '¡Desde 1,25 € por depósito!',
       frequency: 'Nº de Servicios: 3 días a la semana (Lunes, Miércoles y Viernes)',
       days: 'Lunes, Miércoles y Viernes',
       details: '3 servicios semanales • Lunes, Miércoles y Viernes • Domiciliación SEPA o Tarjeta (no efectivo)'
@@ -2329,7 +2332,7 @@ const CONFIG = {
       category: 'pisos',
       price: '39,90 €',
       period: '/ mes',
-      costPerBag: '¡Solo 0,99 € por bolsa (menos de 1€)!',
+      costPerBag: '¡Desde 0,99 € por depósito!',
       frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes completo)',
       days: 'Lunes a Viernes',
       details: '5 servicios semanales • Lunes a Viernes • Domiciliación SEPA o Tarjeta (no efectivo)'
@@ -2339,7 +2342,7 @@ const CONFIG = {
       category: 'chalets',
       price: '34,90 €',
       period: '/ mes',
-      costPerBag: '¡Solo 2,18 € por bolsa recogida!',
+      costPerBag: '¡Desde 2,18 € por depósito!',
       frequency: 'Nº de Servicios: 2 días a la semana (Martes y Jueves)',
       days: 'Martes y Jueves',
       details: '2 servicios semanales • Martes y Jueves • Domiciliación SEPA o Tarjeta (no efectivo)'
@@ -2349,7 +2352,7 @@ const CONFIG = {
       category: 'chalets',
       price: '39,90 €',
       period: '/ mes',
-      costPerBag: '¡Solo 1,66 € por bolsa recogida!',
+      costPerBag: '¡Desde 1,66 € por depósito!',
       frequency: 'Nº de Servicios: 3 días a la semana (Lunes, Miércoles y Viernes)',
       days: 'Lunes, Miércoles y Viernes',
       details: '3 servicios semanales • Lunes, Miércoles y Viernes • Domiciliación SEPA o Tarjeta (no efectivo)'
@@ -2359,7 +2362,7 @@ const CONFIG = {
       category: 'chalets',
       price: '49,90 €',
       period: '/ mes',
-      costPerBag: '¡Solo 1,25 € por bolsa recogida!',
+      costPerBag: '¡Desde 1,25 € por depósito!',
       frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes completo)',
       days: 'Lunes a Viernes',
       details: '5 servicios semanales • Lunes a Viernes • Domiciliación SEPA o Tarjeta (no efectivo)'
