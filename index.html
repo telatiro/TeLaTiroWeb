@@ -273,7 +273,7 @@
             <div id="view-entrega" class="hero-photo-view relative rounded-2xl overflow-hidden shadow-md border border-gray-200 aspect-[16/10] photo-entrega">
               <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent flex flex-col justify-end p-4 text-white">
                 <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#25815F] text-[11px] font-bold w-max mb-1 shadow-sm">
-                  <i class="fa-solid fa-user-check"></i> Personal Propio Uniformado
+                  <i class="fa-solid fa-user-check"></i> Personal Identificado y Uniformado
                 </span>
                 <p class="text-xs text-gray-200 font-medium leading-snug">
                   Asistencia directa y cordial en tu puerta en tu turno acordado.
@@ -355,8 +355,8 @@
             <i class="fa-solid fa-user-shield"></i>
           </div>
           <div>
-            <h4 class="font-bold text-sm sm:text-base text-white">Personal Propio</h4>
-            <p class="text-xs text-gray-400">Identificado, de total confianza y uniformado.</p>
+            <h4 class="font-bold text-sm sm:text-base text-white">Personal Identificado</h4>
+            <p class="text-xs text-gray-400">Debidamente identificado, de confianza y uniformado.</p>
           </div>
         </div>
 
@@ -455,6 +455,10 @@
               <li class="flex items-start gap-2">
                 <i class="fa-solid fa-xmark text-gray-400 mt-1 text-xs"></i>
                 <span><strong>No manipula ni clasifica residuos:</strong> No abrimos las bolsas; el usuario es el único responsable de su correcta separación en origen.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-xmark text-gray-400 mt-1 text-xs"></i>
+                <span><strong>No accede a zonas comunitarias sin autorización:</strong> TeLaTiro no entra en portales, urbanizaciones o zonas comunes cuando la Comunidad de Propietarios o la administración del inmueble no haya autorizado o permitido expresamente dicho acceso.</span>
               </li>
             </ul>
           </div>
@@ -1013,6 +1017,9 @@
           <p>
             • <strong>Capacidad:</strong> Hasta un máximo de <strong>2 bolsas de basura doméstica estándar</strong> (hasta 50L cada una) debidamente cerradas por servicio y vivienda. No acumulable de días anteriores.
           </p>
+          <p>
+            • <strong>Acceso autorizado:</strong> El cliente manifiesta y garantiza contar con la debida autorización de su comunidad de propietarios o administración para el acceso al portal o rellano conforme a sus estatutos. TeLaTiro no prestará servicio en zonas comunitarias donde no exista dicha autorización expresa.
+          </p>
         </div>
       </div>
 
@@ -1248,7 +1255,7 @@
               </p>
               <div class="space-y-2 text-sm text-gray-700">
                 <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> <strong>5 € de ahorro mensual</strong> por cada vivienda suscrita individualmente (60 €/año de ahorro por hogar).</div>
-                <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> Coordinación ágil para acceso al portal conforme a las normas de la comunidad.</div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> Coordinación de acceso con la preceptiva autorización de la comunidad de propietarios y administradores.</div>
                 <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> Mayor higiene, confort y tranquilidad para toda la comunidad.</div>
               </div>
             </div>
@@ -1621,6 +1628,16 @@
               <textarea id="clientNotes" rows="2" placeholder="Ej. Código de telefonillo, dejar en el pomo, vivienda con cancela exterior..." class="custom-input"></textarea>
             </div>
 
+            <!-- RGPD and Community Access Terms Checkbox -->
+            <div class="pt-2">
+              <label class="flex items-start gap-3 cursor-pointer text-xs text-gray-600">
+                <input type="checkbox" id="clientTermsConsent" required class="mt-0.5 rounded border-gray-300 text-[#25815F] focus:ring-[#25815F] h-4 w-4">
+                <span>
+                  He leído y acepto los <button type="button" class="open-legal-modal font-bold text-[#25815F] underline hover:text-[#1E5E44]" data-tab="terminos">Términos del Servicio y Política de Privacidad</button>, garantizando que las indicaciones y el acceso facilitados al inmueble/portal cumplen las normas y autorizaciones de mi comunidad de propietarios.
+                </span>
+              </label>
+            </div>
+
             <!-- Action Buttons -->
             <div class="pt-4">
               <button type="submit" class="btn-primary w-full text-center justify-center !py-4 text-base shadow-lg shadow-[#25815F]/20">
@@ -1828,8 +1845,13 @@
             <span class="text-base sm:text-lg">¿Cómo accede el personal al portal si vivo en un piso?</span>
             <i class="fa-solid fa-chevron-down faq-chevron text-gray-400 transition-transform duration-300"></i>
           </button>
-          <div class="faq-content px-6 pb-6 text-sm text-gray-600 leading-relaxed">
-            Coordinamos el acceso de forma segura y discreta: mediante código de portal, llamada al telefonillo concertada en tu turno elegido, o acuerdos con la portería/administrador de finca. Todo nuestro personal está identificado, asegurado y uniformado.
+          <div class="faq-content px-6 pb-6 text-sm text-gray-600 leading-relaxed space-y-2">
+            <p>
+              Coordinamos el acceso de forma segura, puntual y discreta: mediante código de portal facilitado por el cliente, llamada al telefonillo concertada en tu turno elegido, o acuerdos con la portería/administrador de finca. Todo el personal asignado está debidamente identificado, asegurado y uniformado.
+            </p>
+            <p class="text-xs text-gray-500 bg-gray-50 p-3 rounded-xl border border-gray-100">
+              <strong><i class="fa-solid fa-shield-halved text-[#25815F]"></i> Cláusula de acceso a zonas comunitarias:</strong> TeLaTiro no entra en zonas comunitarias ni portales cuando la Comunidad de Propietarios o la administración del inmueble no haya autorizado o permitido expresamente dicho acceso. El cliente es el responsable de facilitar las indicaciones de acceso conforme a los estatutos y normas de régimen interno de su comunidad.
+            </p>
           </div>
         </div>
 
@@ -1882,7 +1904,7 @@
             - <strong>Piso Plus 3 días:</strong> 24,90 € / mes (en lugar de 29,90 €).<br>
             - <strong>Piso Premium 5 días:</strong> 34,90 € / mes (en lugar de 39,90 €).<br>
             - <em>También aplicable a chalets y urbanizaciones: 29,90 € (2d), 34,90 € (3d) y 44,90 € (5d).</em><br><br>
-            • <strong>Coordinación y Acceso:</strong> Trabajamos en colaboración con presidentes de comunidad y administradores de fincas para coordinar el acceso ágil de nuestros operarios uniformados, garantizando rellanos limpios, sin malos olores ni manchas en ascensores.
+            • <strong>Coordinación y Acceso:</strong> Trabajamos en estrecha colaboración con presidentes de comunidad y administradores de fincas para coordinar el acceso ágil de nuestros operarios debidamente identificados y uniformados, siempre bajo previa autorización expresa de la comunidad de propietarios y conforme a sus estatutos, garantizando rellanos impecables, sin malos olores ni manchas en ascensores.
           </div>
         </div>
 
@@ -2199,7 +2221,7 @@
             <p><i class="fa-solid fa-phone text-[#25815F] mr-1.5"></i> +34 600 000 000</p>
             <p><i class="fa-brands fa-whatsapp text-[#25D366] mr-1.5"></i> WhatsApp</p>
             <p><i class="fa-solid fa-envelope text-[#25815F] mr-1.5"></i> info@telatiro.es</p>
-            <p class="pt-2 text-gray-400 font-medium">Lunes a Sábado</p>
+            <p class="pt-2 text-gray-400 font-medium">Lunes a Viernes</p>
             <p class="text-gray-500">Mañanas: 09:00 - 13:00 h<br>Tardes: 16:00 - 20:00 h</p>
           </div>
         </div>
@@ -2211,11 +2233,12 @@
         <div>
           © 2026 TeLaTiro Servicios Privados S.L. Todos los derechos reservados.
         </div>
-        <div class="flex items-center gap-6">
-          <a href="#" class="hover:text-gray-300 transition-colors">Aviso Legal</a>
-          <a href="#" class="hover:text-gray-300 transition-colors">Política de Privacidad</a>
-          <a href="#" class="hover:text-gray-300 transition-colors">Términos y Condiciones</a>
-          <a href="#" class="hover:text-gray-300 transition-colors">Cookies</a>
+        <div class="flex items-center gap-6 flex-wrap">
+          <button type="button" class="open-legal-modal hover:text-gray-300 transition-colors cursor-pointer" data-tab="aviso">Aviso Legal</button>
+          <button type="button" class="open-legal-modal hover:text-gray-300 transition-colors cursor-pointer" data-tab="privacidad">Política de Privacidad</button>
+          <button type="button" class="open-legal-modal hover:text-gray-300 transition-colors cursor-pointer" data-tab="terminos">Términos y Condiciones</button>
+          <button type="button" class="open-legal-modal hover:text-gray-300 transition-colors cursor-pointer" data-tab="acceso">Acceso a Fincas</button>
+          <button type="button" class="open-legal-modal hover:text-gray-300 transition-colors cursor-pointer" data-tab="cookies">Cookies</button>
         </div>
       </div>
 
@@ -2269,6 +2292,142 @@
     </div>
   </div>
 
+  <!-- LEGAL & TERMS MODAL -->
+  <div id="legalModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
+    <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl relative animate-slideDown overflow-hidden">
+      
+      <!-- Modal Header -->
+      <div class="p-5 sm:p-6 border-b border-gray-100 flex items-center justify-between bg-gradient-to-r from-gray-50 to-white">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#25815F]/10 text-[#25815F] flex items-center justify-center text-xl flex-shrink-0">
+            <i class="fa-solid fa-scale-balanced"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-[#1E1E1E]">Información Legal y Condiciones</h3>
+            <p class="text-xs text-gray-500">TeLaTiro Servicios Privados S.L. • Rivas-Vaciamadrid</p>
+          </div>
+        </div>
+        <button type="button" id="closeLegalModalBtn" class="w-8 h-8 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-800 flex items-center justify-center transition-colors">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Legal Tabs Selector -->
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-1 p-2 bg-gray-100 border-b border-gray-200 text-xs font-bold text-center">
+        <button type="button" class="legal-tab-btn py-2 px-1 rounded-lg transition-all active bg-white text-[#25815F] shadow-sm" data-legal-target="legal-terminos">
+          Términos
+        </button>
+        <button type="button" class="legal-tab-btn py-2 px-1 rounded-lg transition-all text-gray-600 hover:text-gray-900" data-legal-target="legal-acceso">
+          Acceso Fincas
+        </button>
+        <button type="button" class="legal-tab-btn py-2 px-1 rounded-lg transition-all text-gray-600 hover:text-gray-900" data-legal-target="legal-aviso">
+          Aviso Legal
+        </button>
+        <button type="button" class="legal-tab-btn py-2 px-1 rounded-lg transition-all text-gray-600 hover:text-gray-900" data-legal-target="legal-privacidad">
+          Privacidad
+        </button>
+        <button type="button" class="legal-tab-btn py-2 px-1 rounded-lg transition-all text-gray-600 hover:text-gray-900 col-span-2 sm:col-span-1" data-legal-target="legal-cookies">
+          Cookies
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-6 overflow-y-auto space-y-4 text-xs text-gray-600 leading-relaxed max-h-[62vh]">
+        
+        <!-- Tab: Términos y Condiciones -->
+        <div id="legal-terminos" class="legal-tab-pane space-y-3">
+          <h4 class="font-bold text-sm text-gray-900">1. Naturaleza y Objeto del Servicio</h4>
+          <p>
+            TeLaTiro es un servicio privado de asistencia domiciliaria enfocado en facilitar el traslado de bolsas cerradas de basura doméstica generadas por los usuarios desde su puerta interior o cancela hasta los contenedores habilitados por el Ayuntamiento de Rivas-Vaciamadrid en la vía pública.
+          </p>
+          
+          <h4 class="font-bold text-sm text-gray-900">2. Condiciones de Entrega de Bolsas</h4>
+          <p>
+            • Cada servicio comprende un máximo de <strong>2 bolsas de basura doméstica estándar</strong> (hasta 50L cada una) debidamente cerradas y atadas por el usuario.<br>
+            • Las bolsas deben estar preparadas dentro de la propiedad privada del cliente (puerta interior, pomo, felpudo privado o cancela) a las <strong>09:00 h</strong> para el turno de mañana o a las <strong>16:00 h</strong> para el turno de tarde. En ningún caso deberán depositarse en aceras o vía pública con antelación.
+          </p>
+
+          <h4 class="font-bold text-sm text-gray-900">3. Formas de Pago y Modalidades de Contratación</h4>
+          <p>
+            • <strong>Planes Mensuales (Suscripción):</strong> El pago se efectúa mediante Domiciliación bancaria (SEPA) o Tarjeta bancaria mensual. No se admite efectivo en suscripciones mensuales. No existe permanencia mínima; el usuario puede solicitar la baja avisando antes del inicio del siguiente ciclo mensual.<br>
+            • <strong>Servicio Puntual (4,90 €):</strong> Se abona mediante Tarjeta bancaria o Efectivo en mano al asistente en el momento de la prestación.
+          </p>
+
+          <h4 class="font-bold text-sm text-gray-900">4. Inicio del Servicio</h4>
+          <p>
+            Las altas suscritas entre los días 1 y 5 del mes inician su servicio en el mes en curso. Las solicitudes cursadas a partir del día 6 comienzan de manera efectiva el día 1 del mes siguiente.
+          </p>
+        </div>
+
+        <!-- Tab: Cláusula de Acceso a Comunidades e Inmuebles -->
+        <div id="legal-acceso" class="legal-tab-pane hidden space-y-3">
+          <div class="bg-emerald-50 border border-emerald-200 p-3.5 rounded-xl text-emerald-900">
+            <h4 class="font-bold text-sm flex items-center gap-1.5 text-[#1E5E44]">
+              <i class="fa-solid fa-shield-halved"></i> Cláusula Específica de Acceso a Comunidades y Portales
+            </h4>
+          </div>
+          <p>
+            <strong>1. Principio de Autorización Previa:</strong> TeLaTiro Servicios Privados presta sus servicios única y exclusivamente a petición expresa del cliente solicitante. <strong>TeLaTiro no entra ni prestará servicios en zonas comunitarias, portales, zaguanes o urbanizaciones cerradas cuando la Comunidad de Propietarios, su Junta de Gobierno o la Administración de Fincas no haya autorizado o permitido expresamente dicho acceso.</strong>
+          </p>
+          <p>
+            <strong>2. Responsabilidad y Legitimación del Usuario:</strong> El cliente que contrate el servicio declara y garantiza bajo su exclusiva responsabilidad contar con la debida legitimación y autorización conforme a la Ley de Propiedad Horizontal y los estatutos o normas de régimen interior de su comunidad para facilitar las indicaciones de acceso a su rellano o cancela (mediante código de telefonillo, llamada concertada o llaves de acceso).
+          </p>
+          <p>
+            <strong>3. Personal Identificado:</strong> Todo el personal que presta asistencia a través de la red de TeLaTiro acude debidamente identificado y uniformado, limitando su presencia al tiempo estrictamente imprescindible para recoger las bolsas cerradas y depositarlas inmediatamente en el contenedor municipal correspondiente.
+          </p>
+          <p>
+            <strong>4. Respeto y Convivencia Comunitaria:</strong> TeLaTiro colabora activamente con administradores de fincas y presidentes de comunidad para garantizar la máxima higiene comunitaria, evitando el derrame de líquidos o malos olores en escaleras y ascensores.
+          </p>
+        </div>
+
+        <!-- Tab: Aviso Legal -->
+        <div id="legal-aviso" class="legal-tab-pane hidden space-y-3">
+          <h4 class="font-bold text-sm text-gray-900">Aviso Legal y Titularidad</h4>
+          <p>
+            En cumplimiento de la Ley 34/2002 de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE):
+          </p>
+          <p>
+            • <strong>Denominación Social:</strong> TeLaTiro Servicios Privados S.L.<br>
+            • <strong>Contacto:</strong> info@telatiro.es | +34 600 000 000<br>
+            • <strong>Ámbito Operativo:</strong> Término municipal de Rivas-Vaciamadrid (Madrid).<br>
+            • <strong>Actividad:</strong> Servicios privados de asistencia a particulares para depósito en contenedores municipales autorizados. TeLaTiro no presta servicios públicos de recogida, no realiza transporte rodado ni almacena o gestiona residuos en instalaciones intermedias fuera del sistema público municipal.
+          </p>
+        </div>
+
+        <!-- Tab: Política de Privacidad -->
+        <div id="legal-privacidad" class="legal-tab-pane hidden space-y-3">
+          <h4 class="font-bold text-sm text-gray-900">Protección de Datos Personales (RGPD y LOPDGDD)</h4>
+          <p>
+            De conformidad con el Reglamento (UE) 2016/679 (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD), se le informa de que los datos personales recabados a través de los formularios del sitio web serán tratados con la única finalidad de gestionar su solicitud de servicio, coordinar las franjas horarias y emitir la facturación correspondiente.
+          </p>
+          <p>
+            • <strong>Responsable del Tratamiento:</strong> TeLaTiro Servicios Privados S.L.<br>
+            • <strong>Legitimación:</strong> Ejecución del contrato de prestación de servicios o aplicación de medidas precontractuales a petición del interesado (Art. 6.1.b RGPD).<br>
+            • <strong>Destinatarios:</strong> No se cederán datos a terceros salvo obligación legal o proveedores técnicos necesarios.<br>
+            • <strong>Derechos:</strong> Puede ejercer sus derechos de acceso, rectificación, supresión, limitación y oposición enviando un correo electrónico a <strong>info@telatiro.es</strong> con su documento de identidad.
+          </p>
+        </div>
+
+        <!-- Tab: Cookies -->
+        <div id="legal-cookies" class="legal-tab-pane hidden space-y-3">
+          <h4 class="font-bold text-sm text-gray-900">Política de Cookies</h4>
+          <p>
+            Este sitio web utiliza únicamente cookies técnicas y de almacenamiento local necesarias para el correcto funcionamiento de la plataforma, la memorización de preferencias de formulario (como el correo electrónico guardado para su comodidad) y el funcionamiento offline mediante Service Worker (PWA). No se emplean cookies de seguimiento comercial de terceros.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 border-t border-gray-100 bg-gray-50 flex items-center justify-end">
+        <button type="button" id="acceptLegalModalBtn" class="btn-primary py-2.5 px-6 text-xs font-bold">
+          Cerrar
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- Javascript -->
   <script>
 /**
@@ -2290,6 +2449,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCoverageChecker();
   initPlanSelectors();
   initHeroPhotoSwitcher();
+  initLegalModal();
 });
 
 /**
@@ -3641,6 +3801,87 @@ function initRecruiterForm() {
       }
       showToast('🎉 ¡Candidatura enviada correctamente!', 'success');
       form.reset();
+    }
+  });
+}
+
+/**
+ * 12. Modal Legal, Términos y Cláusula de Acceso a Comunidades
+ */
+function initLegalModal() {
+  const legalModal = document.getElementById('legalModal');
+  const closeBtn = document.getElementById('closeLegalModalBtn');
+  const acceptBtn = document.getElementById('acceptLegalModalBtn');
+  const openBtns = document.querySelectorAll('.open-legal-modal');
+  const tabBtns = document.querySelectorAll('.legal-tab-btn');
+  const panes = document.querySelectorAll('.legal-tab-pane');
+
+  if (!legalModal) return;
+
+  function switchLegalTab(targetId) {
+    tabBtns.forEach(btn => {
+      const match = btn.getAttribute('data-legal-target') === targetId;
+      if (match) {
+        btn.classList.add('active', 'bg-white', 'text-[#25815F]', 'shadow-sm');
+        btn.classList.remove('text-gray-600');
+      } else {
+        btn.classList.remove('active', 'bg-white', 'text-[#25815F]', 'shadow-sm');
+        btn.classList.add('text-gray-600');
+      }
+    });
+
+    panes.forEach(pane => {
+      if (pane.id === targetId) {
+        pane.classList.remove('hidden');
+      } else {
+        pane.classList.add('hidden');
+      }
+    });
+  }
+
+  function openModal(defaultTab = 'terminos') {
+    let targetPaneId = 'legal-terminos';
+    if (defaultTab === 'aviso') targetPaneId = 'legal-aviso';
+    else if (defaultTab === 'privacidad') targetPaneId = 'legal-privacidad';
+    else if (defaultTab === 'acceso') targetPaneId = 'legal-acceso';
+    else if (defaultTab === 'cookies') targetPaneId = 'legal-cookies';
+    else if (defaultTab === 'terminos') targetPaneId = 'legal-terminos';
+
+    switchLegalTab(targetPaneId);
+    legalModal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    legalModal.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  openBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const tabName = btn.getAttribute('data-tab') || 'terminos';
+      openModal(tabName);
+    });
+  });
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-legal-target');
+      if (targetId) switchLegalTab(targetId);
+    });
+  });
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (acceptBtn) acceptBtn.addEventListener('click', closeModal);
+
+  legalModal.addEventListener('click', (e) => {
+    if (e.target === legalModal) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !legalModal.classList.contains('hidden')) {
+      closeModal();
     }
   });
 }
