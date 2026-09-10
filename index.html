@@ -1519,9 +1519,28 @@
               </div>
             </div>
 
-            <div>
-              <label for="clientAddress" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Dirección Completa (Calle, Nº, Piso, Puerta) *</label>
-              <input type="text" id="clientAddress" name="street-address" autocomplete="street-address" required placeholder="Ej. Av. de los Almendros 18, 3º B" class="custom-input">
+            <!-- Dirección con Tipo de Vía (Obligatorio), Nombre/Número y Piso/Puerta -->
+            <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+              <div class="sm:col-span-4">
+                <label for="clientStreetType" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Tipo de Vía *</label>
+                <select id="clientStreetType" name="street-type" required class="custom-input font-medium">
+                  <option value="" disabled selected>-- Tipo de vía * --</option>
+                  <option value="Calle">Calle</option>
+                  <option value="Avenida">Avenida</option>
+                  <option value="Plaza">Plaza</option>
+                  <option value="Paseo">Paseo</option>
+                  <option value="Carretera">Carretera</option>
+                  <option value="Ronda">Ronda</option>
+                </select>
+              </div>
+              <div class="sm:col-span-5">
+                <label for="clientAddress" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Nombre de Vía y Nº *</label>
+                <input type="text" id="clientAddress" name="street-address" autocomplete="address-line1" required placeholder="Ej. Los Almendros, 18" class="custom-input">
+              </div>
+              <div class="sm:col-span-3">
+                <label for="clientDoor" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Piso / Puerta</label>
+                <input type="text" id="clientDoor" name="door-address" autocomplete="address-line2" placeholder="Ej. 3º B" class="custom-input">
+              </div>
             </div>
 
             <!-- 3. Time Slots, Days and Payment Method -->
@@ -2994,6 +3013,7 @@ function initBookingForm() {
     e.preventDefault();
 
     const zipSelect = document.getElementById('clientZip');
+    const streetTypeSelect = document.getElementById('clientStreetType');
     const addressInput = document.getElementById('clientAddress');
 
     const formData = getFormData();
@@ -3021,9 +3041,25 @@ function initBookingForm() {
       return;
     }
 
-    if (!formData.rawAddress || formData.rawAddress.trim() === '') {
-      showToast('⚠️ Por favor indica tu calle, número, piso y puerta en Rivas.', 'warning');
-      if (addressInput) addressInput.focus();
+    // Validación estricta de tipo de vía obligatorio (Calle, Avenida, Plaza, etc.)
+    if (!formData.streetType || formData.streetType.trim() === '') {
+      showToast('⚠️ Por favor selecciona el tipo de vía (Calle, Avenida, Plaza...) obligatorio.', 'warning');
+      if (streetTypeSelect) {
+        streetTypeSelect.focus();
+        streetTypeSelect.classList.add('border-red-500', 'ring-2', 'ring-red-200');
+        setTimeout(() => streetTypeSelect.classList.remove('border-red-500', 'ring-2', 'ring-red-200'), 3000);
+      }
+      return;
+    }
+
+    // Validación de nombre de vía y número
+    if (!formData.streetName || formData.streetName.trim() === '') {
+      showToast('⚠️ Por favor indica el nombre de la vía y el número en Rivas.', 'warning');
+      if (addressInput) {
+        addressInput.focus();
+        addressInput.classList.add('border-red-500', 'ring-2', 'ring-red-200');
+        setTimeout(() => addressInput.classList.remove('border-red-500', 'ring-2', 'ring-red-200'), 3000);
+      }
       return;
     }
 
@@ -3135,16 +3171,30 @@ function getFormData() {
   const name = document.getElementById('clientName')?.value.trim() || '';
   const phone = document.getElementById('clientPhone')?.value.trim() || '';
   const email = document.getElementById('clientEmail')?.value.trim() || '';
-  const rawAddress = document.getElementById('clientAddress')?.value.trim() || '';
+  
+  const streetType = document.getElementById('clientStreetType')?.value || '';
+  const rawStreetInput = document.getElementById('clientAddress')?.value.trim() || '';
+  const door = document.getElementById('clientDoor')?.value.trim() || '';
+  
+  // Limpiar si el usuario ya escribió "Calle", "Av.", "Avenida", etc. en el campo de texto para evitar duplicados
+  let cleanStreetName = rawStreetInput;
+  if (streetType) {
+    const regex = new RegExp(`^(${streetType}|c\\/|avda\\.?|av\\.?|pz\\.?|pza\\.?|ps\\.?|pº|cuesta|camino|carretera|bulevar|pasaje|travesia|travesía)\\s*`, 'i');
+    cleanStreetName = rawStreetInput.replace(regex, '').trim();
+    if (!cleanStreetName) cleanStreetName = rawStreetInput;
+  }
+  
+  const fullStreet = streetType ? `${streetType} ${cleanStreetName}` : cleanStreetName;
+  const rawAddress = door ? `${fullStreet}, ${door}` : fullStreet;
   const zip = document.getElementById('clientZip')?.value || '';
   
   // Extraer el código postal de 5 dígitos para geolocalización exacta en Google Maps
   const cpDigits = zip.match(/\b2852[1-5]\b/)?.[0] || '28523';
   
   // Si la dirección no contiene ya 'Rivas', le adjuntamos el CP y localidad para que Google Maps nunca la confunda con Madrid capital
-  let address = rawAddress;
+  let address = fullStreet;
   if (address && !address.toLowerCase().includes('rivas')) {
-    address = `${address}, ${cpDigits} Rivas-Vaciamadrid`;
+    address = `${address}${door ? ', ' + door : ''}, ${cpDigits} Rivas-Vaciamadrid`;
   }
 
   const timeSlot = document.getElementById('clientTimeSlot')?.value || 'Turno Mañana (09:00 - 13:00 h)';
@@ -3153,7 +3203,7 @@ function getFormData() {
   const referral = document.getElementById('clientReferral')?.value.trim() || '';
   const notes = document.getElementById('clientNotes')?.value.trim() || '';
 
-  return { plan: selectedPlan, planName, startDate, name, phone, email, rawAddress, address, zip, timeSlot, days, paymentMethod, referral, notes };
+  return { plan: selectedPlan, planName, startDate, name, phone, email, streetType, streetName: cleanStreetName, door, rawAddress, address, zip, timeSlot, days, paymentMethod, referral, notes };
 }
 
 /**
