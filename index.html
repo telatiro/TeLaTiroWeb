@@ -2933,23 +2933,30 @@ function updateOrderSummary(planKey) {
  * Función de Detección Automática de Código Postal de Rivas por Nombre de Calle
  */
 function detectRivasZip(streetText) {
-  if (!streetText || streetText.length < 3) return null;
+  if (!streetText || streetText.length < 2) return null;
   const s = streetText.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-  // 28523: Covibar, Almendros, Pablo Iglesias, Mitología, Árboles, Flores, La Luna
+  // Detección directa si el texto contiene ya el código postal
+  if (s.includes('28523')) return '28523 - Covibar, Almendros y Pablo Iglesias';
+  if (s.includes('28522')) return '28522 - Sector Central y Rivas Futura';
+  if (s.includes('28521')) return '28521 - Casco Antiguo y Zona Este de Vaciamadrid';
+  if (s.includes('28524') || s.includes('28525')) return '28524 - Nuevos Desarrollos e Industrial';
+
+  // 28523: Covibar, Almendros, Pablo Iglesias, Mitología, Árboles, Flores, Provincias y Regiones españolas, La Luna
   const kw28523 = [
-    'almendros', 'covibar', 'pablo iglesias', 'partija', 'bellavista', 'abogados de atocha', 'fleming', 'san isidro', 'santa monica', 'barrancon', 'zarza', 'pilar barrenechea', 'parque asturias', 'dolores ibarruri', 'la luna',
-    'afrodita', 'apolo', 'atenea', 'zeus', 'artemisa', 'hermes', 'poseidon', 'dionisio', 'antigona', 'heleno', 'electra', 'medea', 'fedra', 'penelope', 'ariadna', 'casandra', 'dafne', 'euridice', 'narciso', 'perseo', 'teseo', 'heracles', 'aquiles', 'ulises', 'hector', 'paris', 'eneas', 'jason', 'orfeo', 'edipo', 'prometeo', 'cronos', 'urano', 'helios', 'selene',
+    'almendros', 'covibar', 'pablo iglesias', 'partija', 'bellavista', 'abogados de atocha', 'fleming', 'san isidro', 'santa monica', 'barrancon', 'zarza', 'pilar barrenechea', 'parque asturias', 'dolores ibarruri', 'la luna', 'provincias', 'chopera',
+    'madrid', 'barcelona', 'sevilla', 'valencia', 'toledo', 'zaragoza', 'bilbao', 'malaga', 'cordoba', 'granada', 'almeria', 'cadiz', 'huelva', 'jaen', 'badajoz', 'caceres', 'cuenca', 'guadalajara', 'ciudad real', 'albacete', 'avila', 'burgos', 'leon', 'palencia', 'salamanca', 'segovia', 'soria', 'valladolid', 'zamora', 'huesca', 'teruel', 'asturias', 'cantabria', 'galicia', 'navarra', 'rioja', 'baleares', 'canarias', 'murcia', 'andalucia', 'extremadura', 'aragon', 'castilla',
+    'afrodita', 'apolo', 'atenea', 'zeus', 'artemisa', 'hermes', 'poseidon', 'dionisio', 'antigona', 'heleno', 'electra', 'medea', 'fedra', 'penelope', 'ariadna', 'casandra', 'dafne', 'euridice', 'narciso', 'perseo', 'teseo', 'heracles', 'aquiles', 'ulises', 'hector', 'paris', 'eneas', 'jason', 'orfeo', 'edipo', 'prometeo', 'cronos', 'urano', 'helios', 'selene', 'hercules', 'hera', 'demeter', 'hades', 'hefesto',
     'encina', 'roble', 'platano', 'olivo', 'castano', 'cipres', 'pino', 'sauce', 'alamo', 'fresno', 'acacias', 'moreras', 'magnolias', 'palmeras', 'cedros', 'nogales', 'laurel', 'madrono', 'avellano', 'tilos', 'olmos',
     'jazmin', 'crisantemo', 'geranio', 'clavel', 'rosa', 'tulipan', 'lilas', 'violetas', 'adelfas', 'orquideas', 'margaritas', 'hortensias', 'azucenas', 'narcisos', 'amapolas', 'dalias'
   ];
 
   // 28522: Sector Central, Rivas Futura, José Hierro, Escritores, Pintores, Arquitectos
   const kw28522 = [
-    'jose hierro', 'hierro', 'aurelio alvarez', 'futura', 'marie curie', 'severo ochoa', 'isaac peral', 'concepcion arenal',
-    'velazquez', 'goya', 'picasso', 'dali', 'joan miro', 'juan gris', 'sorolla', 'zurbaran', 'murillo', 'ribera', 'greco',
+    'jose hierro', 'hierro', 'aurelio alvarez', 'futura', 'marie curie', 'severo ochoa', 'isaac peral', 'concepcion arenal', 'tecnica', 'innovacion', 'creacion', 'investigacion',
+    'velazquez', 'goya', 'picasso', 'dali', 'joan miro', 'juan gris', 'sorolla', 'zurbaran', 'murillo', 'ribera', 'greco', 'tapies', 'chillida', 'barcelo', 'gordillo', 'oteiza',
     'clara campoamor', 'federica montseny', 'victoria kent', 'montessori', 'rosa luxemburgo', 'simone de beauvoir', 'hannah arendt', 'woolf',
-    'antonio machado', 'miguel hernandez', 'garcia lorca', 'alberti', 'cernuda', 'aleixandre', 'damaso alonso', 'gerardo diego', 'jorge guillen', 'pedro salinas', 'leon felipe', 'unamuno',
+    'antonio machado', 'manuel machado', 'miguel hernandez', 'garcia lorca', 'alberti', 'cernuda', 'aleixandre', 'damaso alonso', 'gerardo diego', 'jorge guillen', 'pedro salinas', 'leon felipe', 'unamuno',
     'gaudi', 'corbusier', 'mies van der rohe', 'lloyd wright', 'gropius', 'aalto', 'saarinen', 'niemeyer', 'norman foster', 'piano', 'rogers', 'hadid', 'calatrava', 'moneo', 'campo baeza', 'herrera',
     'cela', 'delibes', 'torrente ballester', 'martin gaite', 'matute', 'laforet', 'valle inclan', 'baroja', 'azorin', 'galdos', 'clarin', 'pardo bazan', 'becquer', 'rosalia de castro', 'larra', 'espronceda', 'duque de rivas', 'zorrilla', 'moratin', 'feijoo', 'jovellanos', 'cadalso', 'quevedo', 'gongora', 'lope de vega', 'calderon', 'tirso de molina', 'cervantes', 'garcilaso', 'fray luis',
     'sector central', 'pueblos originarios', 'trece rosas'
@@ -2957,17 +2964,17 @@ function detectRivasZip(streetText) {
 
   // 28521: Casco Antiguo, Zona Este, Aves, Lagos, Países europeos, Mirador, Laguna del Campillo
   const kw28521 = [
-    'lago', 'como', 'trasimeno', 'sanabria', 'garda', 'mayor', 'constanza', 'ginebra', 'lugano', 'albufera', 'baikal', 'victoria',
+    'lago', 'como', 'trasimeno', 'sanabria', 'garda', 'mayor', 'constanza', 'ginebra', 'lugano', 'albufera', 'baikal', 'victoria', 'titicaca', 'erie', 'ontario', 'michigan', 'huron', 'superior',
     'golondrina', 'colibri', 'mirlo', 'alondra', 'ruisenor', 'aguila', 'halcon', 'gaviota', 'ciguena', 'flamenco', 'garza', 'pelicano', 'cisne', 'pato', 'oca', 'paloma', 'tortola', 'codorniz', 'perdiz', 'faisan', 'petirrojo', 'jilguero', 'canario', 'verderon', 'pardillo', 'pinzon', 'herrerillo', 'carbonero', 'abubilla', 'lechuza', 'buho', 'mochuelo', 'cernicalo',
-    'holanda', 'francia', 'italia', 'alemania', 'portugal', 'belgica', 'suiza', 'austria', 'grecia', 'irlanda', 'dinamarca', 'suecia', 'noruega', 'finlandia', 'polonia', 'hungria', 'rumania', 'bulgaria', 'croacia',
-    'casco', 'marcial lalanda', 'mirador', 'campillo', 'laguna', 'estacion', 'presa', 'huerta', 'san marcos', 'eras', 'soto', 'ucles', 'yesera'
+    'holanda', 'francia', 'italia', 'alemania', 'portugal', 'belgica', 'suiza', 'austria', 'grecia', 'irlanda', 'dinamarca', 'suecia', 'noruega', 'finlandia', 'polonia', 'hungria', 'rumania', 'bulgaria', 'croacia', 'reino unido', 'checa', 'eslovaquia',
+    'casco', 'marcial lalanda', 'mirador', 'campillo', 'laguna', 'estacion', 'presa', 'huerta', 'san marcos', 'eras', 'soto', 'ucles', 'yesera', 'miralrio', 'jarama', 'manzanares', 'carrizal'
   ];
 
   // 28524: Nuevos Desarrollos, Cristo de Rivas, Océanos, Planetas, Oficios, Polígono Industrial
   const kw28524 = [
-    'cristo de rivas', 'oceano', 'atlantico', 'pacifico', 'indico', 'antartico', 'artico', 'cantabrico', 'mediterraneo', 'baltico', 'mar negro', 'mar rojo', 'caribe',
-    'tierra', 'marte', 'venus', 'mercurio', 'jupiter', 'saturno', 'urano', 'neptuno', 'pluton',
-    'fundicion', 'torneros', 'carpinteros', 'fraguas', 'herreros', 'cerrajeros', 'mecanicos', 'electricistas', 'fontaneros', 'pintores', 'albaniles', 'canteros', 'marmolistas', 'yeseros', 'cristaleros', 'tapiceros', 'ebanistas', 'fundidores', 'soldadores', 'poligono', 'santa ana industrial'
+    'cristo de rivas', 'victimas del terrorismo', 'oceano', 'atlantico', 'pacifico', 'indico', 'antartico', 'artico', 'cantabrico', 'mediterraneo', 'baltico', 'mar negro', 'mar rojo', 'caribe', 'tirreno', 'caspio', 'alboran', 'java', 'coral', 'egeo', 'jonio', 'bering',
+    'tierra', 'marte', 'venus', 'mercurio', 'jupiter', 'saturno', 'urano', 'neptuno', 'pluton', 'galaxia', 'cosmos', 'cometa', 'nebulosa', 'asteroide',
+    'fundicion', 'torneros', 'carpinteros', 'fraguas', 'herreros', 'cerrajeros', 'mecanicos', 'electricistas', 'fontaneros', 'pintores', 'albaniles', 'canteros', 'marmolistas', 'yeseros', 'cristaleros', 'tapiceros', 'ebanistas', 'fundidores', 'soldadores', 'poligono', 'santa ana', 'electrodo', 'silicio', 'titanio', 'aluminio', 'cobre', 'platino'
   ];
 
   for (let kw of kw28523) {
@@ -2999,6 +3006,7 @@ function initBookingForm() {
   const phoneInput = document.getElementById('clientPhone');
   const emailInput = document.getElementById('clientEmail');
   const emailDatalist = document.getElementById('savedEmailsList');
+  const streetTypeSelect = document.getElementById('clientStreetType');
   const addressInput = document.getElementById('clientAddress');
   const zipSelect = document.getElementById('clientZip');
   const zipAutoBadge = document.getElementById('zipAutoBadge');
@@ -3009,12 +3017,15 @@ function initBookingForm() {
   // Detección y asignación automática del Código Postal al escribir la calle
   function tryAutoDetectZip() {
     const streetText = addressInput ? addressInput.value.trim() : '';
-    if (!streetText || streetText.length < 3) {
+    const streetType = streetTypeSelect ? streetTypeSelect.value : '';
+    const fullTextToInspect = `${streetType} ${streetText}`.trim();
+
+    if (!streetText || streetText.length < 2) {
       if (zipAutoBadge) zipAutoBadge.classList.add('hidden');
       return;
     }
 
-    const detectedZipValue = detectRivasZip(streetText);
+    const detectedZipValue = detectRivasZip(fullTextToInspect) || detectRivasZip(streetText);
     if (detectedZipValue && zipSelect) {
       zipSelect.value = detectedZipValue;
       zipSelect.classList.add('border-[#25815F]', 'bg-emerald-50/60');
@@ -3035,6 +3046,11 @@ function initBookingForm() {
     addressInput.addEventListener('input', tryAutoDetectZip);
     addressInput.addEventListener('change', tryAutoDetectZip);
     addressInput.addEventListener('blur', tryAutoDetectZip);
+    addressInput.addEventListener('keyup', tryAutoDetectZip);
+  }
+
+  if (streetTypeSelect) {
+    streetTypeSelect.addEventListener('change', tryAutoDetectZip);
   }
 
   // Inicializar opciones de pago y días acordes al plan seleccionado por defecto
