@@ -1231,7 +1231,7 @@
               </p>
               <div class="space-y-2 text-sm text-gray-700">
                 <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> Evita cargar pesos y bajar escaleras o rampas.</div>
-                <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> Personal de confianza, educado e identificado.</div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> Asistentes de confianza, educados y debidamente identificados.</div>
               </div>
             </div>
             <div class="md:col-span-4 bg-[#F8FAF9] p-6 rounded-2xl border border-gray-100 text-center">
@@ -1842,12 +1842,12 @@
         <!-- FAQ 2: Portal -->
         <div class="faq-item clean-card overflow-hidden">
           <button class="faq-header w-full p-6 text-left flex items-center justify-between gap-4 font-bold text-gray-900 hover:text-[#25815F] transition-colors focus:outline-none">
-            <span class="text-base sm:text-lg">¿Cómo accede el personal al portal si vivo en un piso?</span>
+            <span class="text-base sm:text-lg">¿Cómo se accede al portal si vivo en un piso?</span>
             <i class="fa-solid fa-chevron-down faq-chevron text-gray-400 transition-transform duration-300"></i>
           </button>
           <div class="faq-content px-6 pb-6 text-sm text-gray-600 leading-relaxed space-y-2">
             <p>
-              Coordinamos el acceso de forma segura, puntual y discreta: mediante código de portal facilitado por el cliente, llamada al telefonillo concertada en tu turno elegido, o acuerdos con la portería/administrador de finca. Todo el personal asignado está debidamente identificado, asegurado y uniformado.
+              Coordinamos el acceso de forma segura, puntual y discreta: mediante código de portal facilitado por el cliente, llamada al telefonillo concertada en tu turno elegido, o acuerdos con la portería/administrador de finca. Toda persona que preste servicios para TeLaTiro estará debidamente identificada, asegurada y uniformada.
             </p>
             <p class="text-xs text-gray-500 bg-gray-50 p-3 rounded-xl border border-gray-100">
               <strong><i class="fa-solid fa-shield-halved text-[#25815F]"></i> Cláusula de acceso a zonas comunitarias:</strong> TeLaTiro no entra en zonas comunitarias ni portales cuando la Comunidad de Propietarios o la administración del inmueble no haya autorizado o permitido expresamente dicho acceso. El cliente es el responsable de facilitar las indicaciones de acceso conforme a los estatutos y normas de régimen interno de su comunidad.
@@ -1904,7 +1904,7 @@
             - <strong>Piso Plus 3 días:</strong> 24,90 € / mes (en lugar de 29,90 €).<br>
             - <strong>Piso Premium 5 días:</strong> 34,90 € / mes (en lugar de 39,90 €).<br>
             - <em>También aplicable a chalets y urbanizaciones: 29,90 € (2d), 34,90 € (3d) y 44,90 € (5d).</em><br><br>
-            • <strong>Coordinación y Acceso:</strong> Trabajamos en estrecha colaboración con presidentes de comunidad y administradores de fincas para coordinar el acceso ágil de nuestros operarios debidamente identificados y uniformados, siempre bajo previa autorización expresa de la comunidad de propietarios y conforme a sus estatutos, garantizando rellanos impecables, sin malos olores ni manchas en ascensores.
+            • <strong>Coordinación y Acceso:</strong> Trabajamos en estrecha colaboración con presidentes de comunidad y administradores de fincas para coordinar el acceso ágil de toda persona asignada al servicio, debidamente identificada y uniformada, siempre bajo previa autorización expresa de la comunidad de propietarios y conforme a sus estatutos, garantizando rellanos impecables, sin malos olores ni manchas en ascensores.
           </div>
         </div>
 
@@ -2131,12 +2131,25 @@
 
           </div>
 
-          <!-- RGPD Checkbox -->
-          <div class="pt-2">
+          <!-- RGPD & Collaboration Operating Principles -->
+          <div class="space-y-3 pt-2">
+            <!-- Box with key operating principles for collaborators -->
+            <div class="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4 text-xs text-emerald-950 space-y-2">
+              <div class="font-bold flex items-center gap-2 text-[#1E5E44]">
+                <i class="fa-solid fa-file-contract text-emerald-600"></i> Principios Operativos y Normativa de la Red de Colaboración:
+              </div>
+              <ul class="space-y-1.5 text-gray-700 list-disc list-inside">
+                <li><strong>Servicio asistencial a pie:</strong> El traslado de las bolsas se efectúa exclusivamente a pie desde la puerta o cancela del cliente hasta el contenedor municipal más cercano. Queda terminantemente prohibido el transporte de bolsas en vehículos a motor o su almacenamiento/acopio fuera del sistema público.</li>
+                <li><strong>Depósito directo e inmediato:</strong> El servicio concluye obligatoriamente con el depósito inmediato de las bolsas en el contenedor municipal autorizado. Queda prohibido desviar residuos a cualquier otro lugar.</li>
+                <li><strong>Integridad de las bolsas:</strong> El colaborador no abre, manipula ni clasifica el contenido de las bolsas (la separación en origen es exclusiva del usuario).</li>
+                <li><strong>Bolsas no conformes:</strong> En caso de detectar bolsas rotas, abiertas, con residuos peligrosos o escombros no permitidos, no se recogerán y se notificará de inmediato a coordinación.</li>
+              </ul>
+            </div>
+
             <label class="flex items-start gap-3 cursor-pointer text-xs text-gray-600">
               <input type="checkbox" id="recruiterPrivacy" required class="mt-0.5 rounded border-gray-300 text-[#25815F] focus:ring-[#25815F] h-4 w-4">
               <span>
-                Acepto que TeLaTiro gestione mis datos de contacto exclusivamente para evaluar mi candidatura e informarme de oportunidades de rutas y colaboración.
+                He leído y acepto los <button type="button" class="open-legal-modal font-bold text-[#25815F] underline hover:text-[#1E5E44]" data-tab="colaboradores">Términos Operativos de Colaboración</button> y la Política de Privacidad para la evaluación de mi candidatura en TeLaTiro.
               </span>
             </label>
           </div>
@@ -2238,6 +2251,7 @@
           <button type="button" class="open-legal-modal hover:text-gray-300 transition-colors cursor-pointer" data-tab="privacidad">Política de Privacidad</button>
           <button type="button" class="open-legal-modal hover:text-gray-300 transition-colors cursor-pointer" data-tab="terminos">Términos y Condiciones</button>
           <button type="button" class="open-legal-modal hover:text-gray-300 transition-colors cursor-pointer" data-tab="acceso">Acceso a Fincas</button>
+          <button type="button" class="open-legal-modal hover:text-gray-300 transition-colors cursor-pointer" data-tab="colaboradores">Colaboradores</button>
           <button type="button" class="open-legal-modal hover:text-gray-300 transition-colors cursor-pointer" data-tab="cookies">Cookies</button>
         </div>
       </div>
@@ -2313,12 +2327,15 @@
       </div>
 
       <!-- Legal Tabs Selector -->
-      <div class="grid grid-cols-2 sm:grid-cols-5 gap-1 p-2 bg-gray-100 border-b border-gray-200 text-xs font-bold text-center">
+      <div class="grid grid-cols-3 sm:grid-cols-6 gap-1 p-2 bg-gray-100 border-b border-gray-200 text-xs font-bold text-center">
         <button type="button" class="legal-tab-btn py-2 px-1 rounded-lg transition-all active bg-white text-[#25815F] shadow-sm" data-legal-target="legal-terminos">
           Términos
         </button>
         <button type="button" class="legal-tab-btn py-2 px-1 rounded-lg transition-all text-gray-600 hover:text-gray-900" data-legal-target="legal-acceso">
           Acceso Fincas
+        </button>
+        <button type="button" class="legal-tab-btn py-2 px-1 rounded-lg transition-all text-gray-600 hover:text-gray-900" data-legal-target="legal-colaboradores">
+          Colaboradores
         </button>
         <button type="button" class="legal-tab-btn py-2 px-1 rounded-lg transition-all text-gray-600 hover:text-gray-900" data-legal-target="legal-aviso">
           Aviso Legal
@@ -2326,7 +2343,7 @@
         <button type="button" class="legal-tab-btn py-2 px-1 rounded-lg transition-all text-gray-600 hover:text-gray-900" data-legal-target="legal-privacidad">
           Privacidad
         </button>
-        <button type="button" class="legal-tab-btn py-2 px-1 rounded-lg transition-all text-gray-600 hover:text-gray-900 col-span-2 sm:col-span-1" data-legal-target="legal-cookies">
+        <button type="button" class="legal-tab-btn py-2 px-1 rounded-lg transition-all text-gray-600 hover:text-gray-900" data-legal-target="legal-cookies">
           Cookies
         </button>
       </div>
@@ -2373,10 +2390,37 @@
             <strong>2. Responsabilidad y Legitimación del Usuario:</strong> El cliente que contrate el servicio declara y garantiza bajo su exclusiva responsabilidad contar con la debida legitimación y autorización conforme a la Ley de Propiedad Horizontal y los estatutos o normas de régimen interior de su comunidad para facilitar las indicaciones de acceso a su rellano o cancela (mediante código de telefonillo, llamada concertada o llaves de acceso).
           </p>
           <p>
-            <strong>3. Personal Identificado:</strong> Todo el personal que presta asistencia a través de la red de TeLaTiro acude debidamente identificado y uniformado, limitando su presencia al tiempo estrictamente imprescindible para recoger las bolsas cerradas y depositarlas inmediatamente en el contenedor municipal correspondiente.
+            <strong>3. Personas y Colaboradores Identificados:</strong> Toda persona o colaborador que preste asistencia a través de la red de TeLaTiro acude debidamente identificado, asegurado y uniformado, limitando su presencia al tiempo estrictamente imprescindible para recoger las bolsas cerradas y depositarlas inmediatamente en el contenedor municipal correspondiente.
           </p>
           <p>
             <strong>4. Respeto y Convivencia Comunitaria:</strong> TeLaTiro colabora activamente con administradores de fincas y presidentes de comunidad para garantizar la máxima higiene comunitaria, evitando el derrame de líquidos o malos olores en escaleras y ascensores.
+          </p>
+        </div>
+
+        <!-- Tab: Condiciones Operativas de la Red de Colaboradores -->
+        <div id="legal-colaboradores" class="legal-tab-pane hidden space-y-3">
+          <div class="bg-emerald-50 border border-emerald-200 p-3.5 rounded-xl text-emerald-900">
+            <h4 class="font-bold text-sm flex items-center gap-1.5 text-[#1E5E44]">
+              <i class="fa-solid fa-handshake-angle"></i> Marco Operativo y Normativo para la Red de Colaboradores
+            </h4>
+          </div>
+          <p>
+            <strong>1. Naturaleza Jurídica de la Prestación:</strong> La actividad desarrollada por los colaboradores (autónomos, empresas o personal asignado) consiste estrictamente en una asistencia privada de proximidad a pie, ayudando al usuario a trasladar sus bolsas cerradas de basura doméstica desde el acceso de su vivienda hasta el contenedor municipal correspondiente en la vía pública.
+          </p>
+          <p>
+            <strong>2. Prohibición Absoluta de Transporte en Vehículos y Almacenamiento:</strong> Queda terminantemente prohibido el transporte de residuos en vehículos a motor, así como cualquier forma de acopio, depósito temporal, almacenamiento o acumulación de residuos en locales o instalaciones privadas. El servicio se realiza de manera continua y directa a pie.
+          </p>
+          <p>
+            <strong>3. Depósito Inmediato en el Sistema Público:</strong> Todo servicio finaliza obligatoriamente con el depósito inmediato de las bolsas en los contenedores habilitados por el Ayuntamiento de Rivas-Vaciamadrid. Queda estrictamente prohibido desviar o verter los residuos en cualquier otro emplazamiento.
+          </p>
+          <p>
+            <strong>4. No Manipulación de Contenido:</strong> El colaborador tiene expresamente prohibido abrir, revisar, alterar o clasificar el contenido de las bolsas. La separación en origen corresponde con carácter exclusivo al usuario doméstico.
+          </p>
+          <p>
+            <strong>5. Protocolo de Bolsas No Conformes:</strong> Si el colaborador detecta bolsas rotas, abiertas, con riesgo de derrame o que contengan residuos peligrosos, escombros, muebles o materiales no permitidos por la normativa municipal, se abstendrá de retirarlas, dejando constancia fotográfica e informando de inmediato a la coordinación central.
+          </p>
+          <p>
+            <strong>6. Identificación, Aseguramiento y Uniformidad:</strong> Toda persona que preste servicios a través de la red de TeLaTiro estará debidamente identificada, asegurada y uniformada durante la ejecución de los servicios asignados.
           </p>
         </div>
 
@@ -3844,6 +3888,7 @@ function initLegalModal() {
     if (defaultTab === 'aviso') targetPaneId = 'legal-aviso';
     else if (defaultTab === 'privacidad') targetPaneId = 'legal-privacidad';
     else if (defaultTab === 'acceso') targetPaneId = 'legal-acceso';
+    else if (defaultTab === 'colaboradores') targetPaneId = 'legal-colaboradores';
     else if (defaultTab === 'cookies') targetPaneId = 'legal-cookies';
     else if (defaultTab === 'terminos') targetPaneId = 'legal-terminos';
 
