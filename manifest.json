@@ -1,8 +1,8 @@
 {
   "id": "/",
-  "name": "TeLaTiro - Recogida de Basura a Domicilio",
+  "name": "TeLaTiro - Asistencia y Depósito de Basura a Domicilio",
   "short_name": "TeLaTiro",
-  "description": "Servicio premium privado de recogida de bolsas de basura a domicilio en Rivas-Vaciamadrid.",
+  "description": "Servicio privado de asistencia domiciliaria para traslado y depósito de residuos en Rivas-Vaciamadrid.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
