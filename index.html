@@ -1511,7 +1511,7 @@
               <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
                 <div class="sm:col-span-3">
                   <label for="clientStreetType" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Tipo de Vía *</label>
-                  <select id="clientStreetType" name="street-type" required class="custom-input font-medium">
+                  <select id="clientStreetType" name="street-type" required onchange="tryAutoDetectZip()" class="custom-input font-medium">
                     <option value="" disabled selected>-- Tipo de vía * --</option>
                     <option value="Calle">Calle</option>
                     <option value="Avenida">Avenida</option>
@@ -1523,7 +1523,7 @@
                 </div>
                 <div class="sm:col-span-6">
                   <label for="clientAddress" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Nombre de Vía y Nº *</label>
-                  <input type="text" id="clientAddress" name="street-address" autocomplete="address-line1" required placeholder="Ej. Los Almendros, 18" class="custom-input">
+                  <input type="text" id="clientAddress" name="street-address" autocomplete="address-line1" required oninput="tryAutoDetectZip()" onkeyup="tryAutoDetectZip()" placeholder="Ej. Los Almendros, 18" class="custom-input">
                 </div>
                 <div class="sm:col-span-3">
                   <label for="clientDoor" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Piso / Puerta</label>
@@ -1541,7 +1541,7 @@
                   <option value="28521 - Casco Antiguo y Zona Este de Vaciamadrid">28521 - Casco Antiguo y Zona Este de Vaciamadrid</option>
                   <option value="28524 - Nuevos Desarrollos e Industrial">28524 - Nuevos Desarrollos e Industrial</option>
                 </select>
-                <div id="zipAutoBadge" class="hidden text-[11px] text-[#25815F] font-semibold mt-1.5 flex items-center gap-1.5 bg-[#E8F5EF] px-2.5 py-1 rounded-lg border border-[#25815F]/20">
+                <div id="zipAutoBadge" style="display: none;" class="text-[11px] text-[#25815F] font-semibold mt-1.5 items-center gap-1.5 bg-[#E8F5EF] px-2.5 py-1 rounded-lg border border-[#25815F]/20">
                   <i class="fa-solid fa-wand-magic-sparkles text-xs"></i>
                   <span id="zipAutoBadgeText">Código Postal asignado automáticamente por tu calle</span>
                 </div>
@@ -2309,7 +2309,7 @@ function initPWA() {
 const CONFIG = {
   phone: '+34 600 000 000',
   whatsappNumber: '34600000000', // Reemplazar con el número real de WhatsApp de TeLaTiro
-  email: 'telatiro.pruebas@gmail.com',
+  email: 'info@telatiro.es',
   googleSheetWebhookUrl: 'https://script.google.com/macros/s/AKfycbyyTWpM-fDyh68h3Z0_Rk50MHxd9rSu3wVm3dFWZsbdR1On-O8FBFlrU7EM2RotUoirDg/exec',
   sectors: {
     '28521': {
@@ -2935,7 +2935,11 @@ function updateOrderSummary(planKey) {
  */
 function detectRivasZip(streetText) {
   if (!streetText || streetText.length < 2) return null;
-  const s = streetText.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const s = (" " + streetText + " ")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9\s]/g, " ");
 
   // Detección directa si el texto contiene ya el código postal
   if (s.includes('28523')) return '28523 - Covibar, Almendros y Pablo Iglesias';
@@ -2994,6 +2998,59 @@ function detectRivasZip(streetText) {
   return null;
 }
 
+// Función global para auto-detección del Código Postal
+function tryAutoDetectZip() {
+  const addressInput = document.getElementById('clientAddress');
+  const streetTypeSelect = document.getElementById('clientStreetType');
+  const zipSelect = document.getElementById('clientZip');
+  const zipAutoBadge = document.getElementById('zipAutoBadge');
+  const zipAutoBadgeText = document.getElementById('zipAutoBadgeText');
+
+  if (!addressInput || !zipSelect) return;
+
+  const streetText = addressInput.value ? addressInput.value.trim() : '';
+  const streetType = streetTypeSelect ? streetTypeSelect.value : '';
+  const fullTextToInspect = `${streetType} ${streetText}`.trim();
+
+  if (!streetText || streetText.length < 2) {
+    if (zipAutoBadge) zipAutoBadge.style.display = 'none';
+    return;
+  }
+
+  const detectedZipValue = detectRivasZip(fullTextToInspect) || detectRivasZip(streetText);
+  if (detectedZipValue) {
+    const cpMatch = detectedZipValue.match(/\b2852[1-5]\b/);
+    const cpDigits = cpMatch ? cpMatch[0] : '';
+    
+    let matchedOptionIndex = -1;
+    for (let i = 0; i < zipSelect.options.length; i++) {
+      if (cpDigits && zipSelect.options[i].value.includes(cpDigits)) {
+        matchedOptionIndex = i;
+        break;
+      } else if (zipSelect.options[i].value === detectedZipValue) {
+        matchedOptionIndex = i;
+        break;
+      }
+    }
+
+    if (matchedOptionIndex !== -1) {
+      zipSelect.selectedIndex = matchedOptionIndex;
+      zipSelect.value = zipSelect.options[matchedOptionIndex].value;
+      zipSelect.classList.add('border-[#25815F]', 'bg-emerald-50/60');
+      
+      if (zipAutoBadge) {
+        zipAutoBadge.style.display = 'inline-flex';
+        if (zipAutoBadgeText) {
+          zipAutoBadgeText.textContent = `Código Postal ${cpDigits || detectedZipValue.substring(0, 5)} asignado automáticamente por tu calle`;
+        }
+      }
+      setTimeout(() => {
+        zipSelect.classList.remove('border-[#25815F]', 'bg-emerald-50/60');
+      }, 2500);
+    }
+  }
+}
+
 /**
  * 9. Formulario de Reserva, Envío de Solicitud y Autocompletado
  */
@@ -3010,44 +3067,15 @@ function initBookingForm() {
   const streetTypeSelect = document.getElementById('clientStreetType');
   const addressInput = document.getElementById('clientAddress');
   const zipSelect = document.getElementById('clientZip');
-  const zipAutoBadge = document.getElementById('zipAutoBadge');
-  const zipAutoBadgeText = document.getElementById('zipAutoBadgeText');
 
   if (!form) return;
-
-  // Detección y asignación automática del Código Postal al escribir la calle
-  function tryAutoDetectZip() {
-    const streetText = addressInput ? addressInput.value.trim() : '';
-    const streetType = streetTypeSelect ? streetTypeSelect.value : '';
-    const fullTextToInspect = `${streetType} ${streetText}`.trim();
-
-    if (!streetText || streetText.length < 2) {
-      if (zipAutoBadge) zipAutoBadge.classList.add('hidden');
-      return;
-    }
-
-    const detectedZipValue = detectRivasZip(fullTextToInspect) || detectRivasZip(streetText);
-    if (detectedZipValue && zipSelect) {
-      zipSelect.value = detectedZipValue;
-      zipSelect.classList.add('border-[#25815F]', 'bg-emerald-50/60');
-      if (zipAutoBadge) {
-        zipAutoBadge.classList.remove('hidden');
-        if (zipAutoBadgeText) {
-          const cpCode = detectedZipValue.substring(0, 5);
-          zipAutoBadgeText.textContent = `Código Postal ${cpCode} asignado automáticamente por tu calle`;
-        }
-      }
-      setTimeout(() => {
-        zipSelect.classList.remove('border-[#25815F]', 'bg-emerald-50/60');
-      }, 2500);
-    }
-  }
 
   if (addressInput) {
     addressInput.addEventListener('input', tryAutoDetectZip);
     addressInput.addEventListener('change', tryAutoDetectZip);
     addressInput.addEventListener('blur', tryAutoDetectZip);
     addressInput.addEventListener('keyup', tryAutoDetectZip);
+    addressInput.addEventListener('paste', () => setTimeout(tryAutoDetectZip, 50));
   }
 
   if (streetTypeSelect) {
