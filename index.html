@@ -1533,8 +1533,8 @@
                   <input type="text" id="clientAddress" name="street-address" autocomplete="address-line1" required oninput="tryAutoDetectZip()" onkeyup="tryAutoDetectZip()" placeholder="Ej. Los Almendros, 18" class="custom-input">
                 </div>
                 <div class="sm:col-span-3">
-                  <label for="clientDoor" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Piso / Puerta</label>
-                  <input type="text" id="clientDoor" name="door-address" autocomplete="address-line2" placeholder="Ej. 3º B" class="custom-input">
+                  <label for="clientDoor" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Portal / Piso / Puerta</label>
+                  <input type="text" id="clientDoor" name="door-address" autocomplete="address-line2" placeholder="Ej. 4B, 3º B, Portal 2" class="custom-input">
                 </div>
               </div>
 
@@ -3522,7 +3522,7 @@ function getFormData() {
   
   const streetType = document.getElementById('clientStreetType')?.value || '';
   const rawStreetInput = document.getElementById('clientAddress')?.value.trim() || '';
-  const door = document.getElementById('clientDoor')?.value.trim() || '';
+  let door = document.getElementById('clientDoor')?.value.trim() || '';
   
   // Limpiar si el usuario ya escribió "Calle", "Av.", "Avenida", etc. en el campo de texto para evitar duplicados
   let cleanStreetName = rawStreetInput;
@@ -3532,6 +3532,41 @@ function getFormData() {
     if (!cleanStreetName) cleanStreetName = rawStreetInput;
   }
   
+  // Si el usuario puso el número de calle en el campo de puerta/piso (ej. streetName: "Juan Gris", door: "4, 2º B" o "4"),
+  // transferimos el número a la calle para que "Calle / Vía y Nº" tenga SIEMPRE el número y "Piso / Puerta" solo el piso
+  if (!/\d+/.test(cleanStreetName) && door) {
+    const doorSinPrefijo = door.replace(/^(?:n[º°ª\.\/\-]?\s*|n[uú]mero\s*|num\.\s*|n\s*)/i, '');
+    const matchCompuesto = doorSinPrefijo.match(/^(\d+)(?:\s*([a-zA-Z]))?\s*(?:[,\-\/\.]\s*|\s+(?:portal|bloque|esc|escalera|piso|pta|puerta|bajo|ático|atico)\b)\s*(.*)$/i);
+    if (matchCompuesto) {
+      const numExt = matchCompuesto[1] + (matchCompuesto[2] ? matchCompuesto[2].toUpperCase() : '');
+      const pisoRest = (matchCompuesto[3] || '').trim();
+      cleanStreetName = cleanStreetName + ', ' + numExt;
+      door = pisoRest;
+    } else {
+      const matchSoloNum = doorSinPrefijo.match(/^(\d+)$/);
+      if (matchSoloNum) {
+        cleanStreetName = cleanStreetName + ', ' + matchSoloNum[1];
+        door = '';
+      }
+    }
+  } else if (/\d+/.test(cleanStreetName) && door) {
+    // Si la calle ya tiene número (ej. "Calle Juan Gris, 4")
+    const matchCalleNum = cleanStreetName.match(/\b(\d+)\b/);
+    if (matchCalleNum) {
+      const nCalle = matchCalleNum[1];
+      const doorSinPref = door.replace(/^(?:n[º°ª\.\/\-]?\s*|n[uú]mero\s*|num\.\s*|n\s*)/i, '');
+      if (doorSinPref.trim() === nCalle) {
+        door = '';
+      } else {
+        const escapeRegex = nCalle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const pat = new RegExp('^(?:n[º°ª\\.\\/\\-]?\\s*|n[uú]mero\\s*|num\\.\\s*|n\\s*)?' + escapeRegex + '\\s*[,\\-\\/\\.]+\\s*', 'i');
+        door = door.replace(pat, '').trim();
+      }
+    }
+  }
+
+  door = door.replace(/^[,\-\/\.\s]+/, '').replace(/[,\-\/\.\s]+$/, '').trim();
+
   const fullStreet = streetType ? `${streetType} ${cleanStreetName}` : cleanStreetName;
   const rawAddress = door ? `${fullStreet}, ${door}` : fullStreet;
   const zip = document.getElementById('clientZip')?.value || '';
