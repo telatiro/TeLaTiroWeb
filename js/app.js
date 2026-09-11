@@ -1,10 +1,11 @@
 /**
  * TeLaTiro - Lógica Interactiva y Experiencia de Usuario
- * Servicio Premium de Recogida de Basura a Domicilio
+ * Servicio Privado de Asistencia y Depósito de Basura a Domicilio
  * Zona de Cobertura Activa: Rivas-Vaciamadrid
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initPWA();
   initHeader();
   initMobileMenu();
   initFaqAccordion();
@@ -12,16 +13,31 @@ document.addEventListener('DOMContentLoaded', () => {
   initPricingTabs();
   initFormCategoryTabs();
   initBookingForm();
+  initRecruiterForm();
   initCoverageChecker();
   initPlanSelectors();
   initHeroPhotoSwitcher();
+  initLegalModal();
 });
+
+/**
+ * Registro de Service Worker para PWA (Instalación de App en Android e iOS)
+ */
+function initPWA() {
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(reg => console.log('TeLaTiro Service Worker activo:', reg.scope))
+        .catch(err => console.log('Error al registrar Service Worker:', err));
+    });
+  }
+}
 
 // Configuración Global, Sectores de Rivas y Tarifas Oficiales
 const CONFIG = {
   phone: '+34 600 000 000',
   whatsappNumber: '34600000000', // Reemplazar con el número real de WhatsApp de TeLaTiro
-  email: 'telatiro.pruebas@gmail.com',
+  email: 'info@telatiro.es',
   googleSheetWebhookUrl: 'https://script.google.com/macros/s/AKfycbyyTWpM-fDyh68h3Z0_Rk50MHxd9rSu3wVm3dFWZsbdR1On-O8FBFlrU7EM2RotUoirDg/exec',
   sectors: {
     '28521': {
@@ -44,9 +60,9 @@ const CONFIG = {
     },
     '28524': {
       cp: '28524 / 28525',
-      name: 'Nuevos Desarrollos e Industrial',
-      description: 'Nuevos desarrollos urbanísticos, zonas industriales y áreas de expansión reciente.',
-      keywords: ['28524', '28525', 'nuevos desarrollos', 'industrial', 'expansion', 'desarrollos', 'poligono']
+      name: 'Nuevos Desarrollos y Áreas de Expansión',
+      description: 'Nuevos desarrollos residenciales y áreas de expansión.',
+      keywords: ['28524', '28525', 'nuevos desarrollos', 'residencial', 'expansion', 'desarrollos', 'cristo de rivas']
     }
   },
   plans: {
@@ -55,66 +71,66 @@ const CONFIG = {
       category: 'pisos',
       price: '24,90 €',
       period: '/ mes',
-      costPerBag: '¡Solo 1,55 € por bolsa recogida!',
-      frequency: 'Recogidas semanales: Martes y Jueves (2 días)',
+      costPerBag: '¡Desde 1,55 € por depósito!',
+      frequency: 'Nº de Servicios: 2 días a la semana (Martes y Jueves)',
       days: 'Martes y Jueves',
-      details: '2 recogidas semanales • Martes y Jueves • Domiciliación SEPA o Tarjeta (no efectivo)'
+      details: '2 servicios semanales • Martes y Jueves • Domiciliación SEPA o Tarjeta (no efectivo)'
     },
     piso_plus: {
       name: 'Plan Piso Plus (3 días)',
       category: 'pisos',
       price: '29,90 €',
       period: '/ mes',
-      costPerBag: '¡Solo 1,25 € por bolsa recogida!',
-      frequency: 'Recogidas semanales: Lunes, Miércoles y Viernes (3 días)',
+      costPerBag: '¡Desde 1,25 € por depósito!',
+      frequency: 'Nº de Servicios: 3 días a la semana (Lunes, Miércoles y Viernes)',
       days: 'Lunes, Miércoles y Viernes',
-      details: '3 recogidas semanales • Lunes, Miércoles y Viernes • Domiciliación SEPA o Tarjeta (no efectivo)'
+      details: '3 servicios semanales • Lunes, Miércoles y Viernes • Domiciliación SEPA o Tarjeta (no efectivo)'
     },
     piso_premium: {
       name: 'Plan Piso Premium (5 días)',
       category: 'pisos',
       price: '39,90 €',
       period: '/ mes',
-      costPerBag: '¡Solo 0,99 € por bolsa (menos de 1€)!',
-      frequency: 'Recogidas semanales: Lunes a Viernes completo (5 días)',
+      costPerBag: '¡Desde 0,99 € por depósito!',
+      frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes completo)',
       days: 'Lunes a Viernes',
-      details: '5 recogidas semanales • Lunes a Viernes • Domiciliación SEPA o Tarjeta (no efectivo)'
+      details: '5 servicios semanales • Lunes a Viernes • Domiciliación SEPA o Tarjeta (no efectivo)'
     },
     chalet_2d: {
       name: 'Plan Casa/Chalet (2 días)',
       category: 'chalets',
       price: '34,90 €',
       period: '/ mes',
-      costPerBag: '¡Solo 2,18 € por bolsa recogida!',
-      frequency: 'Recogidas semanales: Martes y Jueves (2 días)',
+      costPerBag: '¡Desde 2,18 € por depósito!',
+      frequency: 'Nº de Servicios: 2 días a la semana (Martes y Jueves)',
       days: 'Martes y Jueves',
-      details: '2 recogidas semanales • Martes y Jueves • Domiciliación SEPA o Tarjeta (no efectivo)'
+      details: '2 servicios semanales • Martes y Jueves • Domiciliación SEPA o Tarjeta (no efectivo)'
     },
     chalet_plus: {
       name: 'Plan Casa/Chalet Plus (3 días)',
       category: 'chalets',
       price: '39,90 €',
       period: '/ mes',
-      costPerBag: '¡Solo 1,66 € por bolsa recogida!',
-      frequency: 'Recogidas semanales: Lunes, Miércoles y Viernes (3 días)',
+      costPerBag: '¡Desde 1,66 € por depósito!',
+      frequency: 'Nº de Servicios: 3 días a la semana (Lunes, Miércoles y Viernes)',
       days: 'Lunes, Miércoles y Viernes',
-      details: '3 recogidas semanales • Lunes, Miércoles y Viernes • Domiciliación SEPA o Tarjeta (no efectivo)'
+      details: '3 servicios semanales • Lunes, Miércoles y Viernes • Domiciliación SEPA o Tarjeta (no efectivo)'
     },
     chalet_premium: {
       name: 'Plan Casa/Chalet Premium (5 días)',
       category: 'chalets',
       price: '49,90 €',
       period: '/ mes',
-      costPerBag: '¡Solo 1,25 € por bolsa recogida!',
-      frequency: 'Recogidas semanales: Lunes a Viernes completo (5 días)',
+      costPerBag: '¡Desde 1,25 € por depósito!',
+      frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes completo)',
       days: 'Lunes a Viernes',
-      details: '5 recogidas semanales • Lunes a Viernes • Domiciliación SEPA o Tarjeta (no efectivo)'
+      details: '5 servicios semanales • Lunes a Viernes • Domiciliación SEPA o Tarjeta (no efectivo)'
     },
     puntual: {
-      name: 'Recogida Puntual',
+      name: 'Servicio Puntual',
       category: 'puntual',
       price: '4,90 €',
-      period: '/ recogida',
+      period: '/ servicio',
       costPerBag: 'Servicio individual puntual',
       frequency: 'Servicio puntual de 1 día',
       days: 'Lunes a Viernes (a elegir)',
@@ -342,16 +358,16 @@ function updatePaymentOptions(planKey) {
   const currentVal = paymentSelect.value;
 
   if (planKey === 'puntual') {
-    // Recogida puntual: Tarjeta o Efectivo en mano
+    // Servicio puntual: Tarjeta o Efectivo en mano
     paymentSelect.innerHTML = `
       <option value="Tarjeta bancaria (Débito / Crédito)" ${currentVal.includes('Tarjeta') || !currentVal ? 'selected' : ''}>Tarjeta bancaria</option>
-      <option value="Efectivo en mano (en la recogida)" ${currentVal.includes('Efectivo') ? 'selected' : ''}>Efectivo en mano</option>
+      <option value="Efectivo en mano (en el traslado)" ${currentVal.includes('Efectivo') ? 'selected' : ''}>Efectivo en mano</option>
     `;
     if (currentVal.includes('Domiciliación') || !currentVal) {
       paymentSelect.value = 'Tarjeta bancaria (Débito / Crédito)';
     }
     if (paymentNotice) {
-      paymentNotice.innerHTML = `<i class="fa-solid fa-circle-info text-[#25815F]"></i> Para la <strong>recogida puntual</strong> el pago se realiza mediante <strong>Tarjeta o Efectivo en mano</strong> (la domiciliación bancaria no está disponible en servicios puntuales).`;
+      paymentNotice.innerHTML = `<i class="fa-solid fa-circle-info text-[#25815F]"></i> Para el <strong>servicio puntual</strong> el pago se realiza mediante <strong>Tarjeta o Efectivo en mano</strong> (la domiciliación bancaria no está disponible en servicios puntuales).`;
     }
     if (summaryPayment) {
       summaryPayment.textContent = 'Pago: Tarjeta o Efectivo';
@@ -391,9 +407,9 @@ function updateDayOptions(planKey) {
   if (planKey === 'piso_2d' || planKey === 'chalet_2d') {
     // 2 días por semana: Fijo Martes y Jueves
     daysSelect.innerHTML = `
-      <option value="2 Recogidas semanales: Martes y Jueves" selected>2 Recogidas semanales: Martes y Jueves</option>
+      <option value="2 Servicios semanales: Martes y Jueves" selected>2 Servicios semanales: Martes y Jueves</option>
     `;
-    daysSelect.value = '2 Recogidas semanales: Martes y Jueves';
+    daysSelect.value = '2 Servicios semanales: Martes y Jueves';
     if (timeSlotSelect) {
       for (let opt of timeSlotSelect.options) opt.disabled = false;
     }
@@ -402,9 +418,9 @@ function updateDayOptions(planKey) {
   } else if (planKey === 'piso_plus' || planKey === 'chalet_plus') {
     // 3 días por semana: Fijo Lunes, Miércoles y Viernes
     daysSelect.innerHTML = `
-      <option value="3 Recogidas semanales: Lunes, Miércoles y Viernes" selected>3 Recogidas semanales: Lunes, Miércoles y Viernes</option>
+      <option value="3 Servicios semanales: Lunes, Miércoles y Viernes" selected>3 Servicios semanales: Lunes, Miércoles y Viernes</option>
     `;
-    daysSelect.value = '3 Recogidas semanales: Lunes, Miércoles y Viernes';
+    daysSelect.value = '3 Servicios semanales: Lunes, Miércoles y Viernes';
     if (timeSlotSelect) {
       for (let opt of timeSlotSelect.options) opt.disabled = false;
     }
@@ -413,16 +429,16 @@ function updateDayOptions(planKey) {
   } else if (planKey === 'piso_premium' || planKey === 'chalet_premium') {
     // 5 días por semana: Fijo Lunes a Viernes completo
     daysSelect.innerHTML = `
-      <option value="5 Recogidas semanales: Lunes a Viernes (L, M, X, J, V)" selected>5 Recogidas semanales: Lunes a Viernes</option>
+      <option value="5 Servicios semanales: Lunes a Viernes (L, M, X, J, V)" selected>5 Servicios semanales: Lunes a Viernes</option>
     `;
-    daysSelect.value = '5 Recogidas semanales: Lunes a Viernes (L, M, X, J, V)';
+    daysSelect.value = '5 Servicios semanales: Lunes a Viernes (L, M, X, J, V)';
     if (timeSlotSelect) {
       for (let opt of timeSlotSelect.options) opt.disabled = false;
     }
     if (punctualNotice) punctualNotice.classList.add('hidden');
 
   } else if (planKey === 'puntual') {
-    // Recogida puntual: 1 día a elegir de Lunes a Viernes con regla de 2 horas
+    // Servicio puntual: 1 día a elegir de Lunes a Viernes con regla de 2 horas
     let optionsHtml = '';
     const weekdays = [
       { name: 'Lunes', index: 1 },
@@ -469,7 +485,7 @@ function updateDayOptions(planKey) {
 }
 
 /**
- * Control del aviso dinámico y de las franjas horarias permitidas en recogida puntual
+ * Control del aviso dinámico y de las franjas horarias permitidas en servicio puntual
  */
 function updatePunctualNoticeAndSlots() {
   const planRadio = document.querySelector('input[name="service_plan"]:checked');
@@ -508,7 +524,7 @@ function updatePunctualNoticeAndSlots() {
       }
       if (punctualNotice) {
         punctualNotice.className = 'text-xs p-3 rounded-xl border bg-amber-50 text-amber-900 border-amber-200 block mt-2';
-        punctualNotice.innerHTML = `<i class="fa-solid fa-circle-info text-amber-600 mr-1.5"></i> Para recogida <strong>hoy</strong>, el Turno de Mañana ha finalizado su periodo de solicitud (hora tope: <strong>11:00 h</strong>, 2h antes de las 13:00 h). Solo está disponible el <strong>Turno de Tarde (16:00 - 20:00 h)</strong> con solicitudes abiertas hasta las <strong>18:00 h</strong> (2h antes de las 20:00 h).`;
+        punctualNotice.innerHTML = `<i class="fa-solid fa-circle-info text-amber-600 mr-1.5"></i> Para traslado <strong>hoy</strong>, el Turno de Mañana ha finalizado su periodo de solicitud (hora tope: <strong>11:00 h</strong>, 2h antes de las 13:00 h). Solo está disponible el <strong>Turno de Tarde (16:00 - 20:00 h)</strong> con solicitudes abiertas hasta las <strong>18:00 h</strong> (2h antes de las 20:00 h).`;
       }
     } else {
       if (morningOption) morningOption.disabled = false;
@@ -524,7 +540,7 @@ function updatePunctualNoticeAndSlots() {
     if (afternoonOption) afternoonOption.disabled = false;
     if (punctualNotice) {
       punctualNotice.className = 'text-xs p-3 rounded-xl border bg-gray-50 text-gray-700 border-gray-200 block mt-2';
-      punctualNotice.innerHTML = `<i class="fa-solid fa-circle-info text-[#25815F] mr-1.5"></i> <strong>Aviso de horario en recogida puntual:</strong> Si deseas recogida para el mismo día, la hora tope de solicitud es hasta las <strong>11:00 h</strong> (Turno Mañana) o hasta las <strong>18:00 h</strong> (Turno Tarde), con un mínimo de 2 horas de antelación al fin del turno.`;
+      punctualNotice.innerHTML = `<i class="fa-solid fa-circle-info text-[#25815F] mr-1.5"></i> <strong>Aviso de horario en servicio puntual:</strong> Si deseas servicio para el mismo día, la hora tope de solicitud es hasta las <strong>11:00 h</strong> (Turno Mañana) o hasta las <strong>18:00 h</strong> (Turno Tarde), con un mínimo de 2 horas de antelación al fin del turno.`;
     }
   }
 }
@@ -554,7 +570,7 @@ function getServiceStartDateInfo(planKey) {
       startDateText: 'Día seleccionado en solicitud',
       badgeText: 'Servicio Inmediato',
       modalText: 'Para el día laborable indicado en tu solicitud',
-      modalSubtext: 'Nos pondremos en contacto contigo para coordinar la recogida.',
+      modalSubtext: 'Nos pondremos en contacto contigo para coordinar el servicio.',
       noticeHtml: ''
     };
   }
@@ -594,7 +610,7 @@ function getServiceStartDateInfo(planKey) {
         <div class="bg-amber-50 border border-amber-200 text-amber-900 rounded-2xl p-3.5 flex items-start gap-2.5 text-xs">
           <i class="fa-solid fa-calendar-days text-amber-600 mt-0.5 flex-shrink-0 text-sm"></i>
           <div>
-            <strong>Fecha de inicio del servicio:</strong> Al solicitar el alta a partir del día 6 de ${currentMonthName}, tu servicio comenzará a partir del <strong>1 de ${nextMonthName}</strong> (para la correcta organización y asignación de rutas). <em>Si necesitas recogidas antes de esa fecha, puedes solicitar nuestro servicio de Recogida Puntual (4,90€).</em>
+            <strong>Fecha de inicio del servicio:</strong> Al solicitar el alta a partir del día 6 de ${currentMonthName}, tu servicio comenzará a partir del <strong>1 de ${nextMonthName}</strong> (para la correcta organización y asignación de rutas). <em>Si necesitas servicios antes de esa fecha, puedes solicitar nuestro Servicio Puntual (4,90€).</em>
           </div>
         </div>
       `
@@ -643,6 +659,127 @@ function updateOrderSummary(planKey) {
 }
 
 /**
+ * Función de Detección Automática de Código Postal de Rivas por Nombre de Calle
+ */
+function detectRivasZip(streetText) {
+  if (!streetText || streetText.length < 2) return null;
+  const s = (" " + streetText + " ")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9\s]/g, " ");
+
+  // Detección directa si el texto contiene ya el código postal
+  if (s.includes('28523')) return '28523 - Covibar, Almendros y Pablo Iglesias';
+  if (s.includes('28522')) return '28522 - Sector Central y Rivas Futura';
+  if (s.includes('28521')) return '28521 - Casco Antiguo y Zona Este de Vaciamadrid';
+  if (s.includes('28524') || s.includes('28525')) return '28524 - Nuevos Desarrollos y Áreas de Expansión';
+
+  // 28523: Covibar, Almendros, Pablo Iglesias, Mitología, Árboles, Flores, Provincias y Regiones españolas, La Luna
+  const kw28523 = [
+    'almendros', 'covibar', 'pablo iglesias', 'partija', 'bellavista', 'abogados de atocha', 'fleming', 'san isidro', 'santa monica', 'barrancon', 'zarza', 'pilar barrenechea', 'parque asturias', 'dolores ibarruri', 'la luna', 'provincias', 'chopera',
+    'madrid', 'barcelona', 'sevilla', 'valencia', 'toledo', 'zaragoza', 'bilbao', 'malaga', 'cordoba', 'granada', 'almeria', 'cadiz', 'huelva', 'jaen', 'badajoz', 'caceres', 'cuenca', 'guadalajara', 'ciudad real', 'albacete', 'avila', 'burgos', 'leon', 'palencia', 'salamanca', 'segovia', 'soria', 'valladolid', 'zamora', 'huesca', 'teruel', 'asturias', 'cantabria', 'galicia', 'navarra', 'rioja', 'baleares', 'canarias', 'murcia', 'andalucia', 'extremadura', 'aragon', 'castilla',
+    'afrodita', 'apolo', 'atenea', 'zeus', 'artemisa', 'hermes', 'poseidon', 'dionisio', 'antigona', 'heleno', 'electra', 'medea', 'fedra', 'penelope', 'ariadna', 'casandra', 'dafne', 'euridice', 'narciso', 'perseo', 'teseo', 'heracles', 'aquiles', 'ulises', 'hector', 'paris', 'eneas', 'jason', 'orfeo', 'edipo', 'prometeo', 'cronos', 'urano', 'helios', 'selene', 'hercules', 'hera', 'demeter', 'hades', 'hefesto',
+    'encina', 'roble', 'platano', 'olivo', 'castano', 'cipres', 'pino', 'sauce', 'alamo', 'fresno', 'acacias', 'moreras', 'magnolias', 'palmeras', 'cedros', 'nogales', 'laurel', 'madrono', 'avellano', 'tilos', 'olmos',
+    'jazmin', 'crisantemo', 'geranio', 'clavel', 'rosa', 'tulipan', 'lilas', 'violetas', 'adelfas', 'orquideas', 'margaritas', 'hortensias', 'azucenas', 'narcisos', 'amapolas', 'dalias'
+  ];
+
+  // 28522: Sector Central, Rivas Futura, José Hierro, Escritores, Pintores, Arquitectos
+  const kw28522 = [
+    'jose hierro', 'hierro', 'aurelio alvarez', 'futura', 'marie curie', 'severo ochoa', 'isaac peral', 'concepcion arenal', 'tecnica', 'innovacion', 'creacion', 'investigacion',
+    'velazquez', 'goya', 'picasso', 'dali', 'joan miro', 'juan gris', 'sorolla', 'zurbaran', 'murillo', 'ribera', 'greco', 'tapies', 'chillida', 'barcelo', 'gordillo', 'oteiza',
+    'clara campoamor', 'federica montseny', 'victoria kent', 'montessori', 'rosa luxemburgo', 'simone de beauvoir', 'hannah arendt', 'woolf',
+    'antonio machado', 'manuel machado', 'miguel hernandez', 'garcia lorca', 'alberti', 'cernuda', 'aleixandre', 'damaso alonso', 'gerardo diego', 'jorge guillen', 'pedro salinas', 'leon felipe', 'unamuno',
+    'gaudi', 'corbusier', 'mies van der rohe', 'lloyd wright', 'gropius', 'aalto', 'saarinen', 'niemeyer', 'norman foster', 'piano', 'rogers', 'hadid', 'calatrava', 'moneo', 'campo baeza', 'herrera',
+    'cela', 'delibes', 'torrente ballester', 'martin gaite', 'matute', 'laforet', 'valle inclan', 'baroja', 'azorin', 'galdos', 'clarin', 'pardo bazan', 'becquer', 'rosalia de castro', 'larra', 'espronceda', 'duque de rivas', 'zorrilla', 'moratin', 'feijoo', 'jovellanos', 'cadalso', 'quevedo', 'gongora', 'lope de vega', 'calderon', 'tirso de molina', 'cervantes', 'garcilaso', 'fray luis',
+    'sector central', 'pueblos originarios', 'trece rosas'
+  ];
+
+  // 28521: Casco Antiguo, Zona Este, Aves, Lagos, Países europeos, Mirador, Laguna del Campillo
+  const kw28521 = [
+    'lago', 'como', 'trasimeno', 'sanabria', 'garda', 'mayor', 'constanza', 'ginebra', 'lugano', 'albufera', 'baikal', 'victoria', 'titicaca', 'erie', 'ontario', 'michigan', 'huron', 'superior',
+    'golondrina', 'colibri', 'mirlo', 'alondra', 'ruisenor', 'aguila', 'halcon', 'gaviota', 'ciguena', 'flamenco', 'garza', 'pelicano', 'cisne', 'pato', 'oca', 'paloma', 'tortola', 'codorniz', 'perdiz', 'faisan', 'petirrojo', 'jilguero', 'canario', 'verderon', 'pardillo', 'pinzon', 'herrerillo', 'carbonero', 'abubilla', 'lechuza', 'buho', 'mochuelo', 'cernicalo',
+    'holanda', 'francia', 'italia', 'alemania', 'portugal', 'belgica', 'suiza', 'austria', 'grecia', 'irlanda', 'dinamarca', 'suecia', 'noruega', 'finlandia', 'polonia', 'hungria', 'rumania', 'bulgaria', 'croacia', 'reino unido', 'checa', 'eslovaquia',
+    'casco', 'marcial lalanda', 'mirador', 'campillo', 'laguna', 'estacion', 'presa', 'huerta', 'san marcos', 'eras', 'soto', 'ucles', 'yesera', 'miralrio', 'jarama', 'manzanares', 'carrizal'
+  ];
+
+  // 28524: Nuevos Desarrollos, Cristo de Rivas, Océanos, Planetas, Oficios, Polígono Industrial
+  const kw28524 = [
+    'cristo de rivas', 'victimas del terrorismo', 'oceano', 'atlantico', 'pacifico', 'indico', 'antartico', 'artico', 'cantabrico', 'mediterraneo', 'baltico', 'mar negro', 'mar rojo', 'caribe', 'tirreno', 'caspio', 'alboran', 'java', 'coral', 'egeo', 'jonio', 'bering',
+    'tierra', 'marte', 'venus', 'mercurio', 'jupiter', 'saturno', 'urano', 'neptuno', 'pluton', 'galaxia', 'cosmos', 'cometa', 'nebulosa', 'asteroide',
+    'fundicion', 'torneros', 'carpinteros', 'fraguas', 'herreros', 'cerrajeros', 'mecanicos', 'electricistas', 'fontaneros', 'pintores', 'albaniles', 'canteros', 'marmolistas', 'yeseros', 'cristaleros', 'tapiceros', 'ebanistas', 'fundidores', 'soldadores', 'poligono', 'santa ana', 'electrodo', 'silicio', 'titanio', 'aluminio', 'cobre', 'platino'
+  ];
+
+  for (let kw of kw28523) {
+    if (s.includes(kw)) return '28523 - Covibar, Almendros y Pablo Iglesias';
+  }
+  for (let kw of kw28522) {
+    if (s.includes(kw)) return '28522 - Sector Central y Rivas Futura';
+  }
+  for (let kw of kw28521) {
+    if (s.includes(kw)) return '28521 - Casco Antiguo y Zona Este de Vaciamadrid';
+  }
+  for (let kw of kw28524) {
+    if (s.includes(kw)) return '28524 - Nuevos Desarrollos y Áreas de Expansión';
+  }
+
+  return null;
+}
+
+// Función global para auto-detección del Código Postal
+function tryAutoDetectZip() {
+  const addressInput = document.getElementById('clientAddress');
+  const streetTypeSelect = document.getElementById('clientStreetType');
+  const zipSelect = document.getElementById('clientZip');
+  const zipAutoBadge = document.getElementById('zipAutoBadge');
+  const zipAutoBadgeText = document.getElementById('zipAutoBadgeText');
+
+  if (!addressInput || !zipSelect) return;
+
+  const streetText = addressInput.value ? addressInput.value.trim() : '';
+  const streetType = streetTypeSelect ? streetTypeSelect.value : '';
+  const fullTextToInspect = `${streetType} ${streetText}`.trim();
+
+  if (!streetText || streetText.length < 2) {
+    if (zipAutoBadge) zipAutoBadge.style.display = 'none';
+    return;
+  }
+
+  const detectedZipValue = detectRivasZip(fullTextToInspect) || detectRivasZip(streetText);
+  if (detectedZipValue) {
+    const cpMatch = detectedZipValue.match(/\b2852[1-5]\b/);
+    const cpDigits = cpMatch ? cpMatch[0] : '';
+    
+    let matchedOptionIndex = -1;
+    for (let i = 0; i < zipSelect.options.length; i++) {
+      if (cpDigits && zipSelect.options[i].value.includes(cpDigits)) {
+        matchedOptionIndex = i;
+        break;
+      } else if (zipSelect.options[i].value === detectedZipValue) {
+        matchedOptionIndex = i;
+        break;
+      }
+    }
+
+    if (matchedOptionIndex !== -1) {
+      zipSelect.selectedIndex = matchedOptionIndex;
+      zipSelect.value = zipSelect.options[matchedOptionIndex].value;
+      zipSelect.classList.add('border-[#25815F]', 'bg-emerald-50/60');
+      
+      if (zipAutoBadge) {
+        zipAutoBadge.style.display = 'inline-flex';
+        if (zipAutoBadgeText) {
+          zipAutoBadgeText.textContent = `Código Postal ${cpDigits || detectedZipValue.substring(0, 5)} asignado automáticamente por tu calle`;
+        }
+      }
+      setTimeout(() => {
+        zipSelect.classList.remove('border-[#25815F]', 'bg-emerald-50/60');
+      }, 2500);
+    }
+  }
+}
+
+/**
  * 9. Formulario de Reserva, Envío de Solicitud y Autocompletado
  */
 function initBookingForm() {
@@ -655,8 +792,23 @@ function initBookingForm() {
   const phoneInput = document.getElementById('clientPhone');
   const emailInput = document.getElementById('clientEmail');
   const emailDatalist = document.getElementById('savedEmailsList');
+  const streetTypeSelect = document.getElementById('clientStreetType');
+  const addressInput = document.getElementById('clientAddress');
+  const zipSelect = document.getElementById('clientZip');
 
   if (!form) return;
+
+  if (addressInput) {
+    addressInput.addEventListener('input', tryAutoDetectZip);
+    addressInput.addEventListener('change', tryAutoDetectZip);
+    addressInput.addEventListener('blur', tryAutoDetectZip);
+    addressInput.addEventListener('keyup', tryAutoDetectZip);
+    addressInput.addEventListener('paste', () => setTimeout(tryAutoDetectZip, 50));
+  }
+
+  if (streetTypeSelect) {
+    streetTypeSelect.addEventListener('change', tryAutoDetectZip);
+  }
 
   // Inicializar opciones de pago y días acordes al plan seleccionado por defecto
   const initialPlanRadio = document.querySelector('input[name="service_plan"]:checked');
@@ -733,6 +885,7 @@ function initBookingForm() {
     e.preventDefault();
 
     const zipSelect = document.getElementById('clientZip');
+    const streetTypeSelect = document.getElementById('clientStreetType');
     const addressInput = document.getElementById('clientAddress');
 
     const formData = getFormData();
@@ -760,9 +913,25 @@ function initBookingForm() {
       return;
     }
 
-    if (!formData.rawAddress || formData.rawAddress.trim() === '') {
-      showToast('⚠️ Por favor indica tu calle, número, piso y puerta en Rivas.', 'warning');
-      if (addressInput) addressInput.focus();
+    // Validación estricta de tipo de vía obligatorio (Calle, Avenida, Plaza, etc.)
+    if (!formData.streetType || formData.streetType.trim() === '') {
+      showToast('⚠️ Por favor selecciona el tipo de vía (Calle, Avenida, Plaza...) obligatorio.', 'warning');
+      if (streetTypeSelect) {
+        streetTypeSelect.focus();
+        streetTypeSelect.classList.add('border-red-500', 'ring-2', 'ring-red-200');
+        setTimeout(() => streetTypeSelect.classList.remove('border-red-500', 'ring-2', 'ring-red-200'), 3000);
+      }
+      return;
+    }
+
+    // Validación de nombre de vía y número
+    if (!formData.streetName || formData.streetName.trim() === '') {
+      showToast('⚠️ Por favor indica el nombre de la vía y el número en Rivas.', 'warning');
+      if (addressInput) {
+        addressInput.focus();
+        addressInput.classList.add('border-red-500', 'ring-2', 'ring-red-200');
+        setTimeout(() => addressInput.classList.remove('border-red-500', 'ring-2', 'ring-red-200'), 3000);
+      }
       return;
     }
 
@@ -777,7 +946,7 @@ function initBookingForm() {
       return;
     }
 
-    // Validación de horario límite para recogida puntual en el mismo día
+    // Validación de horario límite para servicio puntual en el mismo día
     if (formData.plan === 'puntual') {
       const now = new Date();
       const currentHour = now.getHours();
@@ -786,7 +955,7 @@ function initBookingForm() {
       const isTodaySelected = formData.days.includes('Hoy');
 
       if (isTodaySelected && isPastEveningDeadline) {
-        showToast('⚠️ Para recogidas el mismo día, la solicitud debe realizarse como máximo a las 18:00 h (2h antes de las 20:00 h). Por favor selecciona otro día.', 'warning');
+        showToast('⚠️ Para traslados en el mismo día, la solicitud debe realizarse como máximo a las 18:00 h (2h antes de las 20:00 h). Por favor selecciona otro día.', 'warning');
         updateDayOptions('puntual');
         return;
       }
@@ -814,7 +983,7 @@ function initBookingForm() {
     }
 
     if (formData.plan === 'puntual' && formData.paymentMethod.toLowerCase().includes('domiciliación')) {
-      showToast('⚠️ La recogida puntual solo admite Tarjeta o Efectivo. Por favor selecciona una de estas opciones.', 'warning');
+      showToast('⚠️ El servicio puntual solo admite Tarjeta o Efectivo. Por favor selecciona una de estas opciones.', 'warning');
       updatePaymentOptions('puntual');
       return;
     }
@@ -835,7 +1004,7 @@ function initBookingForm() {
         method: 'POST',
         mode: 'no-cors',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'text/plain;charset=utf-8'
         },
         body: JSON.stringify(formData)
       }).catch(err => {
@@ -874,25 +1043,39 @@ function getFormData() {
   const name = document.getElementById('clientName')?.value.trim() || '';
   const phone = document.getElementById('clientPhone')?.value.trim() || '';
   const email = document.getElementById('clientEmail')?.value.trim() || '';
-  const rawAddress = document.getElementById('clientAddress')?.value.trim() || '';
+  
+  const streetType = document.getElementById('clientStreetType')?.value || '';
+  const rawStreetInput = document.getElementById('clientAddress')?.value.trim() || '';
+  const door = document.getElementById('clientDoor')?.value.trim() || '';
+  
+  // Limpiar si el usuario ya escribió "Calle", "Av.", "Avenida", etc. en el campo de texto para evitar duplicados
+  let cleanStreetName = rawStreetInput;
+  if (streetType) {
+    const regex = new RegExp(`^(${streetType}|c\\/|avda\\.?|av\\.?|pz\\.?|pza\\.?|ps\\.?|pº|cuesta|camino|carretera|bulevar|pasaje|travesia|travesía)\\s*`, 'i');
+    cleanStreetName = rawStreetInput.replace(regex, '').trim();
+    if (!cleanStreetName) cleanStreetName = rawStreetInput;
+  }
+  
+  const fullStreet = streetType ? `${streetType} ${cleanStreetName}` : cleanStreetName;
+  const rawAddress = door ? `${fullStreet}, ${door}` : fullStreet;
   const zip = document.getElementById('clientZip')?.value || '';
   
   // Extraer el código postal de 5 dígitos para geolocalización exacta en Google Maps
   const cpDigits = zip.match(/\b2852[1-5]\b/)?.[0] || '28523';
   
   // Si la dirección no contiene ya 'Rivas', le adjuntamos el CP y localidad para que Google Maps nunca la confunda con Madrid capital
-  let address = rawAddress;
+  let address = fullStreet;
   if (address && !address.toLowerCase().includes('rivas')) {
-    address = `${address}, ${cpDigits} Rivas-Vaciamadrid`;
+    address = `${address}${door ? ', ' + door : ''}, ${cpDigits} Rivas-Vaciamadrid`;
   }
 
   const timeSlot = document.getElementById('clientTimeSlot')?.value || 'Turno Mañana (09:00 - 13:00 h)';
-  const days = document.getElementById('clientDays')?.value || '3 Recogidas semanales: Lunes, Miércoles y Viernes';
+  const days = document.getElementById('clientDays')?.value || '3 Servicios semanales: Lunes, Miércoles y Viernes';
   const paymentMethod = document.getElementById('clientPayment')?.value || 'Domiciliación bancaria (SEPA)';
   const referral = document.getElementById('clientReferral')?.value.trim() || '';
   const notes = document.getElementById('clientNotes')?.value.trim() || '';
 
-  return { plan: selectedPlan, planName, startDate, name, phone, email, rawAddress, address, zip, timeSlot, days, paymentMethod, referral, notes };
+  return { plan: selectedPlan, planName, startDate, name, phone, email, streetType, streetName: cleanStreetName, door, rawAddress, address, zip, timeSlot, days, paymentMethod, referral, notes };
 }
 
 /**
@@ -1044,3 +1227,231 @@ function initHeroPhotoSwitcher() {
     });
   });
 }
+
+/**
+ * 11. Gestión del Formulario de Candidatura para Colaboradores y Empresas (Trabaja con Nosotros)
+ */
+function initRecruiterForm() {
+  const form = document.getElementById('recruiterForm');
+  if (!form) return;
+
+  const phoneInput = document.getElementById('recruiterPhone');
+  const btnSubmit = document.getElementById('btnSubmitRecruiter');
+  const btnText = document.getElementById('btnRecruiterText');
+  const successAlert = document.getElementById('recruiterSuccessAlert');
+  const errorAlert = document.getElementById('recruiterErrorAlert');
+
+  // Validación de teléfono (solo números, máx 9 dígitos)
+  if (phoneInput) {
+    phoneInput.addEventListener('keydown', (e) => {
+      const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'];
+      if (allowedKeys.includes(e.key) || (e.ctrlKey || e.metaKey)) return;
+      if (!/^[0-9]$/.test(e.key)) {
+        e.preventDefault();
+        return;
+      }
+      const selectedLength = (phoneInput.selectionEnd - phoneInput.selectionStart);
+      if (phoneInput.value.length >= 9 && selectedLength === 0) {
+        e.preventDefault();
+      }
+    });
+
+    phoneInput.addEventListener('paste', (e) => {
+      e.preventDefault();
+      const pasteText = (e.clipboardData || window.clipboardData).getData('text');
+      const cleanDigits = pasteText.replace(/[^0-9]/g, '');
+      const start = phoneInput.selectionStart;
+      const end = phoneInput.selectionEnd;
+      const currentValue = phoneInput.value;
+      const combined = (currentValue.slice(0, start) + cleanDigits + currentValue.slice(end)).slice(0, 9);
+      phoneInput.value = combined;
+      const newPos = Math.min(start + cleanDigits.length, 9);
+      phoneInput.setSelectionRange(newPos, newPos);
+    });
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    if (successAlert) successAlert.classList.add('hidden');
+    if (errorAlert) errorAlert.classList.add('hidden');
+
+    const name = document.getElementById('recruiterName')?.value?.trim();
+    const profileType = document.getElementById('recruiterProfileType')?.value || 'Autónomo';
+    const phone = phoneInput?.value?.trim();
+    const email = document.getElementById('recruiterEmail')?.value?.trim();
+    const zone = document.getElementById('recruiterZone')?.value?.trim();
+    const availability = document.getElementById('recruiterAvailability')?.value || '';
+    const vehicle = document.getElementById('recruiterVehicle')?.value || '';
+    const notes = document.getElementById('recruiterNotes')?.value?.trim() || '';
+    const privacy = document.getElementById('recruiterPrivacy')?.checked;
+
+    if (!name) {
+      showToast('⚠️ Por favor indica tu nombre y apellidos o razón social.', 'warning');
+      document.getElementById('recruiterName')?.focus();
+      return;
+    }
+
+    if (!phone || phone.length !== 9) {
+      showToast('⚠️ Por favor introduce un teléfono de 9 dígitos válido.', 'warning');
+      if (phoneInput) phoneInput.focus();
+      return;
+    }
+
+    if (!email || !email.includes('@')) {
+      showToast('⚠️ Por favor introduce un correo electrónico válido.', 'warning');
+      document.getElementById('recruiterEmail')?.focus();
+      return;
+    }
+
+    if (!zone) {
+      showToast('⚠️ Por favor indica tu zona o municipio de preferencia.', 'warning');
+      document.getElementById('recruiterZone')?.focus();
+      return;
+    }
+
+    if (!privacy) {
+      showToast('⚠️ Debes aceptar la política de privacidad para enviar tu candidatura.', 'warning');
+      return;
+    }
+
+    // Estado visual de carga
+    if (btnSubmit) {
+      btnSubmit.disabled = true;
+      btnSubmit.classList.add('opacity-80', 'cursor-not-allowed');
+    }
+    if (btnText) {
+      btnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Enviando candidatura...';
+    }
+
+    const payload = {
+      formType: 'colaborador',
+      name: name,
+      profileType: profileType,
+      phone: phone,
+      email: email,
+      zone: zone,
+      availability: availability,
+      vehicle: vehicle,
+      notes: notes,
+      timestamp: new Date().toISOString()
+    };
+
+    if (CONFIG.googleSheetWebhookUrl) {
+      fetch(CONFIG.googleSheetWebhookUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        handleSuccess();
+      })
+      .catch((err) => {
+        console.warn('Error en webhook de candidatura:', err);
+        handleSuccess();
+      });
+    } else {
+      setTimeout(handleSuccess, 600);
+    }
+
+    function handleSuccess() {
+      if (btnSubmit) {
+        btnSubmit.disabled = false;
+        btnSubmit.classList.remove('opacity-80', 'cursor-not-allowed');
+      }
+      if (btnText) {
+        btnText.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i> Enviar Solicitud de Colaborador';
+      }
+      if (successAlert) {
+        successAlert.classList.remove('hidden');
+        successAlert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+      showToast('🎉 ¡Candidatura enviada correctamente!', 'success');
+      form.reset();
+    }
+  });
+}
+
+/**
+ * 12. Modal Legal, Términos y Cláusula de Acceso a Comunidades
+ */
+function initLegalModal() {
+  const legalModal = document.getElementById('legalModal');
+  const closeBtn = document.getElementById('closeLegalModalBtn');
+  const acceptBtn = document.getElementById('acceptLegalModalBtn');
+  const openBtns = document.querySelectorAll('.open-legal-modal');
+  const tabBtns = document.querySelectorAll('.legal-tab-btn');
+  const panes = document.querySelectorAll('.legal-tab-pane');
+
+  if (!legalModal) return;
+
+  function switchLegalTab(targetId) {
+    tabBtns.forEach(btn => {
+      const match = btn.getAttribute('data-legal-target') === targetId;
+      if (match) {
+        btn.classList.add('active', 'bg-white', 'text-[#25815F]', 'shadow-sm');
+        btn.classList.remove('text-gray-600');
+      } else {
+        btn.classList.remove('active', 'bg-white', 'text-[#25815F]', 'shadow-sm');
+        btn.classList.add('text-gray-600');
+      }
+    });
+
+    panes.forEach(pane => {
+      if (pane.id === targetId) {
+        pane.classList.remove('hidden');
+      } else {
+        pane.classList.add('hidden');
+      }
+    });
+  }
+
+  function openModal(defaultTab = 'terminos') {
+    let targetPaneId = 'legal-terminos';
+    if (defaultTab === 'aviso') targetPaneId = 'legal-aviso';
+    else if (defaultTab === 'privacidad') targetPaneId = 'legal-privacidad';
+    else if (defaultTab === 'acceso') targetPaneId = 'legal-acceso';
+    else if (defaultTab === 'colaboradores') targetPaneId = 'legal-colaboradores';
+    else if (defaultTab === 'cookies') targetPaneId = 'legal-cookies';
+    else if (defaultTab === 'terminos') targetPaneId = 'legal-terminos';
+
+    switchLegalTab(targetPaneId);
+    legalModal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    legalModal.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  openBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const tabName = btn.getAttribute('data-tab') || 'terminos';
+      openModal(tabName);
+    });
+  });
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-legal-target');
+      if (targetId) switchLegalTab(targetId);
+    });
+  });
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (acceptBtn) acceptBtn.addEventListener('click', closeModal);
+
+  legalModal.addEventListener('click', (e) => {
+    if (e.target === legalModal) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !legalModal.classList.contains('hidden')) {
+      closeModal();
+    }
+  });
+}
+

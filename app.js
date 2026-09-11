@@ -60,9 +60,9 @@ const CONFIG = {
     },
     '28524': {
       cp: '28524 / 28525',
-      name: 'Nuevos Desarrollos e Industrial',
-      description: 'Nuevos desarrollos urbanísticos, zonas industriales y áreas de expansión reciente.',
-      keywords: ['28524', '28525', 'nuevos desarrollos', 'industrial', 'expansion', 'desarrollos', 'poligono']
+      name: 'Nuevos Desarrollos y Áreas de Expansión',
+      description: 'Nuevos desarrollos residenciales y áreas de expansión.',
+      keywords: ['28524', '28525', 'nuevos desarrollos', 'residencial', 'expansion', 'desarrollos', 'cristo de rivas']
     }
   },
   plans: {
@@ -673,7 +673,7 @@ function detectRivasZip(streetText) {
   if (s.includes('28523')) return '28523 - Covibar, Almendros y Pablo Iglesias';
   if (s.includes('28522')) return '28522 - Sector Central y Rivas Futura';
   if (s.includes('28521')) return '28521 - Casco Antiguo y Zona Este de Vaciamadrid';
-  if (s.includes('28524') || s.includes('28525')) return '28524 - Nuevos Desarrollos e Industrial';
+  if (s.includes('28524') || s.includes('28525')) return '28524 - Nuevos Desarrollos y Áreas de Expansión';
 
   // 28523: Covibar, Almendros, Pablo Iglesias, Mitología, Árboles, Flores, Provincias y Regiones españolas, La Luna
   const kw28523 = [
@@ -720,7 +720,7 @@ function detectRivasZip(streetText) {
     if (s.includes(kw)) return '28521 - Casco Antiguo y Zona Este de Vaciamadrid';
   }
   for (let kw of kw28524) {
-    if (s.includes(kw)) return '28524 - Nuevos Desarrollos e Industrial';
+    if (s.includes(kw)) return '28524 - Nuevos Desarrollos y Áreas de Expansión';
   }
 
   return null;
