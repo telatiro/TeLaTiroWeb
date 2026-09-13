@@ -139,6 +139,201 @@ const CONFIG = {
   }
 };
 
+// ============================================================================
+// GESTIÓN DINÁMICA DE CUPOS POR TURNO (20 Plazas Mañana / 20 Plazas Tarde)
+// ============================================================================
+const SHIFT_STATE = {
+  morning: { max: 20, booked: 0, available: 20, isFull: false },
+  afternoon: { max: 20, booked: 0, available: 20, isFull: false },
+  totalAvailable: 40,
+  totalFull: false,
+  loaded: false
+};
+
+/**
+ * Consulta la disponibilidad en tiempo real a Google Apps Script (doGet)
+ */
+function fetchShiftAvailability() {
+  if (!CONFIG.googleSheetWebhookUrl) return;
+
+  fetch(`${CONFIG.googleSheetWebhookUrl}?action=getAvailability&_t=${Date.now()}`)
+    .then(response => {
+      if (!response.ok) throw new Error('Error en consulta de disponibilidad');
+      return response.json();
+    })
+    .then(data => {
+      if (data && (data.status === 'success' || data.morning)) {
+        if (data.morning) {
+          SHIFT_STATE.morning = {
+            max: data.morning.max || 20,
+            booked: data.morning.booked || 0,
+            available: typeof data.morning.available === 'number' ? data.morning.available : Math.max(0, 20 - (data.morning.booked || 0)),
+            isFull: Boolean(data.morning.isFull || (data.morning.available <= 0))
+          };
+        }
+        if (data.afternoon) {
+          SHIFT_STATE.afternoon = {
+            max: data.afternoon.max || 20,
+            booked: data.afternoon.booked || 0,
+            available: typeof data.afternoon.available === 'number' ? data.afternoon.available : Math.max(0, 20 - (data.afternoon.booked || 0)),
+            isFull: Boolean(data.afternoon.isFull || (data.afternoon.available <= 0))
+          };
+        }
+        SHIFT_STATE.totalAvailable = SHIFT_STATE.morning.available + SHIFT_STATE.afternoon.available;
+        SHIFT_STATE.totalFull = SHIFT_STATE.morning.isFull && SHIFT_STATE.afternoon.isFull;
+        SHIFT_STATE.loaded = true;
+
+        updateShiftCapacityUI();
+      }
+    })
+    .catch(err => {
+      console.log('Disponibilidad de turnos inicializada con cupos por defecto (20/20):', err);
+      updateShiftCapacityUI();
+    });
+}
+
+/**
+ * Actualiza los badges de cupo, textos del desplegable y avisos de plazas
+ */
+function updateShiftCapacityUI() {
+  const timeSlotSelect = document.getElementById('clientTimeSlot');
+  const badgeText = document.getElementById('shiftCapacityStatusText');
+  const badgeContainer = document.getElementById('shiftCapacityStatusBadge');
+  const morningText = document.getElementById('morningSlotText');
+  const morningDot = document.getElementById('morningSlotDot');
+  const afternoonText = document.getElementById('afternoonSlotText');
+  const afternoonDot = document.getElementById('afternoonSlotDot');
+
+  const mAvail = SHIFT_STATE.morning.available;
+  const aAvail = SHIFT_STATE.afternoon.available;
+  const mFull = SHIFT_STATE.morning.isFull;
+  const aFull = SHIFT_STATE.afternoon.isFull;
+
+  // 1. Actualizar textos de las opciones del select
+  if (timeSlotSelect) {
+    let mLabel = `Mañana (09:00 - 13:00 h) — [${mAvail} plazas disponibles]`;
+    if (mFull) {
+      mLabel = `Mañana (09:00 - 13:00 h) — [COMPLETO • Lista de Espera]`;
+    } else if (mAvail <= 3) {
+      mLabel = `Mañana (09:00 - 13:00 h) — [¡Últimas ${mAvail} plazas!]`;
+    }
+
+    let aLabel = `Tarde (16:00 - 20:00 h) — [${aAvail} plazas disponibles]`;
+    if (aFull) {
+      aLabel = `Tarde (16:00 - 20:00 h) — [COMPLETO • Lista de Espera]`;
+    } else if (aAvail <= 3) {
+      aLabel = `Tarde (16:00 - 20:00 h) — [¡Últimas ${aAvail} plazas!]`;
+    }
+
+    for (let opt of timeSlotSelect.options) {
+      if (opt.value.toLowerCase().includes('mañana') || opt.value.includes('09:00')) {
+        opt.text = mLabel;
+      } else if (opt.value.toLowerCase().includes('tarde') || opt.value.includes('16:00')) {
+        opt.text = aLabel;
+      }
+    }
+  }
+
+  // 2. Indicadores de cada turno (Mañana y Tarde)
+  if (morningText && morningDot) {
+    if (mFull) {
+      morningDot.className = 'inline-block w-2 h-2 rounded-full bg-red-500';
+      morningText.innerHTML = `<strong>Mañana:</strong> <span class="font-bold text-red-600">Completo (0 plazas)</span>`;
+    } else if (mAvail <= 3) {
+      morningDot.className = 'inline-block w-2 h-2 rounded-full bg-amber-500 animate-pulse';
+      morningText.innerHTML = `<strong>Mañana:</strong> <span class="font-bold text-amber-700">¡Últimas ${mAvail} plazas!</span>`;
+    } else {
+      morningDot.className = 'inline-block w-2 h-2 rounded-full bg-emerald-500';
+      morningText.innerHTML = `<strong>Mañana:</strong> <span class="font-bold text-[#1E5E44]">${mAvail} plazas libres</span>`;
+    }
+  }
+
+  if (afternoonText && afternoonDot) {
+    if (aFull) {
+      afternoonDot.className = 'inline-block w-2 h-2 rounded-full bg-red-500';
+      afternoonText.innerHTML = `<strong>Tarde:</strong> <span class="font-bold text-red-600">Completo (0 plazas)</span>`;
+    } else if (aAvail <= 3) {
+      afternoonDot.className = 'inline-block w-2 h-2 rounded-full bg-amber-500 animate-pulse';
+      afternoonText.innerHTML = `<strong>Tarde:</strong> <span class="font-bold text-amber-700">¡Últimas ${aAvail} plazas!</span>`;
+    } else {
+      afternoonDot.className = 'inline-block w-2 h-2 rounded-full bg-emerald-500';
+      afternoonText.innerHTML = `<strong>Tarde:</strong> <span class="font-bold text-[#1E5E44]">${aAvail} plazas libres</span>`;
+    }
+  }
+
+  // 3. Badge global superior
+  if (badgeText && badgeContainer) {
+    const totAvail = mAvail + aAvail;
+    if (totAvail <= 0) {
+      badgeContainer.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-800 inline-flex items-center gap-1';
+      badgeText.textContent = 'Cupos completos • Lista de Espera';
+    } else if (totAvail <= 5) {
+      badgeContainer.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 inline-flex items-center gap-1';
+      badgeText.textContent = `¡Últimas ${totAvail} plazas libres!`;
+    } else {
+      badgeContainer.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-[#1E5E44] inline-flex items-center gap-1';
+      badgeText.textContent = `${totAvail} plazas disponibles`;
+    }
+  }
+
+  // 4. Evaluar estado del turno actualmente seleccionado
+  checkCurrentSelectedShiftWaitlist();
+}
+
+/**
+ * Comprueba si el turno seleccionado en el formulario está lleno y activa el modo Lista de Espera
+ */
+function checkCurrentSelectedShiftWaitlist() {
+  const timeSlotSelect = document.getElementById('clientTimeSlot');
+  const waitlistNotice = document.getElementById('waitlistNotice');
+  const waitlistNoticeTitle = document.getElementById('waitlistNoticeTitle');
+  const waitlistNoticeDesc = document.getElementById('waitlistNoticeDesc');
+  const submitBtn = document.getElementById('bookingSubmitBtn');
+  const submitIcon = document.getElementById('bookingSubmitIcon');
+  const submitText = document.getElementById('bookingSubmitText');
+
+  if (!timeSlotSelect) return;
+
+  const currentVal = timeSlotSelect.value;
+  const isMorning = currentVal.toLowerCase().includes('mañana') || currentVal.includes('09:00');
+  const isSelectedShiftFull = isMorning ? SHIFT_STATE.morning.isFull : SHIFT_STATE.afternoon.isFull;
+  const otherShiftAvail = isMorning ? SHIFT_STATE.afternoon.available : SHIFT_STATE.morning.available;
+  const otherShiftName = isMorning ? 'Turno de Tarde (16:00 - 20:00 h)' : 'Turno de Mañana (09:00 - 13:00 h)';
+
+  if (isSelectedShiftFull) {
+    if (waitlistNotice) {
+      waitlistNotice.classList.remove('hidden');
+      if (waitlistNoticeTitle) {
+        waitlistNoticeTitle.textContent = `Turno de ${isMorning ? 'Mañana' : 'Tarde'} Completo (20/20 plazas cubiertas)`;
+      }
+      if (waitlistNoticeDesc) {
+        if (otherShiftAvail > 0) {
+          waitlistNoticeDesc.innerHTML = `Las 20 plazas de este turno están cubiertas para asegurar la puntualidad del servicio. Puedes unirte a la <strong>Lista de Espera Prioritaria</strong> con el botón inferior o seleccionar el <strong>${otherShiftName}</strong> (${otherShiftAvail} plazas disponibles).`;
+        } else {
+          waitlistNoticeDesc.innerHTML = `Todas las plazas del día están cubiertas (40/40). Al enviar tu solicitud entrarás en el <strong>puesto nº 1 de la Lista de Espera Prioritaria</strong> y te avisaremos en cuanto se libere una vacante.`;
+        }
+      }
+    }
+
+    if (submitBtn) {
+      submitBtn.classList.remove('btn-primary');
+      submitBtn.classList.add('bg-amber-600', 'hover:bg-amber-700', 'text-white', 'shadow-lg', 'shadow-amber-600/20');
+      if (submitIcon) submitIcon.className = 'fa-solid fa-hourglass-half text-lg';
+      if (submitText) submitText.textContent = 'Unirme a la Lista de Espera Prioritaria';
+    }
+  } else {
+    if (waitlistNotice) {
+      waitlistNotice.classList.add('hidden');
+    }
+    if (submitBtn) {
+      submitBtn.classList.remove('bg-amber-600', 'hover:bg-amber-700', 'shadow-amber-600/20');
+      submitBtn.classList.add('btn-primary');
+      if (submitIcon) submitIcon.className = 'fa-solid fa-paper-plane text-lg';
+      if (submitText) submitText.textContent = 'Solicitar Servicio';
+    }
+  }
+}
+
 /**
  * 1. Cabecera con efecto de desplazamiento (Glass Header)
  */
@@ -815,6 +1010,16 @@ function initBookingForm() {
   const initialPlan = initialPlanRadio ? initialPlanRadio.value : 'piso_plus';
   updateOrderSummary(initialPlan);
 
+  // Consultar disponibilidad de plazas en tiempo real
+  fetchShiftAvailability();
+
+  // Escuchar cambios en la franja horaria para advertir de lista de espera si está completo
+  if (timeSlotSelect) {
+    timeSlotSelect.addEventListener('change', () => {
+      checkCurrentSelectedShiftWaitlist();
+    });
+  }
+
   // Escuchar cambios en el selector de días para actualizar avisos de antelación
   if (daysSelect) {
     daysSelect.addEventListener('change', () => {
@@ -991,12 +1196,36 @@ function initBookingForm() {
     const modalPlan = document.getElementById('modalPlanSelected');
     const modalClient = document.getElementById('modalClientName');
     const modalStartDate = document.getElementById('modalStartDateText');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalIconContainer = document.getElementById('modalIconContainer');
+    const modalIcon = document.getElementById('modalIcon');
+    const modalStartDateBox = document.getElementById('modalStartDateBox');
+    const modalWaitlistInfo = document.getElementById('modalWaitlistInfo');
     const dateInfo = getServiceStartDateInfo(formData.plan);
 
     const basePlanName = CONFIG.plans[formData.plan]?.name || 'Plan Seleccionado';
     if (modalPlan) modalPlan.textContent = basePlanName;
     if (modalClient) modalClient.textContent = formData.name;
     if (modalStartDate) modalStartDate.textContent = dateInfo.modalText;
+
+    // Adaptar modal si es registro en lista de espera
+    if (formData.isWaitlist) {
+      if (modalTitle) modalTitle.textContent = '¡Añadido a Lista de Espera!';
+      if (modalIconContainer) {
+        modalIconContainer.className = 'w-16 h-16 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-3xl mx-auto';
+      }
+      if (modalIcon) modalIcon.className = 'fa-solid fa-hourglass-half';
+      if (modalStartDateBox) modalStartDateBox.classList.add('hidden');
+      if (modalWaitlistInfo) modalWaitlistInfo.classList.remove('hidden');
+    } else {
+      if (modalTitle) modalTitle.textContent = '¡Solicitud Recibida!';
+      if (modalIconContainer) {
+        modalIconContainer.className = 'w-16 h-16 rounded-full bg-emerald-100 text-[#25815F] flex items-center justify-center text-3xl mx-auto';
+      }
+      if (modalIcon) modalIcon.className = 'fa-solid fa-circle-check';
+      if (modalStartDateBox) modalStartDateBox.classList.remove('hidden');
+      if (modalWaitlistInfo) modalWaitlistInfo.classList.add('hidden');
+    }
 
     // Sincronización automática con Google Sheets y Gmail si el Webhook está configurado
     if (CONFIG.googleSheetWebhookUrl) {
@@ -1015,12 +1244,17 @@ function initBookingForm() {
     if (submitModal) {
       submitModal.classList.remove('hidden');
     } else {
-      showToast('✅ ¡Solicitud enviada con éxito! Nos pondremos en contacto contigo.');
+      if (formData.isWaitlist) {
+        showToast('⏳ ¡Añadido a la Lista de Espera Prioritaria! Te avisaremos en cuanto haya vacante.');
+      } else {
+        showToast('✅ ¡Solicitud enviada con éxito! Nos pondremos en contacto contigo.');
+      }
     }
 
     form.reset();
     switchFormCategory('pisos');
     updateOrderSummary('piso_plus');
+    fetchShiftAvailability();
 
     // Restaurar sugerencia de email guardado si existe
     if (savedEmail && emailDatalist) {
@@ -1120,7 +1354,11 @@ function getFormData() {
   const referral = document.getElementById('clientReferral')?.value.trim() || '';
   const notes = document.getElementById('clientNotes')?.value.trim() || '';
 
-  return { plan: selectedPlan, planName, startDate, name, phone, email, streetType, streetName: cleanStreetName, door, rawAddress, address, zip, timeSlot, days, paymentMethod, referral, notes };
+  // Determinar si este registro va a Lista de Espera por cupo completo
+  const isMorning = timeSlot.toLowerCase().includes('mañana') || timeSlot.includes('09:00');
+  const isWaitlist = Boolean(isMorning ? SHIFT_STATE.morning.isFull : SHIFT_STATE.afternoon.isFull);
+
+  return { plan: selectedPlan, planName, startDate, name, phone, email, streetType, streetName: cleanStreetName, door, rawAddress, address, zip, timeSlot, days, paymentMethod, referral, notes, isWaitlist };
 }
 
 /**
