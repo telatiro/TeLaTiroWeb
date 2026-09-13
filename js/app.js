@@ -904,7 +904,7 @@ function initBookingForm() {
 
     // Validación estricta de selección de código postal obligatorio
     if (!formData.zip || formData.zip.trim() === '') {
-      showToast('⚠️ Por favor selecciona tu Código Postal / Sector de Rivas obligatorio.', 'warning');
+      showToast('⚠️ Por favor selecciona tu Código Postal / Sector obligatorio.', 'warning');
       if (zipSelect) {
         zipSelect.focus();
         zipSelect.classList.add('border-red-500', 'ring-2', 'ring-red-200');
@@ -926,7 +926,7 @@ function initBookingForm() {
 
     // Validación de nombre de vía y número
     if (!formData.streetName || formData.streetName.trim() === '') {
-      showToast('⚠️ Por favor indica el nombre de la vía y el número en Rivas.', 'warning');
+      showToast('⚠️ Por favor indica el nombre de la vía y el número.', 'warning');
       if (addressInput) {
         addressInput.focus();
         addressInput.classList.add('border-red-500', 'ring-2', 'ring-red-200');
@@ -1056,22 +1056,32 @@ function getFormData() {
     if (!cleanStreetName) cleanStreetName = rawStreetInput;
   }
   
-  // Si el usuario puso el número de calle en el campo de puerta/piso (ej. streetName: "Juan Gris", door: "4, 2º B" o "4"),
+  // Si el usuario puso el número de calle en el campo de puerta/piso (ej. streetName: "Juan Gris", door: "4, 2º B" o "4B" o "4 B"),
   // transferimos el número a la calle para que "Calle / Vía y Nº" tenga SIEMPRE el número y "Piso / Puerta" solo el piso
   if (!/\d+/.test(cleanStreetName) && door) {
     const doorSinPrefijo = door.replace(/^(?:n[º°ª\.\/\-]?\s*|n[uú]mero\s*|num\.\s*|n\s*)/i, '');
-    const matchCompuesto = doorSinPrefijo.match(/^(\d+)(?:\s*([a-zA-Z]))?\s*(?:[,\-\/\.]\s*|\s+(?:portal|bloque|esc|escalera|piso|pta|puerta|bajo|ático|atico)\b)\s*(.*)$/i);
+    let numExtraido = '';
+    const matchCompuesto = doorSinPrefijo.match(/^(\d+)(?:\s*([a-zA-Z]))?\s*(?:[,\-\/\.]\s*|\s+(?:portal|bloque|esc|escalera|piso|pta|puerta|bajo|ático|atico|\d+[ºª°])\b)\s*(.*)$/i);
     if (matchCompuesto) {
-      const numExt = matchCompuesto[1] + (matchCompuesto[2] ? matchCompuesto[2].toUpperCase() : '');
-      const pisoRest = (matchCompuesto[3] || '').trim();
-      cleanStreetName = cleanStreetName + ', ' + numExt;
-      door = pisoRest;
+      numExtraido = matchCompuesto[1] + (matchCompuesto[2] ? matchCompuesto[2].toUpperCase() : '');
+      door = (matchCompuesto[3] || '').trim();
     } else {
-      const matchSoloNum = doorSinPrefijo.match(/^(\d+)$/);
-      if (matchSoloNum) {
-        cleanStreetName = cleanStreetName + ', ' + matchSoloNum[1];
-        door = '';
+      const matchEspacio = doorSinPrefijo.match(/^(\d+)\s+([a-zA-Z0-9ºª°\s\.\,\-]+)$/i);
+      if (matchEspacio) {
+        numExtraido = matchEspacio[1];
+        door = matchEspacio[2].trim();
+      } else {
+        const matchSoloNum = doorSinPrefijo.match(/^(\d+)([a-zA-Z])?$/i);
+        if (matchSoloNum) {
+          numExtraido = matchSoloNum[1] + (matchSoloNum[2] ? matchSoloNum[2].toUpperCase() : '');
+          door = '';
+        }
       }
+    }
+
+    if (numExtraido) {
+      const sep = (cleanStreetName.endsWith(',') || cleanStreetName.endsWith('.')) ? ' ' : ', ';
+      cleanStreetName = cleanStreetName + sep + numExtraido;
     }
   } else if (/\d+/.test(cleanStreetName) && door) {
     // Si la calle ya tiene número (ej. "Calle Juan Gris, 4")
@@ -1138,7 +1148,7 @@ function initCoverageChecker() {
   checkBtn.addEventListener('click', () => {
     const inputVal = zipInput.value.trim();
     if (!inputVal || inputVal.length < 2) {
-      showCoverageResult('Por favor introduce tu código postal o barrio de Rivas-Vaciamadrid (ej. 28521, 28522, 28523, Covibar, Pablo Iglesias...)', 'warning');
+      showCoverageResult('Por favor introduce tu código postal o barrio (ej. 28521, 28522, 28523, Covibar, Almendros...)', 'warning');
       return;
     }
     verifyCoverage(inputVal);
@@ -1153,7 +1163,7 @@ function initCoverageChecker() {
 
   function verifyCoverage(inputVal) {
     const cleanInput = inputVal.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    showCoverageResult('⏳ Verificando rutas activas en Rivas-Vaciamadrid...', 'loading');
+    showCoverageResult('⏳ Verificando rutas activas...', 'loading');
 
     setTimeout(() => {
       let matchedSector = null;
@@ -1170,9 +1180,9 @@ function initCoverageChecker() {
       // Comprobación si escribe simplemente Rivas o Vaciamadrid
       if (!matchedSector && (cleanInput.includes('rivas') || cleanInput.includes('vaciamadrid'))) {
         matchedSector = {
-          cp: '28521 - 28525 (Rivas-Vaciamadrid)',
-          name: 'Municipio de Rivas-Vaciamadrid',
-          description: 'Casco Antiguo, Rivas Futura, Covibar, Almendros, Pablo Iglesias y Nuevos Desarrollos.'
+          cp: '28521 - 28525',
+          name: 'Zona Activa',
+          description: 'Casco Antiguo, Sector Central, Covibar, Almendros, Pablo Iglesias y Nuevos Desarrollos.'
         };
       }
 
@@ -1189,7 +1199,7 @@ function initCoverageChecker() {
           });
         }
       } else {
-        showCoverageResult(`📍 De momento el servicio solo está disponible para <strong>Rivas-Vaciamadrid</strong> (CP 28521, 28522, 28523, 28524 y 28525). Estamos trabajando para abrir nuevas rutas próximamente.`, 'warning');
+        showCoverageResult(`📍 De momento el servicio está activo para los códigos postales <strong>28521, 28522, 28523, 28524 y 28525</strong>. Estamos trabajando en la apertura de nuevas zonas y rutas próximamente.`, 'warning');
       }
     }, 400);
   }
