@@ -476,9 +476,9 @@ body {
 }
 
 .photo-entrega {
-  background-image: url('../assets/hero-mockup.jpg');
-  background-size: 250% auto;
-  background-position: 53.5% 41.5%;
+  background-image: url('../assets/hero-telatiro-branded.jpg?v=5');
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
 }
 
@@ -604,4 +604,22 @@ body {
     padding: 1.5rem !important;
   }
 }
+
+/* ==========================================================================
+   Ocultar widgets inyectados por Netlify (Netlify Drawer / Feedback / Badges)
+   ========================================================================== */
+#netlify-feedback-drawer,
+[data-netlify-drawer],
+.__netlify-badge,
+iframe[src*="netlify"],
+netlify-drawer,
+.netlify-drawer {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
 

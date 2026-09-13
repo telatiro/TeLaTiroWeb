@@ -57,7 +57,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css?v=5">
 </head>
 <body class="bg-[#F8FAF9] text-[#2D3748] font-sans antialiased selection:bg-[#25815F] selection:text-white">
 
@@ -3532,22 +3532,32 @@ function getFormData() {
     if (!cleanStreetName) cleanStreetName = rawStreetInput;
   }
   
-  // Si el usuario puso el número de calle en el campo de puerta/piso (ej. streetName: "Juan Gris", door: "4, 2º B" o "4"),
+  // Si el usuario puso el número de calle en el campo de puerta/piso (ej. streetName: "Juan Gris", door: "4, 2º B" o "4B" o "4 B"),
   // transferimos el número a la calle para que "Calle / Vía y Nº" tenga SIEMPRE el número y "Piso / Puerta" solo el piso
   if (!/\d+/.test(cleanStreetName) && door) {
     const doorSinPrefijo = door.replace(/^(?:n[º°ª\.\/\-]?\s*|n[uú]mero\s*|num\.\s*|n\s*)/i, '');
-    const matchCompuesto = doorSinPrefijo.match(/^(\d+)(?:\s*([a-zA-Z]))?\s*(?:[,\-\/\.]\s*|\s+(?:portal|bloque|esc|escalera|piso|pta|puerta|bajo|ático|atico)\b)\s*(.*)$/i);
+    let numExtraido = '';
+    const matchCompuesto = doorSinPrefijo.match(/^(\d+)(?:\s*([a-zA-Z]))?\s*(?:[,\-\/\.]\s*|\s+(?:portal|bloque|esc|escalera|piso|pta|puerta|bajo|ático|atico|\d+[ºª°])\b)\s*(.*)$/i);
     if (matchCompuesto) {
-      const numExt = matchCompuesto[1] + (matchCompuesto[2] ? matchCompuesto[2].toUpperCase() : '');
-      const pisoRest = (matchCompuesto[3] || '').trim();
-      cleanStreetName = cleanStreetName + ', ' + numExt;
-      door = pisoRest;
+      numExtraido = matchCompuesto[1] + (matchCompuesto[2] ? matchCompuesto[2].toUpperCase() : '');
+      door = (matchCompuesto[3] || '').trim();
     } else {
-      const matchSoloNum = doorSinPrefijo.match(/^(\d+)$/);
-      if (matchSoloNum) {
-        cleanStreetName = cleanStreetName + ', ' + matchSoloNum[1];
-        door = '';
+      const matchEspacio = doorSinPrefijo.match(/^(\d+)\s+([a-zA-Z0-9ºª°\s\.\,\-]+)$/i);
+      if (matchEspacio) {
+        numExtraido = matchEspacio[1];
+        door = matchEspacio[2].trim();
+      } else {
+        const matchSoloNum = doorSinPrefijo.match(/^(\d+)([a-zA-Z])?$/i);
+        if (matchSoloNum) {
+          numExtraido = matchSoloNum[1] + (matchSoloNum[2] ? matchSoloNum[2].toUpperCase() : '');
+          door = '';
+        }
       }
+    }
+
+    if (numExtraido) {
+      const sep = (cleanStreetName.endsWith(',') || cleanStreetName.endsWith('.')) ? ' ' : ', ';
+      cleanStreetName = cleanStreetName + sep + numExtraido;
     }
   } else if (/\d+/.test(cleanStreetName) && door) {
     // Si la calle ya tiene número (ej. "Calle Juan Gris, 4")
