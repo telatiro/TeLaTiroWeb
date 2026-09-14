@@ -136,6 +136,19 @@ const CONFIG = {
       days: 'Lunes a Viernes (a elegir)',
       details: '1 servicio puntual • Hasta 2 bolsas • Tarjeta o Efectivo en mano'
     }
+  },
+  // ==========================================================================
+  // ENLACES OFICIALES DE PAGO SEGURO STRIPE (Payment Links)
+  // Pega aquí los enlaces generados en tu panel de Stripe para cada plan:
+  // ==========================================================================
+  stripeLinks: {
+    piso_2d: 'https://buy.stripe.com/3cIdR9b49c309W06Bc9fW03',        // Plan Piso 2 días • 24,90 €/mes
+    piso_plus: 'https://buy.stripe.com/14A28r2xD5EC0lq2kW9fW04',      // Plan Piso Plus 3 días • 29,90 €/mes
+    piso_premium: 'https://buy.stripe.com/14AbJ11tz3wu8RWgbM9fW05',   // Plan Piso Premium 5 días • 39,90 €/mes
+    chalet_2d: 'https://buy.stripe.com/9B6eVdc8deb8d8cgbM9fW00',      // Plan Chalet 2 días • 34,90 €/mes
+    chalet_plus: 'https://buy.stripe.com/dRm14n1tz4Ay5FK5x89fW01',    // Plan Chalet Plus 3 días • 39,90 €/mes
+    chalet_premium: 'https://buy.stripe.com/28EeVdfkpgjgd8cgbM9fW02', // Plan Chalet Premium 5 días • 49,90 €/mes
+    puntual: 'https://buy.stripe.com/5kQaEXgotaYW7NS4t49fW06'         // Servicio Puntual 1 día • 4,90 €
   }
 };
 
@@ -1292,6 +1305,32 @@ function initBookingForm() {
       });
     }
 
+    // Comprobar si hay un enlace de pago de Stripe configurado para este plan
+    const stripePaymentUrl = (CONFIG.stripeLinks && CONFIG.stripeLinks[formData.plan]) ? CONFIG.stripeLinks[formData.plan].trim() : '';
+    const hasActiveStripeLink = stripePaymentUrl.startsWith('https://buy.stripe.com') || stripePaymentUrl.startsWith('https://checkout.stripe.com');
+
+    // Si NO es lista de espera y hay enlace de Stripe activo -> Redirigir a pasarela de pago segura
+    if (!formData.isWaitlist && hasActiveStripeLink) {
+      let finalStripeUrl = stripePaymentUrl;
+      const separator = finalStripeUrl.includes('?') ? '&' : '?';
+      if (formData.email) {
+        finalStripeUrl += `${separator}prefilled_email=${encodeURIComponent(formData.email)}`;
+      }
+      if (formData.phone) {
+        const phoneClean = (formData.phone || '').replace(/[^0-9]/g, '');
+        finalStripeUrl += `${finalStripeUrl.includes('?') ? '&' : '?'}client_reference_id=${encodeURIComponent(phoneClean)}`;
+      }
+
+      showToast('🔒 Solicitud guardada. Redirigiendo a la pasarela de pago seguro de Stripe...', 'success');
+
+      setTimeout(() => {
+        window.location.href = finalStripeUrl;
+      }, 800);
+
+      return;
+    }
+
+    // Si es lista de espera o si aún no se han pegado los enlaces de Stripe -> Mostrar modal de confirmación en la web
     if (submitModal) {
       submitModal.classList.remove('hidden');
     } else {
