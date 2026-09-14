@@ -74,7 +74,7 @@ const CONFIG = {
       costPerBag: '¡Desde 1,55 € por depósito!',
       frequency: 'Nº de Servicios: 2 días a la semana (Martes y Jueves)',
       days: 'Martes y Jueves',
-      details: '2 servicios semanales • Martes y Jueves • Domiciliación SEPA o Tarjeta (no efectivo)'
+      details: '2 servicios semanales • Martes y Jueves • Pago seguro con Tarjeta bancaria'
     },
     piso_plus: {
       name: 'Plan Piso Plus (3 días)',
@@ -84,7 +84,7 @@ const CONFIG = {
       costPerBag: '¡Desde 1,25 € por depósito!',
       frequency: 'Nº de Servicios: 3 días a la semana (Lunes, Miércoles y Viernes)',
       days: 'Lunes, Miércoles y Viernes',
-      details: '3 servicios semanales • Lunes, Miércoles y Viernes • Domiciliación SEPA o Tarjeta (no efectivo)'
+      details: '3 servicios semanales • Lunes, Miércoles y Viernes • Pago seguro con Tarjeta bancaria'
     },
     piso_premium: {
       name: 'Plan Piso Premium (5 días)',
@@ -94,7 +94,7 @@ const CONFIG = {
       costPerBag: '¡Desde 0,99 € por depósito!',
       frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes completo)',
       days: 'Lunes a Viernes',
-      details: '5 servicios semanales • Lunes a Viernes • Domiciliación SEPA o Tarjeta (no efectivo)'
+      details: '5 servicios semanales • Lunes a Viernes • Pago seguro con Tarjeta bancaria'
     },
     chalet_2d: {
       name: 'Plan Casa/Chalet (2 días)',
@@ -104,7 +104,7 @@ const CONFIG = {
       costPerBag: '¡Desde 2,18 € por depósito!',
       frequency: 'Nº de Servicios: 2 días a la semana (Martes y Jueves)',
       days: 'Martes y Jueves',
-      details: '2 servicios semanales • Martes y Jueves • Domiciliación SEPA o Tarjeta (no efectivo)'
+      details: '2 servicios semanales • Martes y Jueves • Pago seguro con Tarjeta bancaria'
     },
     chalet_plus: {
       name: 'Plan Casa/Chalet Plus (3 días)',
@@ -114,7 +114,7 @@ const CONFIG = {
       costPerBag: '¡Desde 1,66 € por depósito!',
       frequency: 'Nº de Servicios: 3 días a la semana (Lunes, Miércoles y Viernes)',
       days: 'Lunes, Miércoles y Viernes',
-      details: '3 servicios semanales • Lunes, Miércoles y Viernes • Domiciliación SEPA o Tarjeta (no efectivo)'
+      details: '3 servicios semanales • Lunes, Miércoles y Viernes • Pago seguro con Tarjeta bancaria'
     },
     chalet_premium: {
       name: 'Plan Casa/Chalet Premium (5 días)',
@@ -124,7 +124,7 @@ const CONFIG = {
       costPerBag: '¡Desde 1,25 € por depósito!',
       frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes completo)',
       days: 'Lunes a Viernes',
-      details: '5 servicios semanales • Lunes a Viernes • Domiciliación SEPA o Tarjeta (no efectivo)'
+      details: '5 servicios semanales • Lunes a Viernes • Pago seguro con Tarjeta bancaria'
     },
     puntual: {
       name: 'Servicio Puntual',
@@ -134,7 +134,7 @@ const CONFIG = {
       costPerBag: 'Servicio individual puntual',
       frequency: 'Servicio puntual de 1 día',
       days: 'Lunes a Viernes (a elegir)',
-      details: '1 servicio puntual • Hasta 2 bolsas • Tarjeta o Efectivo en mano'
+      details: '1 servicio puntual • Hasta 2 bolsas • Pago seguro con Tarjeta bancaria'
     }
   },
   // ==========================================================================
@@ -613,38 +613,17 @@ function updatePaymentOptions(planKey) {
 
   if (!paymentSelect) return;
 
-  const currentVal = paymentSelect.value;
+  // Tarjeta bancaria como único método de pago 100% seguro (Stripe) para todos los servicios
+  paymentSelect.innerHTML = `
+    <option value="Tarjeta bancaria (Débito / Crédito)" selected>Tarjeta bancaria (Débito / Crédito)</option>
+  `;
+  paymentSelect.value = 'Tarjeta bancaria (Débito / Crédito)';
 
-  if (planKey === 'puntual') {
-    // Servicio puntual: Tarjeta o Efectivo en mano
-    paymentSelect.innerHTML = `
-      <option value="Tarjeta bancaria (Débito / Crédito)" ${currentVal.includes('Tarjeta') || !currentVal ? 'selected' : ''}>Tarjeta bancaria</option>
-      <option value="Efectivo en mano (en el traslado)" ${currentVal.includes('Efectivo') ? 'selected' : ''}>Efectivo en mano</option>
-    `;
-    if (currentVal.includes('Domiciliación') || !currentVal) {
-      paymentSelect.value = 'Tarjeta bancaria (Débito / Crédito)';
-    }
-    if (paymentNotice) {
-      paymentNotice.innerHTML = `<i class="fa-solid fa-circle-info text-[#25815F]"></i> Para el <strong>servicio puntual</strong> el pago se realiza mediante <strong>Tarjeta o Efectivo en mano</strong> (la domiciliación bancaria no está disponible en servicios puntuales).`;
-    }
-    if (summaryPayment) {
-      summaryPayment.textContent = 'Pago: Tarjeta o Efectivo';
-    }
-  } else {
-    // Todos los planes mensuales (Pisos y Chalets): Domiciliación SEPA o Tarjeta
-    paymentSelect.innerHTML = `
-      <option value="Domiciliación bancaria (SEPA)" ${currentVal.includes('Domiciliación') || !currentVal ? 'selected' : ''}>Domiciliación bancaria (SEPA)</option>
-      <option value="Tarjeta bancaria (Débito / Crédito)" ${currentVal.includes('Tarjeta') ? 'selected' : ''}>Tarjeta bancaria</option>
-    `;
-    if (currentVal.includes('Efectivo') || !currentVal) {
-      paymentSelect.value = 'Domiciliación bancaria (SEPA)';
-    }
-    if (paymentNotice) {
-      paymentNotice.innerHTML = `<i class="fa-solid fa-circle-info text-[#25815F]"></i> Para los <strong>planes mensuales</strong> el pago se realiza mediante <strong>Domiciliación bancaria o Tarjeta</strong> (el pago en efectivo <em>no</em> está admitido en planes mensuales).`;
-    }
-    if (summaryPayment) {
-      summaryPayment.textContent = 'Pago: Domiciliación o Tarjeta';
-    }
+  if (paymentNotice) {
+    paymentNotice.innerHTML = `<i class="fa-solid fa-circle-info text-[#25815F]"></i> Pago 100% seguro con <strong>Tarjeta bancaria (Débito / Crédito)</strong> mediante la pasarela oficial cifrada de Stripe.`;
+  }
+  if (summaryPayment) {
+    summaryPayment.textContent = 'Pago: Tarjeta bancaria';
   }
 }
 
@@ -1244,19 +1223,6 @@ function initBookingForm() {
       }
     }
 
-    // Validar exclusiones de pago según el plan
-    if (formData.plan !== 'puntual' && formData.paymentMethod.toLowerCase().includes('efectivo')) {
-      showToast('⚠️ Los planes mensuales no admiten pago en efectivo. Por favor selecciona Domiciliación bancaria o Tarjeta.', 'warning');
-      updatePaymentOptions(formData.plan);
-      return;
-    }
-
-    if (formData.plan === 'puntual' && formData.paymentMethod.toLowerCase().includes('domiciliación')) {
-      showToast('⚠️ El servicio puntual solo admite Tarjeta o Efectivo. Por favor selecciona una de estas opciones.', 'warning');
-      updatePaymentOptions('puntual');
-      return;
-    }
-
     const modalPlan = document.getElementById('modalPlanSelected');
     const modalClient = document.getElementById('modalClientName');
     const modalStartDate = document.getElementById('modalStartDateText');
@@ -1440,7 +1406,7 @@ function getFormData() {
 
   const timeSlot = document.getElementById('clientTimeSlot')?.value || 'Turno Mañana (09:00 - 13:00 h)';
   const days = document.getElementById('clientDays')?.value || '3 Servicios semanales: Lunes, Miércoles y Viernes';
-  const paymentMethod = document.getElementById('clientPayment')?.value || 'Domiciliación bancaria (SEPA)';
+  const paymentMethod = document.getElementById('clientPayment')?.value || 'Tarjeta bancaria (Débito / Crédito)';
   const referral = document.getElementById('clientReferral')?.value.trim() || '';
   const notes = document.getElementById('clientNotes')?.value.trim() || '';
 
