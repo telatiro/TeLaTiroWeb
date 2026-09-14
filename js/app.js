@@ -199,10 +199,45 @@ function updateShiftCapacityUI() {
   const timeSlotSelect = document.getElementById('clientTimeSlot');
   const badgeText = document.getElementById('shiftCapacityStatusText');
   const badgeContainer = document.getElementById('shiftCapacityStatusBadge');
+  const shiftCapacityDetails = document.getElementById('shiftCapacityDetails');
   const morningText = document.getElementById('morningSlotText');
   const morningDot = document.getElementById('morningSlotDot');
   const afternoonText = document.getElementById('afternoonSlotText');
   const afternoonDot = document.getElementById('afternoonSlotDot');
+
+  const currentPlanRadio = document.querySelector('input[name="service_plan"]:checked');
+  const isPunctual = currentPlanRadio && currentPlanRadio.value === 'puntual';
+
+  // Si es Servicio Puntual: no mostramos badges de plazas ni avisos de cupo mensual recurrente
+  if (isPunctual) {
+    if (badgeContainer) badgeContainer.classList.add('hidden');
+    if (shiftCapacityDetails) shiftCapacityDetails.classList.add('hidden');
+    if (timeSlotSelect) {
+      for (let opt of timeSlotSelect.options) {
+        if (opt.value.toLowerCase().includes('mañana') || opt.value.includes('09:00')) {
+          opt.text = 'Mañana (09:00 - 13:00 h)';
+        } else if (opt.value.toLowerCase().includes('tarde') || opt.value.includes('16:00')) {
+          opt.text = 'Tarde (16:00 - 20:00 h)';
+        }
+      }
+    }
+    const waitlistNotice = document.getElementById('waitlistNotice');
+    if (waitlistNotice) waitlistNotice.classList.add('hidden');
+    const submitBtn = document.getElementById('bookingSubmitBtn');
+    if (submitBtn) {
+      submitBtn.classList.remove('bg-amber-600', 'hover:bg-amber-700', 'shadow-amber-600/20');
+      submitBtn.classList.add('btn-primary');
+    }
+    const submitText = document.getElementById('bookingSubmitText');
+    if (submitText) submitText.textContent = 'Solicitar Servicio';
+    const submitIcon = document.getElementById('bookingSubmitIcon');
+    if (submitIcon) submitIcon.className = 'fa-solid fa-paper-plane text-lg';
+    return;
+  }
+
+  // Para Planes Mensuales (Pisos y Chalets): Mostrar badges e indicadores de plazas en vivo
+  if (badgeContainer) badgeContainer.classList.remove('hidden');
+  if (shiftCapacityDetails) shiftCapacityDetails.classList.remove('hidden');
 
   const mAvail = SHIFT_STATE.morning.available;
   const aAvail = SHIFT_STATE.afternoon.available;
@@ -291,6 +326,21 @@ function checkCurrentSelectedShiftWaitlist() {
   const submitBtn = document.getElementById('bookingSubmitBtn');
   const submitIcon = document.getElementById('bookingSubmitIcon');
   const submitText = document.getElementById('bookingSubmitText');
+
+  const currentPlanRadio = document.querySelector('input[name="service_plan"]:checked');
+  const isPunctual = currentPlanRadio && currentPlanRadio.value === 'puntual';
+
+  // Si es puntual: nunca entra en lista de espera de cupo mensual recurrente
+  if (isPunctual) {
+    if (waitlistNotice) waitlistNotice.classList.add('hidden');
+    if (submitBtn) {
+      submitBtn.classList.remove('bg-amber-600', 'hover:bg-amber-700', 'shadow-amber-600/20');
+      submitBtn.classList.add('btn-primary');
+      if (submitIcon) submitIcon.className = 'fa-solid fa-paper-plane text-lg';
+      if (submitText) submitText.textContent = 'Solicitar Servicio';
+    }
+    return;
+  }
 
   if (!timeSlotSelect) return;
 
@@ -851,6 +901,7 @@ function updateOrderSummary(planKey) {
 
   updatePaymentOptions(planKey);
   updateDayOptions(planKey);
+  updateShiftCapacityUI();
 }
 
 /**
@@ -1354,9 +1405,10 @@ function getFormData() {
   const referral = document.getElementById('clientReferral')?.value.trim() || '';
   const notes = document.getElementById('clientNotes')?.value.trim() || '';
 
-  // Determinar si este registro va a Lista de Espera por cupo completo
+  // Determinar si este registro va a Lista de Espera por cupo completo (solo planes mensuales)
+  const isPunctual = selectedPlan === 'puntual';
   const isMorning = timeSlot.toLowerCase().includes('mañana') || timeSlot.includes('09:00');
-  const isWaitlist = Boolean(isMorning ? SHIFT_STATE.morning.isFull : SHIFT_STATE.afternoon.isFull);
+  const isWaitlist = isPunctual ? false : Boolean(isMorning ? SHIFT_STATE.morning.isFull : SHIFT_STATE.afternoon.isFull);
 
   return { plan: selectedPlan, planName, startDate, name, phone, email, streetType, streetName: cleanStreetName, door, rawAddress, address, zip, timeSlot, days, paymentMethod, referral, notes, isWaitlist };
 }
