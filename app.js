@@ -74,7 +74,7 @@ const CONFIG = {
       costPerBag: '¡Desde 1,55 € por depósito!',
       frequency: 'Nº de Servicios: 2 días a la semana (Martes y Jueves)',
       days: 'Martes y Jueves',
-      details: '2 servicios semanales • Martes y Jueves • Domiciliación SEPA o Tarjeta (no efectivo)'
+      details: '2 servicios semanales • Martes y Jueves • Pago seguro con Tarjeta bancaria'
     },
     piso_plus: {
       name: 'Plan Piso Plus (3 días)',
@@ -84,7 +84,7 @@ const CONFIG = {
       costPerBag: '¡Desde 1,25 € por depósito!',
       frequency: 'Nº de Servicios: 3 días a la semana (Lunes, Miércoles y Viernes)',
       days: 'Lunes, Miércoles y Viernes',
-      details: '3 servicios semanales • Lunes, Miércoles y Viernes • Domiciliación SEPA o Tarjeta (no efectivo)'
+      details: '3 servicios semanales • Lunes, Miércoles y Viernes • Pago seguro con Tarjeta bancaria'
     },
     piso_premium: {
       name: 'Plan Piso Premium (5 días)',
@@ -94,7 +94,7 @@ const CONFIG = {
       costPerBag: '¡Desde 0,99 € por depósito!',
       frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes completo)',
       days: 'Lunes a Viernes',
-      details: '5 servicios semanales • Lunes a Viernes • Domiciliación SEPA o Tarjeta (no efectivo)'
+      details: '5 servicios semanales • Lunes a Viernes • Pago seguro con Tarjeta bancaria'
     },
     chalet_2d: {
       name: 'Plan Casa/Chalet (2 días)',
@@ -104,7 +104,7 @@ const CONFIG = {
       costPerBag: '¡Desde 2,18 € por depósito!',
       frequency: 'Nº de Servicios: 2 días a la semana (Martes y Jueves)',
       days: 'Martes y Jueves',
-      details: '2 servicios semanales • Martes y Jueves • Domiciliación SEPA o Tarjeta (no efectivo)'
+      details: '2 servicios semanales • Martes y Jueves • Pago seguro con Tarjeta bancaria'
     },
     chalet_plus: {
       name: 'Plan Casa/Chalet Plus (3 días)',
@@ -114,7 +114,7 @@ const CONFIG = {
       costPerBag: '¡Desde 1,66 € por depósito!',
       frequency: 'Nº de Servicios: 3 días a la semana (Lunes, Miércoles y Viernes)',
       days: 'Lunes, Miércoles y Viernes',
-      details: '3 servicios semanales • Lunes, Miércoles y Viernes • Domiciliación SEPA o Tarjeta (no efectivo)'
+      details: '3 servicios semanales • Lunes, Miércoles y Viernes • Pago seguro con Tarjeta bancaria'
     },
     chalet_premium: {
       name: 'Plan Casa/Chalet Premium (5 días)',
@@ -124,7 +124,7 @@ const CONFIG = {
       costPerBag: '¡Desde 1,25 € por depósito!',
       frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes completo)',
       days: 'Lunes a Viernes',
-      details: '5 servicios semanales • Lunes a Viernes • Domiciliación SEPA o Tarjeta (no efectivo)'
+      details: '5 servicios semanales • Lunes a Viernes • Pago seguro con Tarjeta bancaria'
     },
     puntual: {
       name: 'Servicio Puntual',
@@ -134,10 +134,268 @@ const CONFIG = {
       costPerBag: 'Servicio individual puntual',
       frequency: 'Servicio puntual de 1 día',
       days: 'Lunes a Viernes (a elegir)',
-      details: '1 servicio puntual • Hasta 2 bolsas • Tarjeta o Efectivo en mano'
+      details: '1 servicio puntual • Hasta 2 bolsas • Pago seguro con Tarjeta bancaria'
     }
+  },
+  // ==========================================================================
+  // ENLACES OFICIALES DE PAGO SEGURO STRIPE (Payment Links)
+  // Pega aquí los enlaces generados en tu panel de Stripe para cada plan:
+  // ==========================================================================
+  stripeLinks: {
+    piso_2d: 'https://buy.stripe.com/3cIdR9b49c309W06Bc9fW03',        // Plan Piso 2 días • 24,90 €/mes
+    piso_plus: 'https://buy.stripe.com/14A28r2xD5EC0lq2kW9fW04',      // Plan Piso Plus 3 días • 29,90 €/mes
+    piso_premium: 'https://buy.stripe.com/14AbJ11tz3wu8RWgbM9fW05',   // Plan Piso Premium 5 días • 39,90 €/mes
+    chalet_2d: 'https://buy.stripe.com/9B6eVdc8deb8d8cgbM9fW00',      // Plan Chalet 2 días • 34,90 €/mes
+    chalet_plus: 'https://buy.stripe.com/dRm14n1tz4Ay5FK5x89fW01',    // Plan Chalet Plus 3 días • 39,90 €/mes
+    chalet_premium: 'https://buy.stripe.com/28EeVdfkpgjgd8cgbM9fW02', // Plan Chalet Premium 5 días • 49,90 €/mes
+    puntual: 'https://buy.stripe.com/5kQaEXgotaYW7NS4t49fW06'         // Servicio Puntual 1 día • 4,90 €
   }
 };
+
+// ============================================================================
+// GESTIÓN DINÁMICA DE CUPOS POR TURNO (20 Plazas Mañana / 20 Plazas Tarde)
+// ============================================================================
+const SHIFT_STATE = {
+  morning: { max: 20, booked: 0, available: 20, isFull: false },
+  afternoon: { max: 20, booked: 0, available: 20, isFull: false },
+  totalAvailable: 40,
+  totalFull: false,
+  loaded: false
+};
+
+/**
+ * Consulta la disponibilidad en tiempo real a Google Apps Script (doGet)
+ */
+function fetchShiftAvailability() {
+  if (!CONFIG.googleSheetWebhookUrl) return;
+
+  fetch(`${CONFIG.googleSheetWebhookUrl}?action=getAvailability&_t=${Date.now()}`)
+    .then(response => {
+      if (!response.ok) throw new Error('Error en consulta de disponibilidad');
+      return response.json();
+    })
+    .then(data => {
+      if (data && (data.status === 'success' || data.morning)) {
+        if (data.morning) {
+          SHIFT_STATE.morning = {
+            max: data.morning.max || 20,
+            booked: data.morning.booked || 0,
+            available: typeof data.morning.available === 'number' ? data.morning.available : Math.max(0, 20 - (data.morning.booked || 0)),
+            isFull: Boolean(data.morning.isFull || (data.morning.available <= 0))
+          };
+        }
+        if (data.afternoon) {
+          SHIFT_STATE.afternoon = {
+            max: data.afternoon.max || 20,
+            booked: data.afternoon.booked || 0,
+            available: typeof data.afternoon.available === 'number' ? data.afternoon.available : Math.max(0, 20 - (data.afternoon.booked || 0)),
+            isFull: Boolean(data.afternoon.isFull || (data.afternoon.available <= 0))
+          };
+        }
+        SHIFT_STATE.totalAvailable = SHIFT_STATE.morning.available + SHIFT_STATE.afternoon.available;
+        SHIFT_STATE.totalFull = SHIFT_STATE.morning.isFull && SHIFT_STATE.afternoon.isFull;
+        SHIFT_STATE.loaded = true;
+
+        updateShiftCapacityUI();
+      }
+    })
+    .catch(err => {
+      console.log('Disponibilidad de turnos inicializada con cupos por defecto (20/20):', err);
+      updateShiftCapacityUI();
+    });
+}
+
+/**
+ * Actualiza los badges de cupo, textos del desplegable y avisos de plazas
+ */
+function updateShiftCapacityUI() {
+  const timeSlotSelect = document.getElementById('clientTimeSlot');
+  const badgeText = document.getElementById('shiftCapacityStatusText');
+  const badgeContainer = document.getElementById('shiftCapacityStatusBadge');
+  const shiftCapacityDetails = document.getElementById('shiftCapacityDetails');
+  const morningText = document.getElementById('morningSlotText');
+  const morningDot = document.getElementById('morningSlotDot');
+  const afternoonText = document.getElementById('afternoonSlotText');
+  const afternoonDot = document.getElementById('afternoonSlotDot');
+
+  const currentPlanRadio = document.querySelector('input[name="service_plan"]:checked');
+  const isPunctual = currentPlanRadio && currentPlanRadio.value === 'puntual';
+
+  // Si es Servicio Puntual: no mostramos badges de plazas ni avisos de cupo mensual recurrente
+  if (isPunctual) {
+    if (badgeContainer) badgeContainer.classList.add('hidden');
+    if (shiftCapacityDetails) shiftCapacityDetails.classList.add('hidden');
+    if (timeSlotSelect) {
+      for (let opt of timeSlotSelect.options) {
+        if (opt.value.toLowerCase().includes('mañana') || opt.value.includes('09:00')) {
+          opt.text = 'Mañana (09:00 - 13:00 h)';
+        } else if (opt.value.toLowerCase().includes('tarde') || opt.value.includes('16:00')) {
+          opt.text = 'Tarde (16:00 - 20:00 h)';
+        }
+      }
+    }
+    const waitlistNotice = document.getElementById('waitlistNotice');
+    if (waitlistNotice) waitlistNotice.classList.add('hidden');
+    const submitBtn = document.getElementById('bookingSubmitBtn');
+    if (submitBtn) {
+      submitBtn.classList.remove('bg-amber-600', 'hover:bg-amber-700', 'shadow-amber-600/20');
+      submitBtn.classList.add('btn-primary');
+    }
+    const submitText = document.getElementById('bookingSubmitText');
+    if (submitText) submitText.textContent = 'Solicitar Servicio';
+    const submitIcon = document.getElementById('bookingSubmitIcon');
+    if (submitIcon) submitIcon.className = 'fa-solid fa-paper-plane text-lg';
+    return;
+  }
+
+  // Para Planes Mensuales (Pisos y Chalets): Mostrar badges e indicadores de plazas en vivo
+  if (badgeContainer) badgeContainer.classList.remove('hidden');
+  if (shiftCapacityDetails) shiftCapacityDetails.classList.remove('hidden');
+
+  const mAvail = SHIFT_STATE.morning.available;
+  const aAvail = SHIFT_STATE.afternoon.available;
+  const mFull = SHIFT_STATE.morning.isFull;
+  const aFull = SHIFT_STATE.afternoon.isFull;
+
+  // 1. Actualizar textos de las opciones del select
+  if (timeSlotSelect) {
+    let mLabel = `Mañana (09:00 - 13:00 h) — [${mAvail} plazas disponibles]`;
+    if (mFull) {
+      mLabel = `Mañana (09:00 - 13:00 h) — [COMPLETO • Lista de Espera]`;
+    } else if (mAvail <= 3) {
+      mLabel = `Mañana (09:00 - 13:00 h) — [¡Últimas ${mAvail} plazas!]`;
+    }
+
+    let aLabel = `Tarde (16:00 - 20:00 h) — [${aAvail} plazas disponibles]`;
+    if (aFull) {
+      aLabel = `Tarde (16:00 - 20:00 h) — [COMPLETO • Lista de Espera]`;
+    } else if (aAvail <= 3) {
+      aLabel = `Tarde (16:00 - 20:00 h) — [¡Últimas ${aAvail} plazas!]`;
+    }
+
+    for (let opt of timeSlotSelect.options) {
+      if (opt.value.toLowerCase().includes('mañana') || opt.value.includes('09:00')) {
+        opt.text = mLabel;
+      } else if (opt.value.toLowerCase().includes('tarde') || opt.value.includes('16:00')) {
+        opt.text = aLabel;
+      }
+    }
+  }
+
+  // 2. Indicadores de cada turno (Mañana y Tarde)
+  if (morningText && morningDot) {
+    if (mFull) {
+      morningDot.className = 'inline-block w-2 h-2 rounded-full bg-red-500';
+      morningText.innerHTML = `<strong>Mañana:</strong> <span class="font-bold text-red-600">Completo (0 plazas)</span>`;
+    } else if (mAvail <= 3) {
+      morningDot.className = 'inline-block w-2 h-2 rounded-full bg-amber-500 animate-pulse';
+      morningText.innerHTML = `<strong>Mañana:</strong> <span class="font-bold text-amber-700">¡Últimas ${mAvail} plazas!</span>`;
+    } else {
+      morningDot.className = 'inline-block w-2 h-2 rounded-full bg-emerald-500';
+      morningText.innerHTML = `<strong>Mañana:</strong> <span class="font-bold text-[#1E5E44]">${mAvail} plazas libres</span>`;
+    }
+  }
+
+  if (afternoonText && afternoonDot) {
+    if (aFull) {
+      afternoonDot.className = 'inline-block w-2 h-2 rounded-full bg-red-500';
+      afternoonText.innerHTML = `<strong>Tarde:</strong> <span class="font-bold text-red-600">Completo (0 plazas)</span>`;
+    } else if (aAvail <= 3) {
+      afternoonDot.className = 'inline-block w-2 h-2 rounded-full bg-amber-500 animate-pulse';
+      afternoonText.innerHTML = `<strong>Tarde:</strong> <span class="font-bold text-amber-700">¡Últimas ${aAvail} plazas!</span>`;
+    } else {
+      afternoonDot.className = 'inline-block w-2 h-2 rounded-full bg-emerald-500';
+      afternoonText.innerHTML = `<strong>Tarde:</strong> <span class="font-bold text-[#1E5E44]">${aAvail} plazas libres</span>`;
+    }
+  }
+
+  // 3. Badge global superior
+  if (badgeText && badgeContainer) {
+    const totAvail = mAvail + aAvail;
+    if (totAvail <= 0) {
+      badgeContainer.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-800 inline-flex items-center gap-1';
+      badgeText.textContent = 'Cupos completos • Lista de Espera';
+    } else if (totAvail <= 5) {
+      badgeContainer.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 inline-flex items-center gap-1';
+      badgeText.textContent = `¡Últimas ${totAvail} plazas libres!`;
+    } else {
+      badgeContainer.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-[#1E5E44] inline-flex items-center gap-1';
+      badgeText.textContent = `${totAvail} plazas disponibles`;
+    }
+  }
+
+  // 4. Evaluar estado del turno actualmente seleccionado
+  checkCurrentSelectedShiftWaitlist();
+}
+
+/**
+ * Comprueba si el turno seleccionado en el formulario está lleno y activa el modo Lista de Espera
+ */
+function checkCurrentSelectedShiftWaitlist() {
+  const timeSlotSelect = document.getElementById('clientTimeSlot');
+  const waitlistNotice = document.getElementById('waitlistNotice');
+  const waitlistNoticeTitle = document.getElementById('waitlistNoticeTitle');
+  const waitlistNoticeDesc = document.getElementById('waitlistNoticeDesc');
+  const submitBtn = document.getElementById('bookingSubmitBtn');
+  const submitIcon = document.getElementById('bookingSubmitIcon');
+  const submitText = document.getElementById('bookingSubmitText');
+
+  const currentPlanRadio = document.querySelector('input[name="service_plan"]:checked');
+  const isPunctual = currentPlanRadio && currentPlanRadio.value === 'puntual';
+
+  // Si es puntual: nunca entra en lista de espera de cupo mensual recurrente
+  if (isPunctual) {
+    if (waitlistNotice) waitlistNotice.classList.add('hidden');
+    if (submitBtn) {
+      submitBtn.classList.remove('bg-amber-600', 'hover:bg-amber-700', 'shadow-amber-600/20');
+      submitBtn.classList.add('btn-primary');
+      if (submitIcon) submitIcon.className = 'fa-solid fa-paper-plane text-lg';
+      if (submitText) submitText.textContent = 'Solicitar Servicio';
+    }
+    return;
+  }
+
+  if (!timeSlotSelect) return;
+
+  const currentVal = timeSlotSelect.value;
+  const isMorning = currentVal.toLowerCase().includes('mañana') || currentVal.includes('09:00');
+  const isSelectedShiftFull = isMorning ? SHIFT_STATE.morning.isFull : SHIFT_STATE.afternoon.isFull;
+  const otherShiftAvail = isMorning ? SHIFT_STATE.afternoon.available : SHIFT_STATE.morning.available;
+  const otherShiftName = isMorning ? 'Turno de Tarde (16:00 - 20:00 h)' : 'Turno de Mañana (09:00 - 13:00 h)';
+
+  if (isSelectedShiftFull) {
+    if (waitlistNotice) {
+      waitlistNotice.classList.remove('hidden');
+      if (waitlistNoticeTitle) {
+        waitlistNoticeTitle.textContent = `Turno de ${isMorning ? 'Mañana' : 'Tarde'} Completo (20/20 plazas cubiertas)`;
+      }
+      if (waitlistNoticeDesc) {
+        if (otherShiftAvail > 0) {
+          waitlistNoticeDesc.innerHTML = `Las 20 plazas de este turno están cubiertas para asegurar la puntualidad del servicio. Puedes unirte a la <strong>Lista de Espera Prioritaria</strong> con el botón inferior o seleccionar el <strong>${otherShiftName}</strong> (${otherShiftAvail} plazas disponibles).`;
+        } else {
+          waitlistNoticeDesc.innerHTML = `Todas las plazas del día están cubiertas (40/40). Al enviar tu solicitud entrarás en el <strong>puesto nº 1 de la Lista de Espera Prioritaria</strong> y te avisaremos en cuanto se libere una vacante.`;
+        }
+      }
+    }
+
+    if (submitBtn) {
+      submitBtn.classList.remove('btn-primary');
+      submitBtn.classList.add('bg-amber-600', 'hover:bg-amber-700', 'text-white', 'shadow-lg', 'shadow-amber-600/20');
+      if (submitIcon) submitIcon.className = 'fa-solid fa-hourglass-half text-lg';
+      if (submitText) submitText.textContent = 'Unirme a la Lista de Espera Prioritaria';
+    }
+  } else {
+    if (waitlistNotice) {
+      waitlistNotice.classList.add('hidden');
+    }
+    if (submitBtn) {
+      submitBtn.classList.remove('bg-amber-600', 'hover:bg-amber-700', 'shadow-amber-600/20');
+      submitBtn.classList.add('btn-primary');
+      if (submitIcon) submitIcon.className = 'fa-solid fa-paper-plane text-lg';
+      if (submitText) submitText.textContent = 'Solicitar Servicio';
+    }
+  }
+}
 
 /**
  * 1. Cabecera con efecto de desplazamiento (Glass Header)
@@ -355,38 +613,17 @@ function updatePaymentOptions(planKey) {
 
   if (!paymentSelect) return;
 
-  const currentVal = paymentSelect.value;
+  // Tarjeta bancaria como único método de pago 100% seguro (Stripe) para todos los servicios
+  paymentSelect.innerHTML = `
+    <option value="Tarjeta bancaria (Débito / Crédito)" selected>Tarjeta bancaria (Débito / Crédito)</option>
+  `;
+  paymentSelect.value = 'Tarjeta bancaria (Débito / Crédito)';
 
-  if (planKey === 'puntual') {
-    // Servicio puntual: Tarjeta o Efectivo en mano
-    paymentSelect.innerHTML = `
-      <option value="Tarjeta bancaria (Débito / Crédito)" ${currentVal.includes('Tarjeta') || !currentVal ? 'selected' : ''}>Tarjeta bancaria</option>
-      <option value="Efectivo en mano (en el traslado)" ${currentVal.includes('Efectivo') ? 'selected' : ''}>Efectivo en mano</option>
-    `;
-    if (currentVal.includes('Domiciliación') || !currentVal) {
-      paymentSelect.value = 'Tarjeta bancaria (Débito / Crédito)';
-    }
-    if (paymentNotice) {
-      paymentNotice.innerHTML = `<i class="fa-solid fa-circle-info text-[#25815F]"></i> Para el <strong>servicio puntual</strong> el pago se realiza mediante <strong>Tarjeta o Efectivo en mano</strong> (la domiciliación bancaria no está disponible en servicios puntuales).`;
-    }
-    if (summaryPayment) {
-      summaryPayment.textContent = 'Pago: Tarjeta o Efectivo';
-    }
-  } else {
-    // Todos los planes mensuales (Pisos y Chalets): Domiciliación SEPA o Tarjeta
-    paymentSelect.innerHTML = `
-      <option value="Domiciliación bancaria (SEPA)" ${currentVal.includes('Domiciliación') || !currentVal ? 'selected' : ''}>Domiciliación bancaria (SEPA)</option>
-      <option value="Tarjeta bancaria (Débito / Crédito)" ${currentVal.includes('Tarjeta') ? 'selected' : ''}>Tarjeta bancaria</option>
-    `;
-    if (currentVal.includes('Efectivo') || !currentVal) {
-      paymentSelect.value = 'Domiciliación bancaria (SEPA)';
-    }
-    if (paymentNotice) {
-      paymentNotice.innerHTML = `<i class="fa-solid fa-circle-info text-[#25815F]"></i> Para los <strong>planes mensuales</strong> el pago se realiza mediante <strong>Domiciliación bancaria o Tarjeta</strong> (el pago en efectivo <em>no</em> está admitido en planes mensuales).`;
-    }
-    if (summaryPayment) {
-      summaryPayment.textContent = 'Pago: Domiciliación o Tarjeta';
-    }
+  if (paymentNotice) {
+    paymentNotice.innerHTML = `<i class="fa-solid fa-circle-info text-[#25815F]"></i> Pago 100% seguro con <strong>Tarjeta bancaria (Débito / Crédito)</strong> mediante la pasarela oficial cifrada de Stripe.`;
+  }
+  if (summaryPayment) {
+    summaryPayment.textContent = 'Pago: Tarjeta bancaria';
   }
 }
 
@@ -656,6 +893,7 @@ function updateOrderSummary(planKey) {
 
   updatePaymentOptions(planKey);
   updateDayOptions(planKey);
+  updateShiftCapacityUI();
 }
 
 /**
@@ -815,6 +1053,16 @@ function initBookingForm() {
   const initialPlan = initialPlanRadio ? initialPlanRadio.value : 'piso_plus';
   updateOrderSummary(initialPlan);
 
+  // Consultar disponibilidad de plazas en tiempo real
+  fetchShiftAvailability();
+
+  // Escuchar cambios en la franja horaria para advertir de lista de espera si está completo
+  if (timeSlotSelect) {
+    timeSlotSelect.addEventListener('change', () => {
+      checkCurrentSelectedShiftWaitlist();
+    });
+  }
+
   // Escuchar cambios en el selector de días para actualizar avisos de antelación
   if (daysSelect) {
     daysSelect.addEventListener('change', () => {
@@ -904,7 +1152,7 @@ function initBookingForm() {
 
     // Validación estricta de selección de código postal obligatorio
     if (!formData.zip || formData.zip.trim() === '') {
-      showToast('⚠️ Por favor selecciona tu Código Postal / Sector de Rivas obligatorio.', 'warning');
+      showToast('⚠️ Por favor selecciona tu Código Postal / Sector obligatorio.', 'warning');
       if (zipSelect) {
         zipSelect.focus();
         zipSelect.classList.add('border-red-500', 'ring-2', 'ring-red-200');
@@ -926,7 +1174,7 @@ function initBookingForm() {
 
     // Validación de nombre de vía y número
     if (!formData.streetName || formData.streetName.trim() === '') {
-      showToast('⚠️ Por favor indica el nombre de la vía y el número en Rivas.', 'warning');
+      showToast('⚠️ Por favor indica el nombre de la vía y el número.', 'warning');
       if (addressInput) {
         addressInput.focus();
         addressInput.classList.add('border-red-500', 'ring-2', 'ring-red-200');
@@ -975,28 +1223,39 @@ function initBookingForm() {
       }
     }
 
-    // Validar exclusiones de pago según el plan
-    if (formData.plan !== 'puntual' && formData.paymentMethod.toLowerCase().includes('efectivo')) {
-      showToast('⚠️ Los planes mensuales no admiten pago en efectivo. Por favor selecciona Domiciliación bancaria o Tarjeta.', 'warning');
-      updatePaymentOptions(formData.plan);
-      return;
-    }
-
-    if (formData.plan === 'puntual' && formData.paymentMethod.toLowerCase().includes('domiciliación')) {
-      showToast('⚠️ El servicio puntual solo admite Tarjeta o Efectivo. Por favor selecciona una de estas opciones.', 'warning');
-      updatePaymentOptions('puntual');
-      return;
-    }
-
     const modalPlan = document.getElementById('modalPlanSelected');
     const modalClient = document.getElementById('modalClientName');
     const modalStartDate = document.getElementById('modalStartDateText');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalIconContainer = document.getElementById('modalIconContainer');
+    const modalIcon = document.getElementById('modalIcon');
+    const modalStartDateBox = document.getElementById('modalStartDateBox');
+    const modalWaitlistInfo = document.getElementById('modalWaitlistInfo');
     const dateInfo = getServiceStartDateInfo(formData.plan);
 
     const basePlanName = CONFIG.plans[formData.plan]?.name || 'Plan Seleccionado';
     if (modalPlan) modalPlan.textContent = basePlanName;
     if (modalClient) modalClient.textContent = formData.name;
     if (modalStartDate) modalStartDate.textContent = dateInfo.modalText;
+
+    // Adaptar modal si es registro en lista de espera
+    if (formData.isWaitlist) {
+      if (modalTitle) modalTitle.textContent = '¡Añadido a Lista de Espera!';
+      if (modalIconContainer) {
+        modalIconContainer.className = 'w-16 h-16 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-3xl mx-auto';
+      }
+      if (modalIcon) modalIcon.className = 'fa-solid fa-hourglass-half';
+      if (modalStartDateBox) modalStartDateBox.classList.add('hidden');
+      if (modalWaitlistInfo) modalWaitlistInfo.classList.remove('hidden');
+    } else {
+      if (modalTitle) modalTitle.textContent = '¡Solicitud Recibida!';
+      if (modalIconContainer) {
+        modalIconContainer.className = 'w-16 h-16 rounded-full bg-emerald-100 text-[#25815F] flex items-center justify-center text-3xl mx-auto';
+      }
+      if (modalIcon) modalIcon.className = 'fa-solid fa-circle-check';
+      if (modalStartDateBox) modalStartDateBox.classList.remove('hidden');
+      if (modalWaitlistInfo) modalWaitlistInfo.classList.add('hidden');
+    }
 
     // Sincronización automática con Google Sheets y Gmail si el Webhook está configurado
     if (CONFIG.googleSheetWebhookUrl) {
@@ -1012,15 +1271,46 @@ function initBookingForm() {
       });
     }
 
+    // Comprobar si hay un enlace de pago de Stripe configurado para este plan
+    const stripePaymentUrl = (CONFIG.stripeLinks && CONFIG.stripeLinks[formData.plan]) ? CONFIG.stripeLinks[formData.plan].trim() : '';
+    const hasActiveStripeLink = stripePaymentUrl.startsWith('https://buy.stripe.com') || stripePaymentUrl.startsWith('https://checkout.stripe.com');
+
+    // Si NO es lista de espera y hay enlace de Stripe activo -> Redirigir a pasarela de pago segura
+    if (!formData.isWaitlist && hasActiveStripeLink) {
+      let finalStripeUrl = stripePaymentUrl;
+      const separator = finalStripeUrl.includes('?') ? '&' : '?';
+      if (formData.email) {
+        finalStripeUrl += `${separator}prefilled_email=${encodeURIComponent(formData.email)}`;
+      }
+      if (formData.phone) {
+        const phoneClean = (formData.phone || '').replace(/[^0-9]/g, '');
+        finalStripeUrl += `${finalStripeUrl.includes('?') ? '&' : '?'}client_reference_id=${encodeURIComponent(phoneClean)}`;
+      }
+
+      showToast('🔒 Solicitud guardada. Redirigiendo a la pasarela de pago seguro de Stripe...', 'success');
+
+      setTimeout(() => {
+        window.location.href = finalStripeUrl;
+      }, 800);
+
+      return;
+    }
+
+    // Si es lista de espera o si aún no se han pegado los enlaces de Stripe -> Mostrar modal de confirmación en la web
     if (submitModal) {
       submitModal.classList.remove('hidden');
     } else {
-      showToast('✅ ¡Solicitud enviada con éxito! Nos pondremos en contacto contigo.');
+      if (formData.isWaitlist) {
+        showToast('⏳ ¡Añadido a la Lista de Espera Prioritaria! Te avisaremos en cuanto haya vacante.');
+      } else {
+        showToast('✅ ¡Solicitud enviada con éxito! Nos pondremos en contacto contigo.');
+      }
     }
 
     form.reset();
     switchFormCategory('pisos');
     updateOrderSummary('piso_plus');
+    fetchShiftAvailability();
 
     // Restaurar sugerencia de email guardado si existe
     if (savedEmail && emailDatalist) {
@@ -1056,22 +1346,32 @@ function getFormData() {
     if (!cleanStreetName) cleanStreetName = rawStreetInput;
   }
   
-  // Si el usuario puso el número de calle en el campo de puerta/piso (ej. streetName: "Juan Gris", door: "4, 2º B" o "4"),
+  // Si el usuario puso el número de calle en el campo de puerta/piso (ej. streetName: "Juan Gris", door: "4, 2º B" o "4B" o "4 B"),
   // transferimos el número a la calle para que "Calle / Vía y Nº" tenga SIEMPRE el número y "Piso / Puerta" solo el piso
   if (!/\d+/.test(cleanStreetName) && door) {
     const doorSinPrefijo = door.replace(/^(?:n[º°ª\.\/\-]?\s*|n[uú]mero\s*|num\.\s*|n\s*)/i, '');
-    const matchCompuesto = doorSinPrefijo.match(/^(\d+)(?:\s*([a-zA-Z]))?\s*(?:[,\-\/\.]\s*|\s+(?:portal|bloque|esc|escalera|piso|pta|puerta|bajo|ático|atico)\b)\s*(.*)$/i);
+    let numExtraido = '';
+    const matchCompuesto = doorSinPrefijo.match(/^(\d+)(?:\s*([a-zA-Z]))?\s*(?:[,\-\/\.]\s*|\s+(?:portal|bloque|esc|escalera|piso|pta|puerta|bajo|ático|atico|\d+[ºª°])\b)\s*(.*)$/i);
     if (matchCompuesto) {
-      const numExt = matchCompuesto[1] + (matchCompuesto[2] ? matchCompuesto[2].toUpperCase() : '');
-      const pisoRest = (matchCompuesto[3] || '').trim();
-      cleanStreetName = cleanStreetName + ', ' + numExt;
-      door = pisoRest;
+      numExtraido = matchCompuesto[1] + (matchCompuesto[2] ? matchCompuesto[2].toUpperCase() : '');
+      door = (matchCompuesto[3] || '').trim();
     } else {
-      const matchSoloNum = doorSinPrefijo.match(/^(\d+)$/);
-      if (matchSoloNum) {
-        cleanStreetName = cleanStreetName + ', ' + matchSoloNum[1];
-        door = '';
+      const matchEspacio = doorSinPrefijo.match(/^(\d+)\s+([a-zA-Z0-9ºª°\s\.\,\-]+)$/i);
+      if (matchEspacio) {
+        numExtraido = matchEspacio[1];
+        door = matchEspacio[2].trim();
+      } else {
+        const matchSoloNum = doorSinPrefijo.match(/^(\d+)([a-zA-Z])?$/i);
+        if (matchSoloNum) {
+          numExtraido = matchSoloNum[1] + (matchSoloNum[2] ? matchSoloNum[2].toUpperCase() : '');
+          door = '';
+        }
       }
+    }
+
+    if (numExtraido) {
+      const sep = (cleanStreetName.endsWith(',') || cleanStreetName.endsWith('.')) ? ' ' : ', ';
+      cleanStreetName = cleanStreetName + sep + numExtraido;
     }
   } else if (/\d+/.test(cleanStreetName) && door) {
     // Si la calle ya tiene número (ej. "Calle Juan Gris, 4")
@@ -1106,11 +1406,16 @@ function getFormData() {
 
   const timeSlot = document.getElementById('clientTimeSlot')?.value || 'Turno Mañana (09:00 - 13:00 h)';
   const days = document.getElementById('clientDays')?.value || '3 Servicios semanales: Lunes, Miércoles y Viernes';
-  const paymentMethod = document.getElementById('clientPayment')?.value || 'Domiciliación bancaria (SEPA)';
+  const paymentMethod = document.getElementById('clientPayment')?.value || 'Tarjeta bancaria (Débito / Crédito)';
   const referral = document.getElementById('clientReferral')?.value.trim() || '';
   const notes = document.getElementById('clientNotes')?.value.trim() || '';
 
-  return { plan: selectedPlan, planName, startDate, name, phone, email, streetType, streetName: cleanStreetName, door, rawAddress, address, zip, timeSlot, days, paymentMethod, referral, notes };
+  // Determinar si este registro va a Lista de Espera por cupo completo (solo planes mensuales)
+  const isPunctual = selectedPlan === 'puntual';
+  const isMorning = timeSlot.toLowerCase().includes('mañana') || timeSlot.includes('09:00');
+  const isWaitlist = isPunctual ? false : Boolean(isMorning ? SHIFT_STATE.morning.isFull : SHIFT_STATE.afternoon.isFull);
+
+  return { plan: selectedPlan, planName, startDate, name, phone, email, streetType, streetName: cleanStreetName, door, rawAddress, address, zip, timeSlot, days, paymentMethod, referral, notes, isWaitlist };
 }
 
 /**
@@ -1138,7 +1443,7 @@ function initCoverageChecker() {
   checkBtn.addEventListener('click', () => {
     const inputVal = zipInput.value.trim();
     if (!inputVal || inputVal.length < 2) {
-      showCoverageResult('Por favor introduce tu código postal o barrio de Rivas-Vaciamadrid (ej. 28521, 28522, 28523, Covibar, Pablo Iglesias...)', 'warning');
+      showCoverageResult('Por favor introduce tu código postal o barrio (ej. 28521, 28522, 28523, Covibar, Almendros...)', 'warning');
       return;
     }
     verifyCoverage(inputVal);
@@ -1153,7 +1458,7 @@ function initCoverageChecker() {
 
   function verifyCoverage(inputVal) {
     const cleanInput = inputVal.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    showCoverageResult('⏳ Verificando rutas activas en Rivas-Vaciamadrid...', 'loading');
+    showCoverageResult('⏳ Verificando rutas activas...', 'loading');
 
     setTimeout(() => {
       let matchedSector = null;
@@ -1170,9 +1475,9 @@ function initCoverageChecker() {
       // Comprobación si escribe simplemente Rivas o Vaciamadrid
       if (!matchedSector && (cleanInput.includes('rivas') || cleanInput.includes('vaciamadrid'))) {
         matchedSector = {
-          cp: '28521 - 28525 (Rivas-Vaciamadrid)',
-          name: 'Municipio de Rivas-Vaciamadrid',
-          description: 'Casco Antiguo, Rivas Futura, Covibar, Almendros, Pablo Iglesias y Nuevos Desarrollos.'
+          cp: '28521 - 28525',
+          name: 'Zona Activa',
+          description: 'Casco Antiguo, Sector Central, Covibar, Almendros, Pablo Iglesias y Nuevos Desarrollos.'
         };
       }
 
@@ -1189,7 +1494,7 @@ function initCoverageChecker() {
           });
         }
       } else {
-        showCoverageResult(`📍 De momento el servicio solo está disponible para <strong>Rivas-Vaciamadrid</strong> (CP 28521, 28522, 28523, 28524 y 28525). Estamos trabajando para abrir nuevas rutas próximamente.`, 'warning');
+        showCoverageResult(`📍 De momento el servicio está activo para los códigos postales <strong>28521, 28522, 28523, 28524 y 28525</strong>. Estamos trabajando en la apertura de nuevas zonas y rutas próximamente.`, 'warning');
       }
     }, 400);
   }

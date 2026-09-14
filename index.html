@@ -57,7 +57,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="css/styles.css?v=13">
+  <link rel="stylesheet" href="css/styles.css?v=14">
 </head>
 <body class="bg-[#F8FAF9] text-[#2D3748] font-sans antialiased selection:bg-[#25815F] selection:text-white">
 
@@ -319,7 +319,7 @@
               <div class="bg-white p-2.5 rounded-xl border border-gray-200 hover:border-[#25815F] transition-all">
                 <span class="text-[10px] uppercase font-bold tracking-wider text-gray-500">Puntual</span>
                 <div class="text-base sm:text-lg font-extrabold text-gray-800">4,90€</div>
-                <span class="text-[10px] text-amber-600 font-semibold block">Tarjeta / Efectivo</span>
+                <span class="text-[10px] text-amber-600 font-semibold block">Tarjeta bancaria</span>
               </div>
             </div>
 
@@ -628,7 +628,7 @@
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
-                <span><strong>Pago mensual:</strong> Domiciliación SEPA o Tarjeta (no efectivo).</span>
+                <span><strong>Pago seguro:</strong> Tarjeta bancaria (Débito/Crédito).</span>
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
@@ -690,7 +690,7 @@
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
-                <span><strong>Pago mensual:</strong> Domiciliación SEPA o Tarjeta (no efectivo).</span>
+                <span><strong>Pago seguro:</strong> Tarjeta bancaria (Débito/Crédito).</span>
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
@@ -748,7 +748,7 @@
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
-                <span><strong>Pago mensual:</strong> Domiciliación SEPA o Tarjeta (no efectivo).</span>
+                <span><strong>Pago seguro:</strong> Tarjeta bancaria (Débito/Crédito).</span>
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
@@ -811,7 +811,7 @@
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
-                <span><strong>Pago mensual:</strong> Domiciliación SEPA o Tarjeta (no efectivo).</span>
+                <span><strong>Pago seguro:</strong> Tarjeta bancaria (Débito/Crédito).</span>
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
@@ -873,7 +873,7 @@
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
-                <span><strong>Pago mensual:</strong> Domiciliación SEPA o Tarjeta (no efectivo).</span>
+                <span><strong>Pago seguro:</strong> Tarjeta bancaria (Débito/Crédito).</span>
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
@@ -931,7 +931,7 @@
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
-                <span><strong>Pago mensual:</strong> Domiciliación SEPA o Tarjeta (no efectivo).</span>
+                <span><strong>Pago seguro:</strong> Tarjeta bancaria (Débito/Crédito).</span>
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
@@ -987,7 +987,7 @@
             </div>
             <h3 class="text-xl sm:text-2xl font-bold text-[#1E1E1E]">¿Prefieres una Recogida Puntual sin cuotas?</h3>
             <p class="text-sm text-gray-600 max-w-2xl">
-              Para días concretos, limpiezas o emergencias. <strong>4,90 € / servicio</strong> con pago por Tarjeta o Efectivo en mano. Elige cualquier día de Lunes a Viernes (solicitud para el mismo día: hasta las <strong>11:00 h</strong> en Mañana o hasta las <strong>18:00 h</strong> en Tarde).
+              Para días concretos, limpiezas o emergencias. <strong>4,90 € / servicio</strong> con pago 100% seguro con Tarjeta bancaria. Elige cualquier día de Lunes a Viernes (solicitud para el mismo día: hasta las <strong>11:00 h</strong> en Mañana o hasta las <strong>18:00 h</strong> en Tarde).
             </p>
           </div>
         </div>
@@ -1540,8 +1540,7 @@
               <div>
                 <label for="clientPayment" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Forma de Pago *</label>
                 <select id="clientPayment" name="payment-method" class="custom-input">
-                  <option value="Domiciliación bancaria (SEPA)" selected>Domiciliación bancaria (SEPA)</option>
-                  <option value="Tarjeta bancaria (Débito / Crédito)">Tarjeta bancaria</option>
+                  <option value="Tarjeta bancaria (Débito / Crédito)" selected>Tarjeta bancaria (Débito / Crédito)</option>
                 </select>
               </div>
             </div>
@@ -1572,7 +1571,7 @@
             </div>
 
             <p id="paymentNotice" class="text-[11px] text-gray-500 italic">
-              <i class="fa-solid fa-circle-info text-[#25815F]"></i> Para los <strong>planes mensuales</strong> el pago se realiza mediante <strong>Domiciliación bancaria o Tarjeta</strong> (el pago en efectivo <em>no</em> está admitido en suscripciones).
+              <i class="fa-solid fa-circle-info text-[#25815F]"></i> Pago 100% seguro con <strong>Tarjeta bancaria (Débito / Crédito)</strong> mediante la pasarela oficial cifrada de Stripe.
             </p>
 
             <!-- Plan Amigo Vecinal (Recomendación de Vecino) Field -->
@@ -1645,7 +1644,7 @@
               </div>
               <div class="flex items-center gap-2">
                 <i class="fa-solid fa-wallet text-[#25815F]"></i>
-                <span id="summaryPaymentMethods">Pago: Domiciliación o Tarjeta</span>
+                <span id="summaryPaymentMethods">Pago: Tarjeta bancaria</span>
               </div>
               <div class="flex items-center gap-2">
                 <i class="fa-solid fa-shield-check text-[#25815F]"></i>
@@ -1833,12 +1832,12 @@
         <!-- FAQ 4: Formas de pago -->
         <div class="faq-item clean-card overflow-hidden">
           <button class="faq-header w-full p-6 text-left flex items-center justify-between gap-4 font-bold text-gray-900 hover:text-[#25815F] transition-colors focus:outline-none">
-            <span class="text-base sm:text-lg">¿Cómo se realizan los pagos? (Tarjeta, Efectivo, Domiciliación)</span>
+            <span class="text-base sm:text-lg">¿Cómo se realizan los pagos? (Tarjeta bancaria segura)</span>
             <i class="fa-solid fa-chevron-down faq-chevron text-gray-400 transition-transform duration-300"></i>
           </button>
           <div class="faq-content px-6 pb-6 text-sm text-gray-600 leading-relaxed">
-            • <strong>Planes Mensuales (Suscripciones Pisos y Chalets):</strong> Se abonan cómodamente mediante <strong>Domiciliación bancaria (SEPA)</strong> o <strong>Tarjeta bancaria</strong> con factura mensual automática. <em>No se admite pago en efectivo para suscripciones mensuales</em>.<br><br>
-            • <strong>Servicio Puntual (4,90 €):</strong> Se abona mediante <strong>Tarjeta bancaria</strong> o <strong>Efectivo en mano</strong> en el momento del servicio (la domiciliación bancaria <em>no</em> está disponible para servicios puntuales).
+            • <strong>Planes Mensuales y Servicio Puntual:</strong> Todos los pagos se realizan de forma 100% segura mediante <strong>Tarjeta bancaria (Débito / Crédito)</strong> a través de la pasarela oficial cifrada de Stripe con factura y recibo automático.<br><br>
+            • <strong>Seguridad y Comodidad:</strong> No necesitas efectivo ni trámites bancarios complejos; los cobros de tus suscripciones mensuales o servicios puntuales se gestionan automáticamente y puedes darte de baja en cualquier momento sin permanencia.
           </div>
         </div>
 
@@ -2174,7 +2173,7 @@
           <ul class="space-y-2 text-xs text-gray-400">
             <li><a href="#tarifas" class="hover:text-[#25815F] transition-colors">Planes Pisos (Desde 24,90 €/mes • ¡Depósito desde 0,99€!)</a></li>
             <li><a href="#tarifas" class="hover:text-[#25815F] transition-colors">Planes Chalets (Desde 34,90 €/mes • Depósito desde 1,25€)</a></li>
-            <li><a href="#tarifas" class="hover:text-[#25815F] transition-colors">Servicio Puntual (4,90 € • Tarjeta/Efectivo)</a></li>
+            <li><a href="#tarifas" class="hover:text-[#25815F] transition-colors">Servicio Puntual (4,90 € • Tarjeta)</a></li>
             <li><a href="#para-quien" class="hover:text-[#25815F] transition-colors">Descuento Vecinal Agrupado</a></li>
             <li><a href="#para-quien" class="hover:text-[#25815F] transition-colors">Personas Mayores y Movilidad</a></li>
           </ul>
@@ -2342,8 +2341,8 @@
 
           <h4 class="font-bold text-sm text-gray-900">3. Formas de Pago y Modalidades de Contratación</h4>
           <p>
-            • <strong>Planes Mensuales (Suscripción):</strong> El pago se efectúa mediante Domiciliación bancaria (SEPA) o Tarjeta bancaria mensual. No se admite efectivo en suscripciones mensuales. No existe permanencia mínima; el usuario puede solicitar la baja avisando antes del inicio del siguiente ciclo mensual.<br>
-            • <strong>Servicio Puntual (4,90 €):</strong> Se abona mediante Tarjeta bancaria o Efectivo en mano al asistente en el momento de la prestación.
+            • <strong>Planes Mensuales (Suscripción):</strong> El pago se efectúa mediante Tarjeta bancaria a través de la pasarela oficial segura de Stripe. No existe permanencia mínima; el usuario puede cancelar su suscripción en cualquier momento antes del inicio del siguiente ciclo mensual.<br>
+            • <strong>Servicio Puntual (4,90 €):</strong> Se abona mediante Tarjeta bancaria de forma 100% segura a través de la plataforma de pago.
           </p>
 
           <h4 class="font-bold text-sm text-gray-900">4. Inicio del Servicio</h4>
@@ -2449,6 +2448,6 @@
   </div>
 
   <!-- Javascript -->
-  <script src="js/app.js?v=13"></script>
+  <script src="js/app.js?v=14"></script>
 </body>
 </html>
