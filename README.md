@@ -8,27 +8,23 @@ Sitio web corporativo y de contratación directa para **Te La Tiro**, empresa es
 
 1. **Tarifas Oficiales y Frecuencias**:
    - **Pisos y Apartamentos**:
-     - **Plan Piso (2 días)**: `24,90 € / mes` • *Martes y Jueves* (~1,55 € / depósito)
      - **Plan Piso Plus (3 días)**: `29,90 € / mes` • *Lunes, Miércoles y Viernes* (~1,25 € / depósito)
      - **Plan Piso Premium (5 días)**: `39,90 € / mes` • *Lunes a Viernes completo* (~0,99 € / depósito)
    - **Casas y Chalets**:
-     - **Plan Casa/Chalet (2 días)**: `34,90 € / mes` • *Martes y Jueves* (~2,18 € / depósito)
      - **Plan Casa/Chalet Plus (3 días)**: `39,90 € / mes` • *Lunes, Miércoles y Viernes* (~1,66 € / depósito)
      - **Plan Casa/Chalet Premium (5 días)**: `49,90 € / mes` • *Lunes a Viernes completo* (~1,25 € / depósito)
    - **Plan Especial Comunidades de Propietarios (10+ Vecinos)**:
      - **5 € de descuento directo al mes para cada vecino** si en la misma finca, bloque o urbanización se suscriben 10 o más viviendas:
-       - *Piso (2d)*: `19,90 € / mes` (~1,24 € / depósito)
        - *Piso Plus (3d)*: `24,90 € / mes` (~1,03 € / depósito)
        - *Piso Premium (5d)*: `34,90 € / mes` (~0,87 € / depósito)
-       - *Chalets (2d/3d/5d)*: `29,90 €` / `34,90 €` / `44,90 € / mes`
+       - *Chalets (3d/5d)*: `34,90 €` / `44,90 € / mes`
    - **Plan Amigo Vecinal (Recomendación)**:
      - **5 € de descuento para cada uno**: 5 € de descuento puntual en la 2ª mensualidad del nuevo vecino suscrito y 5 € de descuento en el próximo recibo del vecino que lo recomendó.
    - **Servicio Puntual**:
      - `4,90 € / servicio` • *1 día a elegir de Lunes a Viernes* (mismo día: máx. hasta las **11:00 h** para Mañana o hasta las **18:00 h** para Tarde)
 
 2. **Formas de Pago**:
-   - **Planes Mensuales (Suscripciones Pisos, Chalets y Comunidades)**: Pago mediante **Domiciliación bancaria (SEPA)** o **Tarjeta bancaria** (*no admite efectivo*).
-   - **Servicio Puntual (4,90 €)**: Pago mediante **Tarjeta bancaria** o **Efectivo en mano** en el momento del traslado (*no admite domiciliación bancaria*).
+   - **Planes Mensuales y Servicio Puntual**: Pago 100% seguro mediante **Tarjeta bancaria (Débito / Crédito)** a través de la pasarela oficial cifrada de Stripe.
 
 3. **2 Franjas Horarias Disponibles**:
    - **Turno de Mañana**: De `09:00 a 13:00 h` *(Bolsas preparadas a las **09:00 h**)*

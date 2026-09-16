@@ -43,14 +43,14 @@ const CONFIG = {
     '28521': {
       cp: '28521',
       name: 'Casco Antiguo y Zona Este',
-      description: 'Casco Antiguo y zona este de Vaciamadrid.',
+      description: 'Casco Antiguo y zona este.',
       keywords: ['28521', 'casco antiguo', 'casco', 'este', 'vaciamadrid']
     },
     '28522': {
       cp: '28522',
-      name: 'Sector Central y Rivas Futura',
-      description: 'Sector Central y la zona comercial de Rivas Futura.',
-      keywords: ['28522', 'sector central', 'futura', 'rivas futura', 'central']
+      name: 'Sector Central y Zona Futura',
+      description: 'Sector Central y zona comercial.',
+      keywords: ['28522', 'sector central', 'futura', 'central']
     },
     '28523': {
       cp: '28523',
@@ -71,7 +71,7 @@ const CONFIG = {
       category: 'pisos',
       price: '24,90 €',
       period: '/ mes',
-      costPerBag: '¡Desde 1,55 € por depósito!',
+      costPerBag: '¡Desde 1,55 € por bolsa!',
       frequency: 'Nº de Servicios: 2 días a la semana (Martes y Jueves)',
       days: 'Martes y Jueves',
       details: '2 servicios semanales • Martes y Jueves • Pago seguro con Tarjeta bancaria'
@@ -81,7 +81,7 @@ const CONFIG = {
       category: 'pisos',
       price: '29,90 €',
       period: '/ mes',
-      costPerBag: '¡Desde 1,25 € por depósito!',
+      costPerBag: '¡Desde 1,25 € por bolsa!',
       frequency: 'Nº de Servicios: 3 días a la semana (Lunes, Miércoles y Viernes)',
       days: 'Lunes, Miércoles y Viernes',
       details: '3 servicios semanales • Lunes, Miércoles y Viernes • Pago seguro con Tarjeta bancaria'
@@ -91,7 +91,7 @@ const CONFIG = {
       category: 'pisos',
       price: '39,90 €',
       period: '/ mes',
-      costPerBag: '¡Desde 0,99 € por depósito!',
+      costPerBag: '¡Desde 0,99 € por bolsa!',
       frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes completo)',
       days: 'Lunes a Viernes',
       details: '5 servicios semanales • Lunes a Viernes • Pago seguro con Tarjeta bancaria'
@@ -101,7 +101,7 @@ const CONFIG = {
       category: 'chalets',
       price: '34,90 €',
       period: '/ mes',
-      costPerBag: '¡Desde 2,18 € por depósito!',
+      costPerBag: '¡Desde 2,18 € por bolsa!',
       frequency: 'Nº de Servicios: 2 días a la semana (Martes y Jueves)',
       days: 'Martes y Jueves',
       details: '2 servicios semanales • Martes y Jueves • Pago seguro con Tarjeta bancaria'
@@ -111,7 +111,7 @@ const CONFIG = {
       category: 'chalets',
       price: '39,90 €',
       period: '/ mes',
-      costPerBag: '¡Desde 1,66 € por depósito!',
+      costPerBag: '¡Desde 1,66 € por bolsa!',
       frequency: 'Nº de Servicios: 3 días a la semana (Lunes, Miércoles y Viernes)',
       days: 'Lunes, Miércoles y Viernes',
       details: '3 servicios semanales • Lunes, Miércoles y Viernes • Pago seguro con Tarjeta bancaria'
@@ -121,7 +121,7 @@ const CONFIG = {
       category: 'chalets',
       price: '49,90 €',
       period: '/ mes',
-      costPerBag: '¡Desde 1,25 € por depósito!',
+      costPerBag: '¡Desde 1,25 € por bolsa!',
       frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes completo)',
       days: 'Lunes a Viernes',
       details: '5 servicios semanales • Lunes a Viernes • Pago seguro con Tarjeta bancaria'
@@ -909,8 +909,8 @@ function detectRivasZip(streetText) {
 
   // Detección directa si el texto contiene ya el código postal
   if (s.includes('28523')) return '28523 - Covibar, Almendros y Pablo Iglesias';
-  if (s.includes('28522')) return '28522 - Sector Central y Rivas Futura';
-  if (s.includes('28521')) return '28521 - Casco Antiguo y Zona Este de Vaciamadrid';
+  if (s.includes('28522')) return '28522 - Sector Central y Zona Futura';
+  if (s.includes('28521')) return '28521 - Casco Antiguo y Zona Este';
   if (s.includes('28524') || s.includes('28525')) return '28524 - Nuevos Desarrollos y Áreas de Expansión';
 
   // 28523: Covibar, Almendros, Pablo Iglesias, Mitología, Árboles, Flores, Provincias y Regiones españolas, La Luna
@@ -952,10 +952,10 @@ function detectRivasZip(streetText) {
     if (s.includes(kw)) return '28523 - Covibar, Almendros y Pablo Iglesias';
   }
   for (let kw of kw28522) {
-    if (s.includes(kw)) return '28522 - Sector Central y Rivas Futura';
+    if (s.includes(kw)) return '28522 - Sector Central y Zona Futura';
   }
   for (let kw of kw28521) {
-    if (s.includes(kw)) return '28521 - Casco Antiguo y Zona Este de Vaciamadrid';
+    if (s.includes(kw)) return '28521 - Casco Antiguo y Zona Este';
   }
   for (let kw of kw28524) {
     if (s.includes(kw)) return '28524 - Nuevos Desarrollos y Áreas de Expansión';
