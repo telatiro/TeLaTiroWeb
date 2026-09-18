@@ -1,5 +1,5 @@
 // TeLaTiro - Service Worker para PWA (Instalación Standalone en Android e iOS)
-const CACHE_NAME = 'telatiro-pwa-v22';
+const CACHE_NAME = 'telatiro-pwa-v23';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
