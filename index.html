@@ -57,7 +57,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="css/styles.css?v=23">
+  <link rel="stylesheet" href="css/styles.css?v=24">
 </head>
 <body class="bg-[#F8FAF9] text-[#2D3748] font-sans antialiased selection:bg-[#25815F] selection:text-white">
 
@@ -1180,6 +1180,129 @@
           </button>
         </div>
         <div id="coverageResult" class="hidden"></div>
+
+        <!-- Collapsible Card: Solicitud de Apertura de Nueva Zona -->
+        <div id="newZoneCard" class="hidden bg-gradient-to-br from-[#F0FAF5] via-white to-white border border-[#25815F]/30 rounded-3xl p-6 sm:p-8 shadow-xl text-left space-y-5 mt-6 transition-all duration-300">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-gray-100 pb-4">
+            <div>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#25815F] text-white text-xs font-bold mb-1">
+                <i class="fa-solid fa-map-location-dot"></i> Lista de Espera y Expansión
+              </span>
+              <h4 class="text-xl sm:text-2xl font-bold text-[#1E1E1E]">¿Quieres TeLaTiro en tu Municipio?</h4>
+              <p class="text-xs sm:text-sm text-gray-600 mt-0.5">
+                Regístrate gratis para priorizar la apertura de tu zona y te avisaremos en cuanto iniciemos ruta en tu calle.
+              </p>
+            </div>
+            <button type="button" id="closeNewZoneCardBtn" class="text-gray-400 hover:text-gray-700 text-lg self-end sm:self-center p-1.5 rounded-lg hover:bg-gray-100 transition-colors" title="Cerrar formulario">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <form id="newZoneForm" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              
+              <!-- Nombre y Apellidos -->
+              <div class="space-y-1.5">
+                <label for="newZoneName" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                  Nombre y Apellidos <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <i class="fa-solid fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                  <input type="text" id="newZoneName" name="newZoneName" required placeholder="Ej: María García" class="w-full pl-10 pr-3 py-2.5 bg-white border border-gray-300 rounded-xl text-sm text-gray-800 placeholder-gray-400 focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all">
+                </div>
+              </div>
+
+              <!-- Teléfono / WhatsApp -->
+              <div class="space-y-1.5">
+                <label for="newZonePhone" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                  Teléfono / WhatsApp <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <i class="fa-solid fa-phone absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                  <input type="tel" id="newZonePhone" name="newZonePhone" required maxlength="9" placeholder="600000000" class="w-full pl-10 pr-3 py-2.5 bg-white border border-gray-300 rounded-xl text-sm text-gray-800 placeholder-gray-400 focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all">
+                </div>
+              </div>
+
+              <!-- Correo Electrónico -->
+              <div class="space-y-1.5">
+                <label for="newZoneEmail" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                  Correo Electrónico <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <i class="fa-solid fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                  <input type="email" id="newZoneEmail" name="newZoneEmail" required placeholder="tuemail@ejemplo.com" class="w-full pl-10 pr-3 py-2.5 bg-white border border-gray-300 rounded-xl text-sm text-gray-800 placeholder-gray-400 focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all">
+                </div>
+              </div>
+
+              <!-- Código Postal / Municipio -->
+              <div class="space-y-1.5">
+                <label for="newZoneZip" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                  Código Postal y Municipio <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <i class="fa-solid fa-location-dot absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                  <input type="text" id="newZoneZip" name="newZoneZip" required placeholder="Ej: 28500 Arganda del Rey" class="w-full pl-10 pr-3 py-2.5 bg-white border border-gray-300 rounded-xl text-sm text-gray-800 placeholder-gray-400 focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all">
+                </div>
+              </div>
+
+              <!-- Tipo de Vivienda / Plan de Interés -->
+              <div class="space-y-1.5">
+                <label for="newZonePlan" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                  Vivienda / Servicio de Interés
+                </label>
+                <div class="relative">
+                  <i class="fa-solid fa-house absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                  <select id="newZonePlan" name="newZonePlan" class="w-full pl-10 pr-8 py-2.5 bg-white border border-gray-300 rounded-xl text-sm text-gray-800 focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all appearance-none">
+                    <option value="Piso Plus (3 días)">Piso Plus (3 días • 29,90 €/mes)</option>
+                    <option value="Piso Premium (5 días)">Piso Premium (5 días • 39,90 €/mes)</option>
+                    <option value="Chalet Plus (3 días)">Casa/Chalet Plus (3 días • 39,90 €/mes)</option>
+                    <option value="Chalet Premium (5 días)">Casa/Chalet Premium (5 días • 49,90 €/mes)</option>
+                    <option value="Servicio Puntual">Servicio Puntual (4,90 €)</option>
+                    <option value="Comunidad de Propietarios">Comunidad de Propietarios (10+ Vecinos)</option>
+                  </select>
+                  <i class="fa-solid fa-chevron-down absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
+                </div>
+              </div>
+
+              <!-- Calle aproximada o Comentario -->
+              <div class="space-y-1.5">
+                <label for="newZoneNotes" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                  Calle / Barrio (Opcional)
+                </label>
+                <div class="relative">
+                  <i class="fa-solid fa-road absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                  <input type="text" id="newZoneNotes" name="newZoneNotes" placeholder="Ej: Calle Real / Barrio Centro" class="w-full pl-10 pr-3 py-2.5 bg-white border border-gray-300 rounded-xl text-sm text-gray-800 placeholder-gray-400 focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all">
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Privacidad y Envío -->
+            <div class="pt-2 space-y-3">
+              <label class="flex items-start gap-2.5 cursor-pointer text-xs text-gray-600">
+                <input type="checkbox" id="newZonePrivacy" required class="mt-0.5 rounded border-gray-300 text-[#25815F] focus:ring-[#25815F] h-4 w-4">
+                <span>He leído y acepto la <a href="#legalModal" onclick="openLegalModal('privacidad'); return false;" class="text-[#25815F] underline font-semibold hover:text-emerald-800">política de privacidad</a> para recibir el aviso de apertura en mi zona.</span>
+              </label>
+
+              <button type="submit" id="newZoneSubmitBtn" class="btn-primary w-full py-3 text-sm font-bold justify-center shadow-md">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Enviar Petición de Apertura de Zona</span>
+              </button>
+            </div>
+          </form>
+
+          <!-- Alert de éxito -->
+          <div id="newZoneSuccessAlert" class="hidden p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-950 text-sm flex items-start gap-3">
+            <i class="fa-solid fa-circle-check text-emerald-600 text-xl mt-0.5 flex-shrink-0"></i>
+            <div>
+              <h5 class="font-bold text-base text-emerald-900">¡Petición Registrada con Éxito!</h5>
+              <p class="mt-1 leading-relaxed">
+                Hemos anotado tu código postal y municipio en nuestra lista de prioridad. Te avisaremos de forma preferente por WhatsApp o email en cuanto iniciemos ruta en tu zona.
+              </p>
+            </div>
+          </div>
+
+        </div>
       </div>
 
     </div>
@@ -2345,6 +2468,6 @@
   </div>
 
   <!-- Javascript -->
-  <script src="js/app.js?v=23"></script>
+  <script src="js/app.js?v=24"></script>
 </body>
 </html>

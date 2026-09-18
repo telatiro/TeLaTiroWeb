@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initFormCategoryTabs();
   initBookingForm();
   initRecruiterForm();
+  initNewZoneForm();
   initCoverageChecker();
   initPlanSelectors();
   initHeroPhotoSwitcher();
@@ -1494,7 +1495,32 @@ function initCoverageChecker() {
           });
         }
       } else {
-        showCoverageResult(`📍 De momento el servicio está activo para los códigos postales <strong>28521, 28522, 28523, 28524 y 28525</strong>. Estamos trabajando en la apertura de nuevas zonas y rutas próximamente.`, 'warning');
+        const cleanInputVal = inputVal.trim();
+        showCoverageResult(`
+          <div>
+            <p>📍 De momento el servicio está activo para los códigos postales <strong>28521, 28522, 28523, 28524 y 28525</strong>. Estamos trabajando en la apertura de nuevas zonas y rutas próximamente.</p>
+            <div class="mt-3 pt-3 border-t border-amber-200/70 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <span class="text-xs font-medium text-amber-800">¿Quieres que abramos ruta en tu municipio o barrio?</span>
+              <button type="button" id="openNewZoneBtn" class="px-4 py-2 bg-[#25815F] hover:bg-[#1E6B4E] text-white text-xs font-bold rounded-xl transition-all shadow-sm flex items-center gap-1.5 whitespace-nowrap">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <span>Solicitar apertura en mi zona</span>
+              </button>
+            </div>
+          </div>
+        `, 'warning');
+
+        const openBtn = document.getElementById('openNewZoneBtn');
+        if (openBtn) {
+          openBtn.addEventListener('click', () => {
+            const card = document.getElementById('newZoneCard');
+            const zipInputNew = document.getElementById('newZoneZip');
+            if (card) {
+              card.classList.remove('hidden');
+              if (zipInputNew && cleanInputVal) zipInputNew.value = cleanInputVal;
+              card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+          });
+        }
       }
     }, 400);
   }
@@ -1714,6 +1740,118 @@ function initRecruiterForm() {
 }
 
 /**
+ * 11b. Formulario de Petición de Apertura de Nueva Zona (Expansión)
+ */
+function initNewZoneForm() {
+  const form = document.getElementById('newZoneForm');
+  const card = document.getElementById('newZoneCard');
+  const closeBtn = document.getElementById('closeNewZoneCardBtn');
+  const btnSubmit = document.getElementById('newZoneSubmitBtn');
+  const successAlert = document.getElementById('newZoneSuccessAlert');
+
+  if (closeBtn && card) {
+    closeBtn.addEventListener('click', () => {
+      card.classList.add('hidden');
+    });
+  }
+
+  if (!form) return;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('newZoneName')?.value.trim();
+    const phone = document.getElementById('newZonePhone')?.value.trim();
+    const email = document.getElementById('newZoneEmail')?.value.trim();
+    const zip = document.getElementById('newZoneZip')?.value.trim();
+    const plan = document.getElementById('newZonePlan')?.value;
+    const notes = document.getElementById('newZoneNotes')?.value.trim();
+    const privacy = document.getElementById('newZonePrivacy')?.checked;
+
+    if (!name) {
+      showToast('⚠️ Por favor introduce tu nombre y apellidos.', 'warning');
+      document.getElementById('newZoneName')?.focus();
+      return;
+    }
+
+    if (!phone || phone.length < 9) {
+      showToast('⚠️ Por favor introduce un teléfono de contacto válido.', 'warning');
+      document.getElementById('newZonePhone')?.focus();
+      return;
+    }
+
+    if (!email || !email.includes('@')) {
+      showToast('⚠️ Por favor introduce un correo electrónico válido.', 'warning');
+      document.getElementById('newZoneEmail')?.focus();
+      return;
+    }
+
+    if (!zip) {
+      showToast('⚠️ Por favor indica tu código postal o municipio.', 'warning');
+      document.getElementById('newZoneZip')?.focus();
+      return;
+    }
+
+    if (!privacy) {
+      showToast('⚠️ Debes aceptar la política de privacidad para enviar tu solicitud.', 'warning');
+      return;
+    }
+
+    // Estado visual de carga
+    if (btnSubmit) {
+      btnSubmit.disabled = true;
+      btnSubmit.classList.add('opacity-80', 'cursor-not-allowed');
+      btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Registrando petición...';
+    }
+
+    const payload = {
+      formType: 'peticion_zona',
+      name: name,
+      phone: phone,
+      email: email,
+      zip: zip,
+      municipality: zip,
+      plan: plan,
+      housingType: plan,
+      notes: notes || 'Sin observaciones',
+      timestamp: new Date().toISOString()
+    };
+
+    if (CONFIG.googleSheetWebhookUrl) {
+      fetch(CONFIG.googleSheetWebhookUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        handleSuccess();
+      })
+      .catch((err) => {
+        console.warn('Error en webhook de nueva zona:', err);
+        handleSuccess();
+      });
+    } else {
+      setTimeout(handleSuccess, 600);
+    }
+
+    function handleSuccess() {
+      if (btnSubmit) {
+        btnSubmit.disabled = false;
+        btnSubmit.classList.remove('opacity-80', 'cursor-not-allowed');
+        btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i> Enviar Petición de Apertura de Zona';
+      }
+      if (successAlert) {
+        successAlert.classList.remove('hidden');
+        successAlert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+      showToast('🎉 ¡Petición de zona registrada correctamente!', 'success');
+      form.reset();
+    }
+  });
+}
+
+/**
  * 12. Modal Legal, Términos y Cláusula de Acceso a Comunidades
  */
 function initLegalModal() {
@@ -1760,6 +1898,8 @@ function initLegalModal() {
     legalModal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
   }
+
+  window.openLegalModal = openModal;
 
   function closeModal() {
     legalModal.classList.add('hidden');
