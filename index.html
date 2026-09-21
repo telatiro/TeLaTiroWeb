@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TeLaTiro • Asistencia Domiciliaria para Depósito en Contenedor Municipal</title>
-  <meta name="description" content="Servicio privado de asistencia domiciliaria: trasladamos tus bolsas cerradas de basura doméstica desde la puerta de tu vivienda y las depositamos inmediatamente en el contenedor municipal. Desde 29,90€/mes.">
+  <meta name="description" content="Servicio privado de asistencia domiciliaria: trasladamos tus bolsas cerradas de basura doméstica desde la puerta de tu vivienda y las depositamos inmediatamente en el contenedor municipal. Desde 39,90€/mes.">
   <meta name="theme-color" content="#25815F">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -57,7 +57,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="css/styles.css?v=26">
+  <link rel="stylesheet" href="css/styles.css?v=27">
 </head>
 <body class="bg-[#F8FAF9] text-[#2D3748] font-sans antialiased selection:bg-[#25815F] selection:text-white">
 
@@ -288,11 +288,11 @@
             <div class="grid grid-cols-2 gap-1.5 text-left bg-white p-2.5 rounded-xl border border-gray-100 text-[11px] sm:text-xs shadow-xs">
               <div class="flex items-center gap-1.5">
                 <i class="fa-solid fa-circle-check text-[#25815F]"></i>
-                <span class="font-medium text-gray-700">Máx. 2 bolsas domésticas</span>
+                <span class="font-medium text-gray-700">1 bolsa 50L (o 2 de 25L)</span>
               </div>
               <div class="flex items-center gap-1.5">
                 <i class="fa-solid fa-circle-check text-[#25815F]"></i>
-                <span class="font-medium text-gray-700">Hasta 50 L cada bolsa</span>
+                <span class="font-medium text-gray-700">Lunes a Viernes (L-V)</span>
               </div>
               <div class="flex items-center gap-1.5">
                 <i class="fa-solid fa-circle-check text-[#25815F]"></i>
@@ -308,18 +308,18 @@
             <div class="grid grid-cols-3 gap-2 text-center">
               <div class="bg-white p-2 rounded-xl border-2 border-[#25815F] shadow-xs relative">
                 <span class="text-[10px] uppercase font-bold tracking-wider text-[#25815F]">Pisos</span>
-                <div class="text-base font-extrabold text-[#25815F]">29,90€</div>
-                <span class="text-[10px] text-emerald-700 font-bold block">¡Bolsa desde 0,99€!</span>
+                <div class="text-base font-extrabold text-[#25815F]">39,90€</div>
+                <span class="text-[10px] text-emerald-700 font-bold block">5 días / sem</span>
               </div>
               <div class="bg-white p-2 rounded-xl border border-gray-200 hover:border-[#25815F] transition-all shadow-xs">
                 <span class="text-[10px] uppercase font-bold tracking-wider text-gray-500">Chalets</span>
-                <div class="text-base font-extrabold text-[#1E1E1E]">39,90€</div>
-                <span class="text-[10px] text-[#25815F] font-semibold block">Bolsa desde 1,25€</span>
+                <div class="text-base font-extrabold text-[#1E1E1E]">49,90€</div>
+                <span class="text-[10px] text-[#25815F] font-semibold block">5 días / sem</span>
               </div>
               <div class="bg-white p-2 rounded-xl border border-gray-200 hover:border-[#25815F] transition-all shadow-xs">
                 <span class="text-[10px] uppercase font-bold tracking-wider text-gray-500">Puntual</span>
                 <div class="text-base font-extrabold text-gray-800">4,90€</div>
-                <span class="text-[10px] text-amber-600 font-semibold block">Tarjeta bancaria</span>
+                <span class="text-[10px] text-amber-600 font-semibold block">1 servicio</span>
               </div>
             </div>
 
@@ -581,22 +581,10 @@
         </div>
       </div>
 
-      <!-- Category Switcher Tabs -->
-      <div class="flex items-center justify-center gap-3 mb-12 flex-wrap">
-        <button type="button" class="pricing-tab-btn active" data-pricing-target="pricing-pisos">
-          <i class="fa-solid fa-building text-base"></i>
-          <span>Pisos y Apartamentos (2 Planes)</span>
-        </button>
-        <button type="button" class="pricing-tab-btn" data-pricing-target="pricing-chalets">
-          <i class="fa-solid fa-house-chimney text-base"></i>
-          <span>Casas y Chalets (2 Planes)</span>
-        </button>
-      </div>
-
-      <!-- CONTAINER 1: PISOS Y APARTAMENTOS (2 Planes) -->
+      <!-- Pricing Cards Container: 2 Planes Mensuales Lunes a Viernes -->
       <div id="pricing-pisos" class="grid grid-cols-1 md:grid-cols-2 max-w-5xl mx-auto gap-8 items-stretch">
         
-        <!-- PLAN PISO PLUS: 3 DÍAS (29,90€) - MÁS POPULAR -->
+        <!-- PLAN PISO: 5 DÍAS (39,90€) - MÁS POPULAR -->
         <div class="plan-card featured p-8 flex flex-col justify-between relative bg-white">
           <div class="absolute -top-0 right-8 bg-[#25815F] text-white text-xs font-bold px-4 py-1 rounded-b-lg shadow-sm uppercase tracking-wider">
             ⭐ MÁS POPULAR
@@ -605,138 +593,13 @@
           <div>
             <div class="flex items-center justify-between mb-4">
               <span class="text-xs font-bold uppercase tracking-wider text-white bg-[#25815F] px-3 py-1 rounded-full">
-                3 DÍAS / SEMANA
+                5 DÍAS / SEMANA (L-V)
               </span>
               <i class="fa-solid fa-building text-2xl text-[#25815F]"></i>
             </div>
 
-            <h3 class="text-2xl font-bold text-[#1E1E1E]">Plan Piso Plus</h3>
-            <p class="text-sm text-gray-500 mt-1">El equilibrio perfecto para familias y viviendas habituales.</p>
-
-            <!-- Price -->
-            <div class="my-6">
-              <div class="flex items-baseline gap-1">
-                <span class="text-4xl sm:text-5xl font-extrabold text-[#25815F]">29,90€</span>
-                <span class="text-gray-500 font-medium">/ mes</span>
-              </div>
-              <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/70 border border-emerald-300 text-xs font-bold text-[#1E5E44]">
-                <i class="fa-solid fa-tag"></i> ¡Solo 1,25 € por bolsa!
-              </div>
-            </div>
-
-            <!-- Features List -->
-            <ul class="space-y-3 text-sm text-gray-700 border-t border-gray-100 pt-6">
-              <li class="flex items-start gap-3">
-                <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
-                <span><strong>Nº de Servicios:</strong> 3 días a la semana (<strong>Lunes, Miércoles y Viernes</strong>).</span>
-              </li>
-              <li class="flex items-start gap-3">
-                <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
-                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio.</span>
-              </li>
-              <li class="flex items-start gap-3">
-                <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
-                <span><strong>2 Franjas a elegir:</strong> Mañana (09:00-13:00h) o Tarde (16:00-20:00h).</span>
-              </li>
-              <li class="flex items-start gap-3">
-                <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
-                <span><strong>Pago seguro:</strong> Tarjeta bancaria (Débito/Crédito).</span>
-              </li>
-              <li class="flex items-start gap-3">
-                <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
-                <span><strong>Sin permanencia:</strong> cancela cuando quieras.</span>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Card Button -->
-          <div class="pt-8">
-            <button data-select-plan="piso_plus" class="btn-primary w-full py-3.5 text-center justify-center font-semibold shadow-md">
-              <span>Elegir Plan Piso Plus (29,90€)</span>
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- PLAN PISO PREMIUM: 5 DÍAS (39,90€) - SERVICIO COMPLETO -->
-        <div class="plan-card p-8 flex flex-col justify-between border-purple-200 hover:border-purple-400">
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-xs font-bold uppercase tracking-wider text-purple-800 bg-purple-100 px-3 py-1 rounded-full">
-                5 DÍAS / SEMANA (L-V)
-              </span>
-              <i class="fa-solid fa-crown text-2xl text-purple-600"></i>
-            </div>
-
-            <h3 class="text-2xl font-bold text-[#1E1E1E]">Plan Piso Premium</h3>
-            <p class="text-sm text-gray-500 mt-1">Servicio continuo de lunes a viernes con la máxima comodidad.</p>
-
-            <!-- Price -->
-            <div class="my-6">
-              <div class="flex items-baseline gap-1">
-                <span class="text-4xl sm:text-5xl font-extrabold text-[#1E1E1E]">39,90€</span>
-                <span class="text-gray-500 font-medium">/ mes</span>
-              </div>
-              <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-50 border border-purple-200 text-xs font-bold text-purple-800">
-                <i class="fa-solid fa-tag"></i> ¡Solo 0,99 € por bolsa!
-              </div>
-            </div>
-
-            <!-- Features List -->
-            <ul class="space-y-3 text-sm text-gray-700 border-t border-gray-100 pt-6">
-              <li class="flex items-start gap-3">
-                <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
-                <span><strong>Nº de Servicios:</strong> 5 días a la semana (<strong>Lunes, Martes, Miércoles, Jueves y Viernes</strong>).</span>
-              </li>
-              <li class="flex items-start gap-3">
-                <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
-                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio.</span>
-              </li>
-              <li class="flex items-start gap-3">
-                <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
-                <span><strong>2 Franjas a elegir:</strong> Mañana (09:00-13:00h) o Tarde (16:00-20:00h).</span>
-              </li>
-              <li class="flex items-start gap-3">
-                <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
-                <span><strong>Pago seguro:</strong> Tarjeta bancaria (Débito/Crédito).</span>
-              </li>
-              <li class="flex items-start gap-3">
-                <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
-                <span><strong>Sin permanencia:</strong> cancela cuando quieras.</span>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Card Button -->
-          <div class="pt-8">
-            <button data-select-plan="piso_premium" class="btn-outline-green w-full py-3.5 text-center justify-center font-semibold">
-              <span>Elegir Plan Piso Premium (39,90€)</span>
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- CONTAINER 2: CASAS Y CHALETS (2 Planes) - Hidden by default -->
-      <div id="pricing-chalets" class="grid grid-cols-1 md:grid-cols-2 max-w-5xl mx-auto gap-8 items-stretch hidden">
-        
-        <!-- PLAN CHALET PLUS: 3 DÍAS (39,90€) - MÁS SOLICITADO -->
-        <div class="plan-card featured p-8 flex flex-col justify-between relative bg-white">
-          <div class="absolute -top-0 right-8 bg-[#25815F] text-white text-xs font-bold px-4 py-1 rounded-b-lg shadow-sm uppercase tracking-wider">
-            ⭐ MÁS SOLICITADO
-          </div>
-
-          <div>
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-xs font-bold uppercase tracking-wider text-white bg-[#25815F] px-3 py-1 rounded-full">
-                3 DÍAS / SEMANA
-              </span>
-              <i class="fa-solid fa-house-chimney text-2xl text-[#25815F]"></i>
-            </div>
-
-            <h3 class="text-2xl font-bold text-[#1E1E1E]">Plan Chalet Plus</h3>
-            <p class="text-sm text-gray-500 mt-1">La opción más popular y completa para viviendas unifamiliares.</p>
+            <h3 class="text-2xl font-bold text-[#1E1E1E]">Plan Pisos y Apartamentos</h3>
+            <p class="text-sm text-gray-500 mt-1">Servicio continuo de lunes a viernes para tu máxima comodidad.</p>
 
             <!-- Price -->
             <div class="my-6">
@@ -745,7 +608,7 @@
                 <span class="text-gray-500 font-medium">/ mes</span>
               </div>
               <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/70 border border-emerald-300 text-xs font-bold text-[#1E5E44]">
-                <i class="fa-solid fa-tag"></i> ¡Solo 1,66 € por bolsa!
+                <i class="fa-solid fa-tag"></i> ¡Solo ~1,99 € por servicio!
               </div>
             </div>
 
@@ -753,11 +616,11 @@
             <ul class="space-y-3 text-sm text-gray-700 border-t border-gray-100 pt-6">
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
-                <span><strong>Nº de Servicios:</strong> 3 días a la semana (<strong>Lunes, Miércoles y Viernes</strong>).</span>
+                <span><strong>Nº de Servicios:</strong> 5 días a la semana (<strong>Lunes a Viernes</strong> completo).</span>
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
-                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio.</span>
+                <span><strong>1 bolsa de 50L (o 2 de 25L)</strong> por servicio.</span>
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
@@ -776,25 +639,29 @@
 
           <!-- Card Button -->
           <div class="pt-8">
-            <button data-select-plan="chalet_plus" class="btn-primary w-full py-3.5 text-center justify-center font-semibold shadow-md">
-              <span>Elegir Plan Chalet Plus (39,90€)</span>
+            <button data-select-plan="piso_5d" class="btn-primary w-full py-3.5 text-center justify-center font-semibold shadow-md">
+              <span>Elegir Plan Piso (39,90€)</span>
               <i class="fa-solid fa-arrow-right"></i>
             </button>
           </div>
         </div>
 
-        <!-- PLAN CHALET PREMIUM: 5 DÍAS (49,90€) - MÁXIMO CONFORT -->
-        <div class="plan-card p-8 flex flex-col justify-between border-purple-200 hover:border-purple-400">
+        <!-- PLAN CASA/CHALET: 5 DÍAS (49,90€) - MÁXIMO CONFORT -->
+        <div class="plan-card p-8 flex flex-col justify-between border-emerald-200 hover:border-[#25815F] relative bg-white">
+          <div class="absolute -top-0 right-8 bg-emerald-800 text-white text-xs font-bold px-4 py-1 rounded-b-lg shadow-sm uppercase tracking-wider">
+            🏡 MÁXIMO CONFORT
+          </div>
+
           <div>
             <div class="flex items-center justify-between mb-4">
-              <span class="text-xs font-bold uppercase tracking-wider text-purple-800 bg-purple-100 px-3 py-1 rounded-full">
+              <span class="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full">
                 5 DÍAS / SEMANA (L-V)
               </span>
-              <i class="fa-solid fa-crown text-2xl text-purple-600"></i>
+              <i class="fa-solid fa-house-chimney text-2xl text-[#25815F]"></i>
             </div>
 
-            <h3 class="text-2xl font-bold text-[#1E1E1E]">Plan Chalet Premium</h3>
-            <p class="text-sm text-gray-500 mt-1">Servicio integral de lunes a viernes para total tranquilidad.</p>
+            <h3 class="text-2xl font-bold text-[#1E1E1E]">Plan Casas y Chalets</h3>
+            <p class="text-sm text-gray-500 mt-1">Servicio integral de lunes a viernes para viviendas unifamiliares.</p>
 
             <!-- Price -->
             <div class="my-6">
@@ -802,8 +669,8 @@
                 <span class="text-4xl sm:text-5xl font-extrabold text-[#1E1E1E]">49,90€</span>
                 <span class="text-gray-500 font-medium">/ mes</span>
               </div>
-              <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-50 border border-purple-200 text-xs font-bold text-purple-800">
-                <i class="fa-solid fa-tag"></i> ¡Solo 1,25 € por bolsa!
+              <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-bold text-emerald-800">
+                <i class="fa-solid fa-tag"></i> ¡Solo ~2,49 € por servicio!
               </div>
             </div>
 
@@ -811,11 +678,11 @@
             <ul class="space-y-3 text-sm text-gray-700 border-t border-gray-100 pt-6">
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1 font-bold"></i>
-                <span><strong>Nº de Servicios:</strong> 5 días a la semana (<strong>Lunes, Martes, Miércoles, Jueves y Viernes</strong>).</span>
+                <span><strong>Nº de Servicios:</strong> 5 días a la semana (<strong>Lunes a Viernes</strong> completo).</span>
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
-                <span><strong>Hasta 2 bolsas domésticas</strong> por servicio.</span>
+                <span><strong>1 bolsa de 50L (o 2 de 25L)</strong> por servicio.</span>
               </li>
               <li class="flex items-start gap-3">
                 <i class="fa-solid fa-check text-[#25815F] mt-1"></i>
@@ -834,8 +701,8 @@
 
           <!-- Card Button -->
           <div class="pt-8">
-            <button data-select-plan="chalet_premium" class="btn-outline-green w-full py-3.5 text-center justify-center font-semibold">
-              <span>Elegir Plan Chalet Premium (49,90€)</span>
+            <button data-select-plan="chalet_5d" class="btn-outline-green w-full py-3.5 text-center justify-center font-semibold">
+              <span>Elegir Plan Casa/Chalet (49,90€)</span>
               <i class="fa-solid fa-arrow-right"></i>
             </button>
           </div>
@@ -898,7 +765,7 @@
             • <strong>Horario de preparación:</strong> Ten preparadas tus bolsas cerradas <strong>a las 09:00 h (turno mañana) o a las 16:00 h (turno tarde)</strong>. Las bolsas deben permanecer siempre en el ámbito privado del inmueble y nunca depositarse en la vía pública o acera.
           </p>
           <p>
-            • <strong>Capacidad:</strong> Hasta un máximo de <strong>2 bolsas de basura doméstica estándar</strong> (hasta 50L cada una) debidamente cerradas por servicio y vivienda. No acumulable de días anteriores.
+            • <strong>Capacidad:</strong> <strong>1 bolsa doméstica de hasta 50 litros o 2 bolsas de 25 litros</strong> debidamente cerradas por servicio y vivienda. No acumulable de días anteriores.
           </p>
           <p>
             • <strong>Acceso autorizado:</strong> El cliente manifiesta y garantiza contar con la debida autorización de su comunidad de propietarios o administración para el acceso al portal o rellano conforme a sus estatutos. TeLaTiro no prestará servicio en zonas comunitarias donde no exista dicha autorización expresa.
@@ -945,7 +812,7 @@
             <li class="flex items-start gap-3">
               <i class="fa-solid fa-circle-check text-[#25815F] text-lg mt-0.5"></i>
               <div>
-                <strong>Hasta un máximo de 2 bolsas por servicio y vivienda</strong> (Hasta 50L cada bolsa).
+                <strong>1 bolsa doméstica de hasta 50 litros (o 2 bolsas de 25 litros) por servicio</strong> y vivienda.
               </div>
             </li>
             <li class="flex items-start gap-3">
@@ -1253,10 +1120,8 @@
                 <div class="relative">
                   <i class="fa-solid fa-house absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
                   <select id="newZonePlan" name="newZonePlan" class="w-full pl-10 pr-8 py-2.5 bg-white border border-gray-300 rounded-xl text-sm text-gray-800 focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all appearance-none">
-                    <option value="Piso Plus (3 días)">Piso Plus (3 días • 29,90 €/mes)</option>
-                    <option value="Piso Premium (5 días)">Piso Premium (5 días • 39,90 €/mes)</option>
-                    <option value="Chalet Plus (3 días)">Casa/Chalet Plus (3 días • 39,90 €/mes)</option>
-                    <option value="Chalet Premium (5 días)">Casa/Chalet Premium (5 días • 49,90 €/mes)</option>
+                    <option value="Plan Piso (5 días)">Plan Piso (5 días • 39,90 €/mes)</option>
+                    <option value="Plan Casa/Chalet (5 días)">Plan Casa/Chalet (5 días • 49,90 €/mes)</option>
                     <option value="Servicio Puntual">Servicio Puntual (4,90 €)</option>
                     <option value="Comunidad de Propietarios">Comunidad de Propietarios (10+ Vecinos)</option>
                   </select>
@@ -1345,78 +1210,46 @@
                 </button>
               </div>
 
-              <!-- Radios for Pisos (2 tiers) -->
-              <div id="form-group-pisos" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                
-                <!-- Piso Plus 3 días (checked by default) -->
+              <!-- Radios for Pisos (Single 5-day plan) -->
+              <div id="form-group-pisos" class="max-w-md">
                 <div>
-                  <input type="radio" name="service_plan" id="plan_piso_plus" value="piso_plus" class="sr-only plan-radio-input" checked>
-                  <label for="plan_piso_plus" class="plan-radio-label flex-col text-left h-full">
+                  <input type="radio" name="service_plan" id="plan_piso_5d" value="piso_5d" class="sr-only plan-radio-input" checked>
+                  <label for="plan_piso_5d" class="plan-radio-label flex-col text-left h-full">
                     <div class="flex items-center justify-between w-full mb-1">
-                      <span class="font-bold text-sm text-[#1E1E1E]">Piso Plus (3 días)</span>
-                      <span class="text-[10px] font-bold bg-emerald-100 text-[#25815F] px-1.5 py-0.5 rounded">⭐ L, X, V</span>
-                    </div>
-                    <span class="text-lg font-extrabold text-[#25815F]">29,90€<span class="text-xs font-normal text-gray-500">/mes</span></span>
-                    <span class="text-[11px] text-gray-500 mt-1">Lunes, Miércoles y Viernes</span>
-                  </label>
-                </div>
-
-                <!-- Piso Premium 5 días -->
-                <div>
-                  <input type="radio" name="service_plan" id="plan_piso_premium" value="piso_premium" class="sr-only plan-radio-input">
-                  <label for="plan_piso_premium" class="plan-radio-label flex-col text-left h-full">
-                    <div class="flex items-center justify-between w-full mb-1">
-                      <span class="font-bold text-sm text-[#1E1E1E]">Piso Premium (5 días)</span>
-                      <span class="text-[10px] font-bold bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded">💎 5 días</span>
+                      <span class="font-bold text-sm text-[#1E1E1E]">Plan Pisos y Apartamentos (5 días)</span>
+                      <span class="text-[10px] font-bold bg-emerald-100 text-[#25815F] px-1.5 py-0.5 rounded">⭐ L a V</span>
                     </div>
                     <span class="text-lg font-extrabold text-[#25815F]">39,90€<span class="text-xs font-normal text-gray-500">/mes</span></span>
-                    <span class="text-[11px] text-gray-500 mt-1">Lunes a Viernes completo</span>
+                    <span class="text-[11px] text-gray-500 mt-1">Lunes a Viernes • 1 bolsa 50L (o 2 de 25L)</span>
                   </label>
                 </div>
-
               </div>
 
-              <!-- Radios for Chalets (2 tiers, hidden initially) -->
-              <div id="form-group-chalets" class="grid grid-cols-1 sm:grid-cols-2 gap-4 hidden">
-                
-                <!-- Chalet Plus 3 días -->
+              <!-- Radios for Chalets (Single 5-day plan, hidden initially) -->
+              <div id="form-group-chalets" class="max-w-md hidden">
                 <div>
-                  <input type="radio" name="service_plan" id="plan_chalet_plus" value="chalet_plus" class="sr-only plan-radio-input">
-                  <label for="plan_chalet_plus" class="plan-radio-label flex-col text-left h-full">
+                  <input type="radio" name="service_plan" id="plan_chalet_5d" value="chalet_5d" class="sr-only plan-radio-input">
+                  <label for="plan_chalet_5d" class="plan-radio-label flex-col text-left h-full">
                     <div class="flex items-center justify-between w-full mb-1">
-                      <span class="font-bold text-sm text-[#1E1E1E]">Chalet Plus (3 días)</span>
-                      <span class="text-[10px] font-bold bg-emerald-100 text-[#25815F] px-1.5 py-0.5 rounded">⭐ L, X, V</span>
-                    </div>
-                    <span class="text-lg font-extrabold text-[#25815F]">39,90€<span class="text-xs font-normal text-gray-500">/mes</span></span>
-                    <span class="text-[11px] text-gray-500 mt-1">Lunes, Miércoles y Viernes</span>
-                  </label>
-                </div>
-
-                <!-- Chalet Premium 5 días -->
-                <div>
-                  <input type="radio" name="service_plan" id="plan_chalet_premium" value="chalet_premium" class="sr-only plan-radio-input">
-                  <label for="plan_chalet_premium" class="plan-radio-label flex-col text-left h-full">
-                    <div class="flex items-center justify-between w-full mb-1">
-                      <span class="font-bold text-sm text-[#1E1E1E]">Chalet Premium (5 días)</span>
-                      <span class="text-[10px] font-bold bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded">💎 5 días</span>
+                      <span class="font-bold text-sm text-[#1E1E1E]">Plan Casas y Chalets (5 días)</span>
+                      <span class="text-[10px] font-bold bg-emerald-100 text-[#25815F] px-1.5 py-0.5 rounded">🏡 L a V</span>
                     </div>
                     <span class="text-lg font-extrabold text-[#25815F]">49,90€<span class="text-xs font-normal text-gray-500">/mes</span></span>
-                    <span class="text-[11px] text-gray-500 mt-1">Lunes a Viernes completo</span>
+                    <span class="text-[11px] text-gray-500 mt-1">Lunes a Viernes • 1 bolsa 50L (o 2 de 25L)</span>
                   </label>
                 </div>
-
               </div>
 
               <!-- Radios for Puntual (hidden initially) -->
-              <div id="form-group-puntual" class="hidden">
+              <div id="form-group-puntual" class="max-w-md hidden">
                 <input type="radio" name="service_plan" id="plan_puntual" value="puntual" class="sr-only plan-radio-input">
-                <label for="plan_puntual" class="plan-radio-label flex-col text-left max-w-sm">
+                <label for="plan_puntual" class="plan-radio-label flex-col text-left h-full">
                   <div class="flex items-center justify-between w-full mb-1">
                     <span class="font-bold text-sm text-[#1E1E1E]">Servicio Puntual (1 día)</span>
                     <i class="fa-solid fa-bolt text-amber-500"></i>
                   </div>
                   <span class="text-lg font-extrabold text-gray-800">4,90€<span class="text-xs font-normal text-gray-500">/servicio</span></span>
-                  <span class="text-[11px] text-gray-500 mt-1">1 solo servicio sin suscripción</span>
+                  <span class="text-[11px] text-gray-500 mt-1">1 solo servicio sin suscripción • 1 bolsa 50L (o 2 de 25L)</span>
                 </label>
               </div>
 
@@ -1528,8 +1361,7 @@
                 <div>
                   <label for="clientDays" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Nº de Servicios / Días *</label>
                   <select id="clientDays" name="frequency" class="custom-input">
-                    <option value="3 Servicios semanales: Lunes, Miércoles y Viernes" selected>3 Servicios semanales: Lunes, Miércoles y Viernes</option>
-                    <option value="2 Servicios semanales: Martes y Jueves">2 Servicios semanales: Martes y Jueves</option>
+                    <option value="5 Servicios semanales: Lunes a Viernes (L, M, X, J, V)" selected>5 Servicios semanales: Lunes a Viernes</option>
                   </select>
                 </div>
 
@@ -1618,12 +1450,12 @@
             
             <div>
               <div id="summaryPlanName" class="text-xl font-bold text-[#1E1E1E]">Plan Pisos y Apartamentos</div>
-              <div id="summaryPlanPrice" class="text-3xl font-extrabold text-[#25815F] mt-1">29,90 € <span class="text-sm font-normal text-gray-500">/ mes</span></div>
+              <div id="summaryPlanPrice" class="text-3xl font-extrabold text-[#25815F] mt-1">39,90 € <span class="text-sm font-normal text-gray-500">/ mes</span></div>
               <div id="summaryCostPerBag" class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-xs font-bold text-[#25815F]">
-                <i class="fa-solid fa-tag"></i> ¡Desde 1,25 € por bolsa!
+                <i class="fa-solid fa-tag"></i> ¡Solo ~1,99 € por servicio!
               </div>
 
-              <p id="summaryPlanDetails" class="text-xs text-gray-500 mt-2">3 servicios semanales • Hasta 2 bolsas por servicio • Depósito en contenedor</p>
+              <p id="summaryPlanDetails" class="text-xs text-gray-500 mt-2">5 servicios semanales • 1 bolsa de 50L (o 2 de 25L) • Depósito en contenedor</p>
             </div>
 
             <div class="bg-gray-50 p-4 rounded-xl space-y-2 text-xs text-gray-700">
@@ -1633,7 +1465,7 @@
               </div>
               <div class="flex items-center gap-2">
                 <i class="fa-solid fa-calendar-week text-[#25815F]"></i>
-                <span id="summaryFrequency">Nº de Servicios: 3 días a la semana</span>
+                <span id="summaryFrequency">Nº de Servicios: 5 días a la semana</span>
               </div>
               <div class="flex items-center gap-2">
                 <i class="fa-solid fa-clock text-[#25815F]"></i>
@@ -1649,7 +1481,7 @@
               </div>
               <div class="flex items-center gap-2">
                 <i class="fa-solid fa-bag-shopping text-[#25815F]"></i>
-                <span>Máx. 2 bolsas (Hasta 50L cada bolsa)</span>
+                <span>1 bolsa 50L (o 2 de 25L) por servicio</span>
               </div>
             </div>
           </div>
@@ -1792,8 +1624,8 @@
             • <strong>Turno de Tarde:</strong> de 16:00 a 20:00 h.<br><br>
             ⏰ <strong>Importante sobre la preparación de las bolsas:</strong> Ten preparadas tus bolsas cerradas <strong>a las 09:00 h (turno mañana) o a las 16:00 h (turno tarde)</strong>. Las bolsas deben permanecer siempre en el ámbito privado del inmueble y nunca depositarse en la vía pública o acera. Nuestro asistente pasará durante la franja horaria acordada.<br><br>
             Los días de servicio están organizados de forma fija según el plan que elijas:<br>
-            • <strong>Planes Plus de 3 días (Pisos 29,90€ / Chalets 39,90€):</strong> Lunes, Miércoles y Viernes.<br>
-            • <strong>Planes Premium de 5 días (Pisos 39,90€ / Chalets 49,90€):</strong> Lunes a Viernes completo.<br><br>
+            • <strong>Plan Pisos y Apartamentos (39,90 € / mes):</strong> 5 días a la semana (Lunes a Viernes).<br>
+            • <strong>Plan Casas y Chalets (49,90 € / mes):</strong> 5 días a la semana (Lunes a Viernes).<br><br>
             Para el <strong>servicio puntual (4,90 €)</strong> puedes solicitarlo para cualquier día de Lunes a Viernes. Si deseas el servicio para ese mismo día, la solicitud debe realizarse con al menos 2 horas de antelación al fin del turno (<strong>hora tope para Mañana: 11:00 h</strong> / <strong>hora tope para Tarde: 18:00 h</strong>).
           </div>
         </div>
@@ -1821,7 +1653,7 @@
             <i class="fa-solid fa-chevron-down faq-chevron text-gray-400 transition-transform duration-300"></i>
           </button>
           <div class="faq-content px-6 pb-6 text-sm text-gray-600 leading-relaxed">
-            Todos nuestros planes incluyen hasta un máximo de <strong>2 bolsas de basura doméstica estándar (hasta 50L cada bolsa)</strong> por servicio. Deben estar debidamente cerradas. ¡En los planes Premium el depósito te sale por menos de 1 €!
+            Todos nuestros planes incluyen <strong>1 bolsa doméstica de hasta 50 litros o 2 bolsas de 25 litros</strong> por servicio. Deben estar debidamente cerradas.
           </div>
         </div>
 
@@ -1873,9 +1705,8 @@
           <div class="faq-content px-6 pb-6 text-sm text-gray-600 leading-relaxed">
             • <strong>Descuento Directo:</strong> Si en tu edificio, bloque residencial, mancomunidad o urbanización se suscriben <strong>10 vecinos o más</strong> a cualquiera de los planes mensuales, a cada una de las viviendas se le aplican <strong>5 € de descuento directo cada mes</strong> en su cuota de servicio.<br><br>
             • <strong>Precios bonificados resultantes:</strong><br>
-            - <strong>Piso Plus 3 días:</strong> 24,90 € / mes (en lugar de 29,90 €).<br>
-            - <strong>Piso Premium 5 días:</strong> 34,90 € / mes (en lugar de 39,90 €).<br>
-            - <em>También aplicable a chalets y urbanizaciones: 34,90 € (3 días) y 44,90 € (5 días).</em><br><br>
+            - <strong>Plan Pisos (5 días):</strong> 34,90 € / mes (en lugar de 39,90 €).<br>
+            - <strong>Plan Casas/Chalets (5 días):</strong> 44,90 € / mes (en lugar de 49,90 €).<br><br>
             • <strong>Coordinación y Acceso:</strong> Trabajamos en estrecha colaboración con presidentes de comunidad y administradores de fincas para coordinar el acceso ágil de toda persona asignada al servicio, debidamente identificada y uniformada, siempre bajo previa autorización expresa de la comunidad de propietarios y conforme a sus estatutos, garantizando rellanos impecables, sin malos olores ni manchas en ascensores.
           </div>
         </div>
@@ -2174,8 +2005,8 @@
         <div class="space-y-3">
           <h4 class="text-sm font-bold text-white uppercase tracking-wider">Tarifas Oficiales</h4>
           <ul class="space-y-2 text-xs text-gray-400">
-            <li><a href="#tarifas" class="hover:text-[#25815F] transition-colors">Planes Pisos (Desde 29,90 €/mes • ¡Bolsa desde 0,99€!)</a></li>
-            <li><a href="#tarifas" class="hover:text-[#25815F] transition-colors">Planes Chalets (Desde 39,90 €/mes • Bolsa desde 1,25€)</a></li>
+            <li><a href="#tarifas" class="hover:text-[#25815F] transition-colors">Plan Pisos (39,90 €/mes • Lunes a Viernes)</a></li>
+            <li><a href="#tarifas" class="hover:text-[#25815F] transition-colors">Plan Casas y Chalets (49,90 €/mes • Lunes a Viernes)</a></li>
             <li><a href="#tarifas" class="hover:text-[#25815F] transition-colors">Servicio Puntual (4,90 € • Tarjeta)</a></li>
             <li><a href="#para-quien" class="hover:text-[#25815F] transition-colors">Descuento Vecinal Agrupado</a></li>
             <li><a href="#para-quien" class="hover:text-[#25815F] transition-colors">Personas Mayores y Movilidad</a></li>
@@ -2350,7 +2181,7 @@
           
           <h4 class="font-bold text-sm text-gray-900">2. Condiciones de Entrega de Bolsas</h4>
           <p>
-            • Cada servicio comprende un máximo de <strong>2 bolsas de basura doméstica estándar</strong> (hasta 50L cada una) debidamente cerradas y atadas por el usuario.<br>
+            • Cada servicio comprende <strong>1 bolsa de basura doméstica de hasta 50 litros o 2 bolsas de 25 litros</strong> debidamente cerradas y atadas por el usuario.<br>
             • Ten preparadas tus bolsas cerradas a las <strong>09:00 h</strong> para el turno de mañana o a las <strong>16:00 h</strong> para el turno de tarde. Las bolsas deben permanecer siempre en el ámbito privado del inmueble y nunca depositarse en la vía pública o acera.
           </p>
 
@@ -2468,6 +2299,6 @@
   </div>
 
   <!-- Javascript -->
-  <script src="js/app.js?v=26"></script>
+  <script src="js/app.js?v=27"></script>
 </body>
 </html>

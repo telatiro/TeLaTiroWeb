@@ -67,65 +67,85 @@ const CONFIG = {
     }
   },
   plans: {
-    piso_2d: {
-      name: 'Plan Piso (2 días)',
+    piso_5d: {
+      name: 'Plan Pisos y Apartamentos (5 días)',
       category: 'pisos',
-      price: '24,90 €',
+      price: '39,90 €',
       period: '/ mes',
-      costPerBag: '¡Desde 1,55 € por bolsa!',
-      frequency: 'Nº de Servicios: 2 días a la semana (Martes y Jueves)',
-      days: 'Martes y Jueves',
-      details: '2 servicios semanales • Martes y Jueves • Pago seguro con Tarjeta bancaria'
-    },
-    piso_plus: {
-      name: 'Plan Piso Plus (3 días)',
-      category: 'pisos',
-      price: '29,90 €',
-      period: '/ mes',
-      costPerBag: '¡Desde 1,25 € por bolsa!',
-      frequency: 'Nº de Servicios: 3 días a la semana (Lunes, Miércoles y Viernes)',
-      days: 'Lunes, Miércoles y Viernes',
-      details: '3 servicios semanales • Lunes, Miércoles y Viernes • Pago seguro con Tarjeta bancaria'
+      costPerBag: '¡Solo ~1,99 € por servicio!',
+      frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes)',
+      days: 'Lunes a Viernes',
+      details: '5 servicios semanales • Lunes a Viernes • 1 bolsa 50L (o 2 de 25L) • Tarjeta bancaria'
     },
     piso_premium: {
-      name: 'Plan Piso Premium (5 días)',
+      name: 'Plan Pisos y Apartamentos (5 días)',
       category: 'pisos',
       price: '39,90 €',
       period: '/ mes',
-      costPerBag: '¡Desde 0,99 € por bolsa!',
-      frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes completo)',
+      costPerBag: '¡Solo ~1,99 € por servicio!',
+      frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes)',
       days: 'Lunes a Viernes',
-      details: '5 servicios semanales • Lunes a Viernes • Pago seguro con Tarjeta bancaria'
+      details: '5 servicios semanales • Lunes a Viernes • 1 bolsa 50L (o 2 de 25L) • Tarjeta bancaria'
     },
-    chalet_2d: {
-      name: 'Plan Casa/Chalet (2 días)',
-      category: 'chalets',
-      price: '34,90 €',
-      period: '/ mes',
-      costPerBag: '¡Desde 2,18 € por bolsa!',
-      frequency: 'Nº de Servicios: 2 días a la semana (Martes y Jueves)',
-      days: 'Martes y Jueves',
-      details: '2 servicios semanales • Martes y Jueves • Pago seguro con Tarjeta bancaria'
-    },
-    chalet_plus: {
-      name: 'Plan Casa/Chalet Plus (3 días)',
-      category: 'chalets',
+    piso_plus: {
+      name: 'Plan Pisos y Apartamentos (5 días)',
+      category: 'pisos',
       price: '39,90 €',
       period: '/ mes',
-      costPerBag: '¡Desde 1,66 € por bolsa!',
-      frequency: 'Nº de Servicios: 3 días a la semana (Lunes, Miércoles y Viernes)',
-      days: 'Lunes, Miércoles y Viernes',
-      details: '3 servicios semanales • Lunes, Miércoles y Viernes • Pago seguro con Tarjeta bancaria'
+      costPerBag: '¡Solo ~1,99 € por servicio!',
+      frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes)',
+      days: 'Lunes a Viernes',
+      details: '5 servicios semanales • Lunes a Viernes • 1 bolsa 50L (o 2 de 25L) • Tarjeta bancaria'
     },
-    chalet_premium: {
-      name: 'Plan Casa/Chalet Premium (5 días)',
+    piso_2d: {
+      name: 'Plan Pisos y Apartamentos (5 días)',
+      category: 'pisos',
+      price: '39,90 €',
+      period: '/ mes',
+      costPerBag: '¡Solo ~1,99 € por servicio!',
+      frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes)',
+      days: 'Lunes a Viernes',
+      details: '5 servicios semanales • Lunes a Viernes • 1 bolsa 50L (o 2 de 25L) • Tarjeta bancaria'
+    },
+    chalet_5d: {
+      name: 'Plan Casas y Chalets (5 días)',
       category: 'chalets',
       price: '49,90 €',
       period: '/ mes',
-      costPerBag: '¡Desde 1,25 € por bolsa!',
-      frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes completo)',
+      costPerBag: '¡Solo ~2,49 € por servicio!',
+      frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes)',
       days: 'Lunes a Viernes',
-      details: '5 servicios semanales • Lunes a Viernes • Pago seguro con Tarjeta bancaria'
+      details: '5 servicios semanales • Lunes a Viernes • 1 bolsa 50L (o 2 de 25L) • Tarjeta bancaria'
+    },
+    chalet_premium: {
+      name: 'Plan Casas y Chalets (5 días)',
+      category: 'chalets',
+      price: '49,90 €',
+      period: '/ mes',
+      costPerBag: '¡Solo ~2,49 € por servicio!',
+      frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes)',
+      days: 'Lunes a Viernes',
+      details: '5 servicios semanales • Lunes a Viernes • 1 bolsa 50L (o 2 de 25L) • Tarjeta bancaria'
+    },
+    chalet_plus: {
+      name: 'Plan Casas y Chalets (5 días)',
+      category: 'chalets',
+      price: '49,90 €',
+      period: '/ mes',
+      costPerBag: '¡Solo ~2,49 € por servicio!',
+      frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes)',
+      days: 'Lunes a Viernes',
+      details: '5 servicios semanales • Lunes a Viernes • 1 bolsa 50L (o 2 de 25L) • Tarjeta bancaria'
+    },
+    chalet_2d: {
+      name: 'Plan Casas y Chalets (5 días)',
+      category: 'chalets',
+      price: '49,90 €',
+      period: '/ mes',
+      costPerBag: '¡Solo ~2,49 € por servicio!',
+      frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes)',
+      days: 'Lunes a Viernes',
+      details: '5 servicios semanales • Lunes a Viernes • 1 bolsa 50L (o 2 de 25L) • Tarjeta bancaria'
     },
     puntual: {
       name: 'Servicio Puntual',
@@ -135,7 +155,7 @@ const CONFIG = {
       costPerBag: 'Servicio individual puntual',
       frequency: 'Servicio puntual de 1 día',
       days: 'Lunes a Viernes (a elegir)',
-      details: '1 servicio puntual • Hasta 2 bolsas • Pago seguro con Tarjeta bancaria'
+      details: '1 servicio puntual • 1 bolsa 50L (o 2 de 25L) • Pago seguro con Tarjeta bancaria'
     }
   },
   // ==========================================================================
@@ -143,12 +163,14 @@ const CONFIG = {
   // Pega aquí los enlaces generados en tu panel de Stripe para cada plan:
   // ==========================================================================
   stripeLinks: {
-    piso_2d: 'https://buy.stripe.com/3cIdR9b49c309W06Bc9fW03',        // Plan Piso 2 días • 24,90 €/mes
-    piso_plus: 'https://buy.stripe.com/14A28r2xD5EC0lq2kW9fW04',      // Plan Piso Plus 3 días • 29,90 €/mes
+    piso_5d: 'https://buy.stripe.com/14AbJ11tz3wu8RWgbM9fW05',        // Plan Piso 5 días • 39,90 €/mes
     piso_premium: 'https://buy.stripe.com/14AbJ11tz3wu8RWgbM9fW05',   // Plan Piso Premium 5 días • 39,90 €/mes
-    chalet_2d: 'https://buy.stripe.com/9B6eVdc8deb8d8cgbM9fW00',      // Plan Chalet 2 días • 34,90 €/mes
-    chalet_plus: 'https://buy.stripe.com/dRm14n1tz4Ay5FK5x89fW01',    // Plan Chalet Plus 3 días • 39,90 €/mes
+    piso_plus: 'https://buy.stripe.com/14AbJ11tz3wu8RWgbM9fW05',      // Alias
+    piso_2d: 'https://buy.stripe.com/14AbJ11tz3wu8RWgbM9fW05',        // Alias
+    chalet_5d: 'https://buy.stripe.com/28EeVdfkpgjgd8cgbM9fW02',      // Plan Chalet 5 días • 49,90 €/mes
     chalet_premium: 'https://buy.stripe.com/28EeVdfkpgjgd8cgbM9fW02', // Plan Chalet Premium 5 días • 49,90 €/mes
+    chalet_plus: 'https://buy.stripe.com/28EeVdfkpgjgd8cgbM9fW02',    // Alias
+    chalet_2d: 'https://buy.stripe.com/28EeVdfkpgjgd8cgbM9fW02',      // Alias
     puntual: 'https://buy.stripe.com/5kQaEXgotaYW7NS4t49fW06'         // Servicio Puntual 1 día • 4,90 €
   }
 };
@@ -575,7 +597,7 @@ function initPlanSelectors() {
   selectPlanButtons.forEach(button => {
     button.addEventListener('click', () => {
       const planKey = button.getAttribute('data-select-plan');
-      const planInfo = CONFIG.plans[planKey] || CONFIG.plans.piso_plus;
+      const planInfo = CONFIG.plans[planKey] || CONFIG.plans.piso_5d;
 
       if (planInfo.category) {
         switchFormCategory(planInfo.category);
@@ -642,29 +664,7 @@ function updateDayOptions(planKey) {
   const currentHour = now.getHours();
   const isPastEveningDeadline = currentHour >= 18;
 
-  if (planKey === 'piso_2d' || planKey === 'chalet_2d') {
-    // 2 días por semana: Fijo Martes y Jueves
-    daysSelect.innerHTML = `
-      <option value="2 Servicios semanales: Martes y Jueves" selected>2 Servicios semanales: Martes y Jueves</option>
-    `;
-    daysSelect.value = '2 Servicios semanales: Martes y Jueves';
-    if (timeSlotSelect) {
-      for (let opt of timeSlotSelect.options) opt.disabled = false;
-    }
-    if (punctualNotice) punctualNotice.classList.add('hidden');
-
-  } else if (planKey === 'piso_plus' || planKey === 'chalet_plus') {
-    // 3 días por semana: Fijo Lunes, Miércoles y Viernes
-    daysSelect.innerHTML = `
-      <option value="3 Servicios semanales: Lunes, Miércoles y Viernes" selected>3 Servicios semanales: Lunes, Miércoles y Viernes</option>
-    `;
-    daysSelect.value = '3 Servicios semanales: Lunes, Miércoles y Viernes';
-    if (timeSlotSelect) {
-      for (let opt of timeSlotSelect.options) opt.disabled = false;
-    }
-    if (punctualNotice) punctualNotice.classList.add('hidden');
-
-  } else if (planKey === 'piso_premium' || planKey === 'chalet_premium') {
+  if (planKey !== 'puntual') {
     // 5 días por semana: Fijo Lunes a Viernes completo
     daysSelect.innerHTML = `
       <option value="5 Servicios semanales: Lunes a Viernes (L, M, X, J, V)" selected>5 Servicios semanales: Lunes a Viernes</option>
@@ -860,7 +860,7 @@ function getServiceStartDateInfo(planKey) {
  * 8. Actualizar el resumen del pedido en vivo
  */
 function updateOrderSummary(planKey) {
-  const planInfo = CONFIG.plans[planKey] || CONFIG.plans.piso_plus;
+  const planInfo = CONFIG.plans[planKey] || CONFIG.plans.piso_5d;
   const summaryName = document.getElementById('summaryPlanName');
   const summaryPrice = document.getElementById('summaryPlanPrice');
   const summaryCost = document.getElementById('summaryCostPerBag');
@@ -1051,7 +1051,7 @@ function initBookingForm() {
 
   // Inicializar opciones de pago y días acordes al plan seleccionado por defecto
   const initialPlanRadio = document.querySelector('input[name="service_plan"]:checked');
-  const initialPlan = initialPlanRadio ? initialPlanRadio.value : 'piso_plus';
+  const initialPlan = initialPlanRadio ? initialPlanRadio.value : 'piso_5d';
   updateOrderSummary(initialPlan);
 
   // Consultar disponibilidad de plazas en tiempo real
@@ -1310,7 +1310,7 @@ function initBookingForm() {
 
     form.reset();
     switchFormCategory('pisos');
-    updateOrderSummary('piso_plus');
+    updateOrderSummary('piso_5d');
     fetchShiftAvailability();
 
     // Restaurar sugerencia de email guardado si existe
@@ -1327,7 +1327,7 @@ function initBookingForm() {
 }
 
 function getFormData() {
-  const selectedPlan = document.querySelector('input[name="service_plan"]:checked')?.value || 'piso_plus';
+  const selectedPlan = document.querySelector('input[name="service_plan"]:checked')?.value || 'piso_5d';
   const planName = CONFIG.plans[selectedPlan]?.name || selectedPlan;
   const dateInfo = getServiceStartDateInfo(selectedPlan);
   const startDate = dateInfo?.startDateText || '';
