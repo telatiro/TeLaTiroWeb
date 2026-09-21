@@ -57,7 +57,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="css/styles.css?v=25">
+  <link rel="stylesheet" href="css/styles.css?v=26">
 </head>
 <body class="bg-[#F8FAF9] text-[#2D3748] font-sans antialiased selection:bg-[#25815F] selection:text-white">
 
@@ -255,7 +255,7 @@
                   <i class="fa-solid fa-hands-holding-circle mr-1"></i> En Puerta
                 </button>
                 <button type="button" class="photo-tab-btn" data-photo-target="view-felpudo">
-                  <i class="fa-solid fa-door-closed mr-1"></i> En Felpudo
+                  <i class="fa-solid fa-shield-halved mr-1"></i> Asistencia Limpia
                 </button>
               </div>
             </div>
@@ -272,14 +272,14 @@
               </div>
             </div>
 
-            <!-- Photo 2: Bolsa en Felpudo con Colgador (Oculto por defecto) -->
+            <!-- Photo 2: Asistencia Limpia y Sin Esperas (Oculto por defecto) -->
             <div id="view-felpudo" class="hero-photo-view hidden relative rounded-2xl overflow-hidden shadow-md border border-gray-200 aspect-[16/9] photo-felpudo">
               <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent flex flex-col justify-end p-3 text-white">
                 <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-600 text-[10px] font-bold w-max mb-1 shadow-sm">
-                  <i class="fa-solid fa-door-open"></i> Sin Esperas • Sin Permanencia
+                  <i class="fa-solid fa-shield-halved"></i> Ámbito Privado • Sin Esperas
                 </span>
                 <p class="text-xs text-gray-200 font-medium leading-snug">
-                  Déjala cerrada en tu felpudo, pomo, puerta o cancela. La trasladamos directamente al contenedor municipal.
+                  Ten preparadas tus bolsas a las 09:00h o 16:00h. Las trasladamos directamente al contenedor municipal.
                 </p>
               </div>
             </div>
@@ -499,17 +499,17 @@
           </span>
         </div>
 
-        <!-- Step 2 (With Felpudo Photo) -->
+        <!-- Step 2 -->
         <div class="clean-card p-6 sm:p-8 relative flex flex-col items-center text-center space-y-4">
           <div class="step-number mb-1">2</div>
-          <div class="w-full h-32 rounded-xl overflow-hidden photo-felpudo border border-gray-200 shadow-sm relative">
+          <div class="w-full h-32 rounded-xl overflow-hidden photo-entrega border border-gray-200 shadow-sm relative">
             <span class="absolute bottom-2 left-2 bg-[#1E1E1E]/80 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-              🚪 Felpudo o cancela
+              🚪 Ámbito Privado
             </span>
           </div>
           <h3 class="text-xl font-bold text-[#1E1E1E]">2. Listas a las 09:00h o 16:00h</h3>
           <p class="text-sm text-gray-600 leading-relaxed">
-            Ten preparadas tus bolsas cerradas en el felpudo, pomo, puerta o cancela a las <strong>09:00 h (turno mañana)</strong> o a las <strong>16:00 h (turno tarde)</strong>. Las bolsas deben permanecer siempre en el ámbito privado del inmueble y nunca depositarse en la vía pública o acera.
+            Ten preparadas tus bolsas cerradas a las <strong>09:00 h (turno mañana)</strong> o a las <strong>16:00 h (turno tarde)</strong>. Las bolsas deben permanecer siempre en el ámbito privado del inmueble y nunca depositarse en la vía pública o acera.
           </p>
           <span class="text-xs font-semibold text-[#25815F] bg-[#E8F5EF] px-3 py-1 rounded-full">
             Listas a las 09:00h o 16:00h
@@ -895,7 +895,7 @@
         <div class="space-y-1">
           <strong class="font-bold block">Condiciones esenciales del servicio:</strong>
           <p>
-            • <strong>Horario de colocación:</strong> Las bolsas cerradas deben estar <strong>ya preparadas en el lugar acordado (felpudo, pomo, puerta o cancela dentro del inmueble) a las 09:00 h (turno de mañana) o a las 16:00 h (turno de tarde)</strong>. Las bolsas deben permanecer siempre dentro de la propiedad privada o rellano de acceso y nunca depositarse en la acera o vía pública.
+            • <strong>Horario de preparación:</strong> Ten preparadas tus bolsas cerradas <strong>a las 09:00 h (turno mañana) o a las 16:00 h (turno tarde)</strong>. Las bolsas deben permanecer siempre en el ámbito privado del inmueble y nunca depositarse en la vía pública o acera.
           </p>
           <p>
             • <strong>Capacidad:</strong> Hasta un máximo de <strong>2 bolsas de basura doméstica estándar</strong> (hasta 50L cada una) debidamente cerradas por servicio y vivienda. No acumulable de días anteriores.
@@ -1089,7 +1089,7 @@
                 Para personas en silla de ruedas, con muletas o dificultades de movilidad temporal o permanente, llegar al contenedor de la calle puede ser una auténtica carrera de obstáculos. Nosotros lo hacemos fácil y accesible.
               </p>
               <div class="space-y-2 text-sm text-gray-700">
-                <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> Asistencia en la misma puerta o pomo de tu vivienda.</div>
+                <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> Asistencia y recogida en la misma puerta de tu vivienda.</div>
                 <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#25815F]"></i> Flexibilidad y trato humano personalizado.</div>
               </div>
             </div>
@@ -1563,7 +1563,7 @@
             <div class="bg-amber-50/80 border border-amber-200/80 rounded-2xl p-3.5 flex items-start gap-2.5 text-xs text-amber-900">
               <i class="fa-solid fa-clock text-amber-600 mt-0.5 flex-shrink-0"></i>
               <div>
-                <strong>Puntualidad en la entrega:</strong> Las bolsas deben estar depositadas en tu felpudo, pomo, puerta o cancela <strong>a las 09:00 h (turno mañana) o a las 16:00 h (turno tarde)</strong> dentro del ámbito privado de la vivienda o rellano de acceso (nunca en la acera ni en la vía pública).
+                <strong>Puntualidad en la entrega:</strong> Ten preparadas tus bolsas cerradas <strong>a las 09:00 h (turno mañana) o a las 16:00 h (turno tarde)</strong>. Las bolsas deben permanecer siempre en el ámbito privado del inmueble y nunca depositarse en la vía pública o acera.
               </div>
             </div>
 
@@ -1585,7 +1585,7 @@
 
             <div>
               <label for="clientNotes" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Observaciones</label>
-              <textarea id="clientNotes" rows="2" placeholder="Ej. Código de telefonillo, dejar en el pomo, vivienda con cancela exterior..." class="custom-input"></textarea>
+              <textarea id="clientNotes" rows="2" placeholder="Ej. Código de telefonillo, indicaciones de portal, horario preferente..." class="custom-input"></textarea>
             </div>
 
             <!-- RGPD and Community Access Terms Checkbox -->
@@ -1790,7 +1790,7 @@
             Disponemos de <strong>2 turnos diarios</strong> para tu máxima comodidad:<br>
             • <strong>Turno de Mañana:</strong> de 09:00 a 13:00 h.<br>
             • <strong>Turno de Tarde:</strong> de 16:00 a 20:00 h.<br><br>
-            ⏰ <strong>Importante sobre la colocación de las bolsas:</strong> Las bolsas cerradas deben estar <strong>ya preparadas en tu felpudo, pomo, puerta o cancela (dentro del inmueble o rellano) a las 09:00 h (si elegiste mañana) o a las 16:00 h (si elegiste tarde)</strong>. Nuestro asistente pasará durante la franja horaria acordada.<br><br>
+            ⏰ <strong>Importante sobre la preparación de las bolsas:</strong> Ten preparadas tus bolsas cerradas <strong>a las 09:00 h (turno mañana) o a las 16:00 h (turno tarde)</strong>. Las bolsas deben permanecer siempre en el ámbito privado del inmueble y nunca depositarse en la vía pública o acera. Nuestro asistente pasará durante la franja horaria acordada.<br><br>
             Los días de servicio están organizados de forma fija según el plan que elijas:<br>
             • <strong>Planes Plus de 3 días (Pisos 29,90€ / Chalets 39,90€):</strong> Lunes, Miércoles y Viernes.<br>
             • <strong>Planes Premium de 5 días (Pisos 39,90€ / Chalets 49,90€):</strong> Lunes a Viernes completo.<br><br>
@@ -2106,7 +2106,7 @@
                 <i class="fa-solid fa-file-contract text-emerald-600"></i> Principios Operativos y Normativa de la Red de Colaboración:
               </div>
               <ul class="space-y-1.5 text-gray-700 list-disc list-inside">
-                <li><strong>Servicio asistencial a pie:</strong> El traslado de las bolsas se efectúa exclusivamente a pie desde la puerta o cancela del cliente hasta el contenedor municipal correspondiente. Queda terminantemente prohibido el transporte de bolsas en vehículos a motor o su almacenamiento/acopio fuera del sistema público.</li>
+                <li><strong>Servicio asistencial a pie:</strong> El traslado de las bolsas se efectúa exclusivamente a pie desde la puerta o acceso privado del cliente hasta el contenedor municipal correspondiente. Queda terminantemente prohibido el transporte de bolsas en vehículos a motor o su almacenamiento/acopio fuera del sistema público.</li>
                 <li><strong>Depósito directo e inmediato:</strong> El servicio concluye obligatoriamente con el depósito inmediato de las bolsas en el contenedor municipal autorizado. Queda prohibido desviar residuos a cualquier otro lugar.</li>
                 <li><strong>Integridad de las bolsas:</strong> El colaborador no abre, manipula ni clasifica el contenido de las bolsas (la separación en origen es exclusiva del usuario).</li>
                 <li><strong>Bolsas no conformes:</strong> En caso de detectar bolsas rotas, abiertas, con residuos peligrosos o escombros no permitidos, no se trasladarán y se notificará de inmediato a coordinación (dejando constancia visual limitada estrictamente al residuo, sin captar personas, interiores ni números de puerta).</li>
@@ -2270,7 +2270,7 @@
       <!-- Punctuality reminder in modal -->
       <div class="bg-amber-50/70 border border-amber-200/70 p-3.5 rounded-2xl text-left text-xs text-amber-900 space-y-1">
         <div class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-clock text-amber-600"></i> Recuerda tener las bolsas listas:</div>
-        <p>A las <strong>09:00 h</strong> (turno mañana) o a las <strong>16:00 h</strong> (turno tarde) junto a tu puerta interior o cancela privada para que el asistente pueda trasladarla puntualmente.</p>
+        <p>Ten preparadas tus bolsas cerradas a las <strong>09:00 h</strong> (turno mañana) o a las <strong>16:00 h</strong> (turno tarde). Las bolsas deben permanecer siempre en el ámbito privado del inmueble y nunca depositarse en la vía pública o acera.</p>
       </div>
 
       <p class="text-xs text-gray-500">
@@ -2333,7 +2333,7 @@
         <div id="legal-terminos" class="legal-tab-pane space-y-3">
           <h4 class="font-bold text-sm text-gray-900">1. Descripción y Naturaleza de la Prestación</h4>
           <p>
-            TeLaTiro es un servicio privado de asistencia domiciliaria enfocado en facilitar el traslado de bolsas cerradas de basura doméstica generadas por los usuarios desde su puerta interior o cancela hasta los contenedores habilitados por el municipio correspondiente en la vía pública.
+            TeLaTiro es un servicio privado de asistencia domiciliaria enfocado en facilitar el traslado de bolsas cerradas de basura doméstica generadas por los usuarios desde su acceso privado hasta los contenedores habilitados por el municipio correspondiente en la vía pública.
           </p>
           <div class="bg-emerald-50 border border-emerald-200 p-3.5 rounded-xl text-emerald-950 space-y-1.5">
             <h5 class="font-bold text-xs text-[#1E5E44]">Naturaleza estrictamente asistencial del servicio</h5>
@@ -2351,7 +2351,7 @@
           <h4 class="font-bold text-sm text-gray-900">2. Condiciones de Entrega de Bolsas</h4>
           <p>
             • Cada servicio comprende un máximo de <strong>2 bolsas de basura doméstica estándar</strong> (hasta 50L cada una) debidamente cerradas y atadas por el usuario.<br>
-            • Las bolsas deben estar preparadas dentro de la propiedad privada del cliente (puerta interior, pomo, felpudo privado o cancela) a las <strong>09:00 h</strong> para el turno de mañana o a las <strong>16:00 h</strong> para el turno de tarde. En ningún caso deberán depositarse en aceras o vía pública con antelación.
+            • Ten preparadas tus bolsas cerradas a las <strong>09:00 h</strong> para el turno de mañana o a las <strong>16:00 h</strong> para el turno de tarde. Las bolsas deben permanecer siempre en el ámbito privado del inmueble y nunca depositarse en la vía pública o acera.
           </p>
 
           <h4 class="font-bold text-sm text-gray-900">3. Formas de Pago y Modalidades de Contratación</h4>
@@ -2382,7 +2382,7 @@
             <strong>1. Principio de Autorización Previa:</strong> TeLaTiro Servicios Privados presta sus servicios única y exclusivamente a petición expresa del cliente solicitante. <strong>TeLaTiro no entra ni prestará servicios en zonas comunitarias, portales, zaguanes o urbanizaciones cerradas cuando la Comunidad de Propietarios, su Junta de Gobierno o la Administración de Fincas no haya autorizado o permitido expresamente dicho acceso.</strong>
           </p>
           <p>
-            <strong>2. Responsabilidad y Legitimación del Usuario:</strong> El cliente que contrate el servicio declara y garantiza bajo su exclusiva responsabilidad contar con la debida legitimación y autorización conforme a la Ley de Propiedad Horizontal y los estatutos o normas de régimen interior de su comunidad para facilitar las indicaciones de acceso a su rellano o cancela (mediante código de telefonillo, llamada concertada o llaves de acceso).
+            <strong>2. Responsabilidad y Legitimación del Usuario:</strong> El cliente que contrate el servicio declara y garantiza bajo su exclusiva responsabilidad contar con la debida legitimación y autorización conforme a la Ley de Propiedad Horizontal y los estatutos o normas de régimen interior de su comunidad para facilitar las indicaciones de acceso a su portal o vivienda (mediante código de telefonillo, llamada concertada o llaves de acceso).
           </p>
           <p>
             <strong>3. Personas y Colaboradores Identificados:</strong> Toda persona o colaborador que preste asistencia a través de la red de TeLaTiro acude debidamente identificado, asegurado y uniformado, limitando su presencia al tiempo estrictamente imprescindible para trasladar las bolsas cerradas y depositarlas inmediatamente en el contenedor municipal correspondiente.
@@ -2468,6 +2468,6 @@
   </div>
 
   <!-- Javascript -->
-  <script src="js/app.js?v=25"></script>
+  <script src="js/app.js?v=26"></script>
 </body>
 </html>
