@@ -249,6 +249,57 @@ function fetchShiftAvailability() {
 }
 
 /**
+ * Obtiene la capacidad y plazas de la zona/código postal seleccionado
+ */
+function getSelectedZoneCapacity() {
+  const zipSelect = document.getElementById('clientZip');
+  const zipVal = zipSelect ? zipSelect.value : '';
+  
+  if (!zipVal || zipVal === '') {
+    return {
+      key: 'all',
+      name: 'Todo Rivas Vaciamadrid',
+      morning: 30,
+      afternoon: 30,
+      total: 60,
+      isMorningFull: false,
+      isAfternoonFull: false,
+      isFuture: false,
+      isGlobal: true
+    };
+  }
+
+  let zoneKey = '28523';
+  if (zipVal.includes('28523')) zoneKey = '28523';
+  else if (zipVal.includes('28522')) zoneKey = '28522';
+  else if (zipVal.includes('28521')) zoneKey = '28521';
+  else if (zipVal.includes('28524') || zipVal.includes('28525')) zoneKey = '28524';
+  
+  const zoneInfo = (SHIFT_STATE.zones && SHIFT_STATE.zones[zoneKey]) 
+    ? SHIFT_STATE.zones[zoneKey] 
+    : { name: 'Covibar, Almendros y Pablo Iglesias', morning: 12, afternoon: 12, total: 24, max: 24 };
+
+  const isFuture = Boolean(zoneInfo.isFuture || zoneInfo.total === 0);
+  const mAvail = isFuture ? 0 : (typeof zoneInfo.morning === 'number' ? zoneInfo.morning : 12);
+  const aAvail = isFuture ? 0 : (typeof zoneInfo.afternoon === 'number' ? zoneInfo.afternoon : 12);
+  const totAvail = isFuture ? 0 : (typeof zoneInfo.total === 'number' ? zoneInfo.total : (mAvail + aAvail));
+  const mFull = isFuture || mAvail <= 0;
+  const aFull = isFuture || aAvail <= 0;
+
+  return {
+    key: zoneKey,
+    name: zoneInfo.name,
+    morning: mAvail,
+    afternoon: aAvail,
+    total: totAvail,
+    isMorningFull: mFull,
+    isAfternoonFull: aFull,
+    isFuture: isFuture,
+    isGlobal: false
+  };
+}
+
+/**
  * Actualiza los badges de cupo, textos del desplegable y avisos de plazas
  */
 function updateShiftCapacityUI() {
@@ -291,29 +342,39 @@ function updateShiftCapacityUI() {
     return;
   }
 
-  // Para Planes Mensuales (Pisos y Chalets): Mostrar badges e indicadores de plazas en vivo
+  // Para Planes Mensuales (Pisos y Chalets): Mostrar badges e indicadores de plazas en vivo de la zona seleccionada
   if (badgeContainer) badgeContainer.classList.remove('hidden');
   if (shiftCapacityDetails) shiftCapacityDetails.classList.remove('hidden');
 
-  const mAvail = SHIFT_STATE.morning.available;
-  const aAvail = SHIFT_STATE.afternoon.available;
-  const mFull = SHIFT_STATE.morning.isFull;
-  const aFull = SHIFT_STATE.afternoon.isFull;
+  const zoneCap = getSelectedZoneCapacity();
+  const mAvail = zoneCap.morning;
+  const aAvail = zoneCap.afternoon;
+  const mFull = zoneCap.isMorningFull;
+  const aFull = zoneCap.isAfternoonFull;
+  const totAvail = zoneCap.total;
 
-  // 1. Actualizar textos de las opciones del select
+  // 1. Actualizar textos de las opciones del select de franja horaria
   if (timeSlotSelect) {
-    let mLabel = `Mañana (09:00 - 13:00 h) — [${mAvail} plazas disponibles]`;
-    if (mFull) {
+    let mLabel = zoneCap.isGlobal 
+      ? `Mañana (09:00 - 13:00 h) — [30 plazas disponibles]` 
+      : `Mañana (09:00 - 13:00 h) — [${mAvail} plazas en CP ${zoneCap.key}]`;
+    if (zoneCap.isFuture) {
+      mLabel = `Mañana (09:00 - 13:00 h) — [Sin plazas disponibles / Próxima apertura]`;
+    } else if (mFull) {
       mLabel = `Mañana (09:00 - 13:00 h) — [COMPLETO • Lista de Espera]`;
-    } else if (mAvail <= 3) {
-      mLabel = `Mañana (09:00 - 13:00 h) — [¡Últimas ${mAvail} plazas!]`;
+    } else if (mAvail <= 3 && !zoneCap.isGlobal) {
+      mLabel = `Mañana (09:00 - 13:00 h) — [¡Últimas ${mAvail} plazas en CP ${zoneCap.key}!]`;
     }
 
-    let aLabel = `Tarde (16:00 - 20:00 h) — [${aAvail} plazas disponibles]`;
-    if (aFull) {
+    let aLabel = zoneCap.isGlobal 
+      ? `Tarde (16:00 - 20:00 h) — [30 plazas disponibles]` 
+      : `Tarde (16:00 - 20:00 h) — [${aAvail} plazas en CP ${zoneCap.key}]`;
+    if (zoneCap.isFuture) {
+      aLabel = `Tarde (16:00 - 20:00 h) — [Sin plazas disponibles / Próxima apertura]`;
+    } else if (aFull) {
       aLabel = `Tarde (16:00 - 20:00 h) — [COMPLETO • Lista de Espera]`;
-    } else if (aAvail <= 3) {
-      aLabel = `Tarde (16:00 - 20:00 h) — [¡Últimas ${aAvail} plazas!]`;
+    } else if (aAvail <= 3 && !zoneCap.isGlobal) {
+      aLabel = `Tarde (16:00 - 20:00 h) — [¡Últimas ${aAvail} plazas en CP ${zoneCap.key}!]`;
     }
 
     for (let opt of timeSlotSelect.options) {
@@ -327,10 +388,13 @@ function updateShiftCapacityUI() {
 
   // 2. Indicadores de cada turno (Mañana y Tarde)
   if (morningText && morningDot) {
-    if (mFull) {
+    if (zoneCap.isFuture) {
+      morningDot.className = 'inline-block w-2 h-2 rounded-full bg-red-500';
+      morningText.innerHTML = `<strong>Mañana:</strong> <span class="font-bold text-red-600">Sin plazas (Próxima apertura)</span>`;
+    } else if (mFull) {
       morningDot.className = 'inline-block w-2 h-2 rounded-full bg-red-500';
       morningText.innerHTML = `<strong>Mañana:</strong> <span class="font-bold text-red-600">Completo (0 plazas)</span>`;
-    } else if (mAvail <= 3) {
+    } else if (mAvail <= 3 && !zoneCap.isGlobal) {
       morningDot.className = 'inline-block w-2 h-2 rounded-full bg-amber-500 animate-pulse';
       morningText.innerHTML = `<strong>Mañana:</strong> <span class="font-bold text-amber-700">¡Últimas ${mAvail} plazas!</span>`;
     } else {
@@ -340,10 +404,13 @@ function updateShiftCapacityUI() {
   }
 
   if (afternoonText && afternoonDot) {
-    if (aFull) {
+    if (zoneCap.isFuture) {
+      afternoonDot.className = 'inline-block w-2 h-2 rounded-full bg-red-500';
+      afternoonText.innerHTML = `<strong>Tarde:</strong> <span class="font-bold text-red-600">Sin plazas (Próxima apertura)</span>`;
+    } else if (aFull) {
       afternoonDot.className = 'inline-block w-2 h-2 rounded-full bg-red-500';
       afternoonText.innerHTML = `<strong>Tarde:</strong> <span class="font-bold text-red-600">Completo (0 plazas)</span>`;
-    } else if (aAvail <= 3) {
+    } else if (aAvail <= 3 && !zoneCap.isGlobal) {
       afternoonDot.className = 'inline-block w-2 h-2 rounded-full bg-amber-500 animate-pulse';
       afternoonText.innerHTML = `<strong>Tarde:</strong> <span class="font-bold text-amber-700">¡Últimas ${aAvail} plazas!</span>`;
     } else {
@@ -352,18 +419,20 @@ function updateShiftCapacityUI() {
     }
   }
 
-  // 3. Badge global superior
+  // 3. Badge global superior sobre el selector de Franja Horaria
   if (badgeText && badgeContainer) {
-    const totAvail = mAvail + aAvail;
-    if (totAvail <= 0) {
+    if (zoneCap.isFuture || totAvail <= 0) {
       badgeContainer.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-800 inline-flex items-center gap-1';
-      badgeText.textContent = 'Cupos completos • Lista de Espera';
+      badgeText.textContent = `Sin plazas en CP ${zoneCap.key} • Lista de Espera`;
+    } else if (zoneCap.isGlobal) {
+      badgeContainer.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-[#1E5E44] inline-flex items-center gap-1';
+      badgeText.textContent = `60 plazas disponibles en Rivas`;
     } else if (totAvail <= 5) {
       badgeContainer.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 inline-flex items-center gap-1';
-      badgeText.textContent = `¡Últimas ${totAvail} plazas libres!`;
+      badgeText.textContent = `¡Últimas ${totAvail} plazas en CP ${zoneCap.key}!`;
     } else {
       badgeContainer.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-[#1E5E44] inline-flex items-center gap-1';
-      badgeText.textContent = `${totAvail} plazas disponibles`;
+      badgeText.textContent = `${totAvail} plazas en CP ${zoneCap.key}`;
     }
   }
 
@@ -400,23 +469,43 @@ function checkCurrentSelectedShiftWaitlist() {
 
   if (!timeSlotSelect) return;
 
+  const zoneCap = getSelectedZoneCapacity();
   const currentVal = timeSlotSelect.value;
   const isMorning = currentVal.toLowerCase().includes('mañana') || currentVal.includes('09:00');
-  const isSelectedShiftFull = isMorning ? SHIFT_STATE.morning.isFull : SHIFT_STATE.afternoon.isFull;
-  const otherShiftAvail = isMorning ? SHIFT_STATE.afternoon.available : SHIFT_STATE.morning.available;
+  const isSelectedShiftFull = isMorning ? zoneCap.isMorningFull : zoneCap.isAfternoonFull;
+  const otherShiftAvail = isMorning ? zoneCap.afternoon : zoneCap.morning;
   const otherShiftName = isMorning ? 'Turno de Tarde (16:00 - 20:00 h)' : 'Turno de Mañana (09:00 - 13:00 h)';
+
+  if (zoneCap.isFuture) {
+    if (waitlistNotice) {
+      waitlistNotice.classList.remove('hidden');
+      if (waitlistNoticeTitle) {
+        waitlistNoticeTitle.textContent = `Zona CP ${zoneCap.key} en Fase de Expansión (Sin plazas activas)`;
+      }
+      if (waitlistNoticeDesc) {
+        waitlistNoticeDesc.innerHTML = `Actualmente no hay plazas activas en el código postal ${zoneCap.key}. Puedes enviar tu solicitud para quedar registrado con <strong>prioridad de apertura</strong> cuando habilitemos la ruta.`;
+      }
+    }
+    if (submitBtn) {
+      submitBtn.classList.remove('btn-primary');
+      submitBtn.classList.add('bg-amber-600', 'hover:bg-amber-700', 'text-white', 'shadow-lg', 'shadow-amber-600/20');
+      if (submitIcon) submitIcon.className = 'fa-solid fa-hourglass-half text-lg';
+      if (submitText) submitText.textContent = 'Unirme a la Lista de Espera de mi Zona';
+    }
+    return;
+  }
 
   if (isSelectedShiftFull) {
     if (waitlistNotice) {
       waitlistNotice.classList.remove('hidden');
       if (waitlistNoticeTitle) {
-        waitlistNoticeTitle.textContent = `Turno de ${isMorning ? 'Mañana' : 'Tarde'} Completo (30/30 plazas cubiertas)`;
+        waitlistNoticeTitle.textContent = `Turno de ${isMorning ? 'Mañana' : 'Tarde'} Completo en tu zona (${zoneCap.key})`;
       }
       if (waitlistNoticeDesc) {
         if (otherShiftAvail > 0) {
-          waitlistNoticeDesc.innerHTML = `Las 30 plazas de este turno están cubiertas para asegurar la puntualidad del servicio. Puedes unirte a la <strong>Lista de Espera Prioritaria</strong> con el botón inferior o seleccionar el <strong>${otherShiftName}</strong> (${otherShiftAvail} plazas disponibles).`;
+          waitlistNoticeDesc.innerHTML = `Las plazas de este turno para tu código postal (${zoneCap.key}) están cubiertas. Puedes unirte a la <strong>Lista de Espera Prioritaria</strong> con el botón inferior o seleccionar el <strong>${otherShiftName}</strong> (${otherShiftAvail} plazas disponibles).`;
         } else {
-          waitlistNoticeDesc.innerHTML = `Todas las plazas del día están cubiertas (60/60). Al enviar tu solicitud entrarás en el <strong>puesto nº 1 de la Lista de Espera Prioritaria</strong> y te avisaremos en cuanto se libere una vacante.`;
+          waitlistNoticeDesc.innerHTML = `Todas las plazas de tu zona (${zoneCap.key}) están cubiertas. Al enviar tu solicitud entrarás en el <strong>puesto nº 1 de la Lista de Espera Prioritaria</strong> y te avisaremos en cuanto se libere una vacante.`;
         }
       }
     }
@@ -1043,6 +1132,7 @@ function tryAutoDetectZip() {
           zipAutoBadgeText.textContent = `Código Postal ${cpDigits || detectedZipValue.substring(0, 5)} asignado automáticamente por tu calle`;
         }
       }
+      updateShiftCapacityUI();
       setTimeout(() => {
         zipSelect.classList.remove('border-[#25815F]', 'bg-emerald-50/60');
       }, 2500);
@@ -1079,6 +1169,11 @@ function initBookingForm() {
 
   if (streetTypeSelect) {
     streetTypeSelect.addEventListener('change', tryAutoDetectZip);
+  }
+
+  if (zipSelect) {
+    zipSelect.addEventListener('change', updateShiftCapacityUI);
+    zipSelect.addEventListener('input', updateShiftCapacityUI);
   }
 
   // Inicializar opciones de pago y días acordes al plan seleccionado por defecto
