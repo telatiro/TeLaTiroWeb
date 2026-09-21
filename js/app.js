@@ -45,25 +45,38 @@ const CONFIG = {
       cp: '28521',
       name: 'Casco Antiguo y Zona Este',
       description: 'Casco Antiguo y zona este.',
-      keywords: ['28521', 'casco antiguo', 'casco', 'este', 'vaciamadrid']
+      keywords: ['28521', 'casco antiguo', 'casco', 'este', 'vaciamadrid'],
+      maxMorning: 5,
+      maxAfternoon: 5,
+      maxTotal: 10
     },
     '28522': {
       cp: '28522',
       name: 'Sector Central y Zona Futura',
       description: 'Sector Central y zona comercial.',
-      keywords: ['28522', 'sector central', 'futura', 'central']
+      keywords: ['28522', 'sector central', 'futura', 'central'],
+      maxMorning: 13,
+      maxAfternoon: 13,
+      maxTotal: 26
     },
     '28523': {
       cp: '28523',
       name: 'Covibar, Almendros y Pablo Iglesias',
       description: 'Avenida de los Almendros, urbanización Pablo Iglesias, barrio de Covibar y La Partija.',
-      keywords: ['28523', 'almendros', 'avenida de los almendros', 'pablo iglesias', 'covibar', 'partija', 'la partija']
+      keywords: ['28523', 'almendros', 'avenida de los almendros', 'pablo iglesias', 'covibar', 'partija', 'la partija'],
+      maxMorning: 12,
+      maxAfternoon: 12,
+      maxTotal: 24
     },
     '28524': {
       cp: '28524 / 28525',
       name: 'Nuevos Desarrollos y Áreas de Expansión',
       description: 'Nuevos desarrollos residenciales y áreas de expansión.',
-      keywords: ['28524', '28525', 'nuevos desarrollos', 'residencial', 'expansion', 'desarrollos', 'cristo de rivas']
+      keywords: ['28524', '28525', 'nuevos desarrollos', 'residencial', 'expansion', 'desarrollos', 'cristo de rivas'],
+      maxMorning: 0,
+      maxAfternoon: 0,
+      maxTotal: 0,
+      isFuture: true
     }
   },
   plans: {
@@ -176,14 +189,21 @@ const CONFIG = {
 };
 
 // ============================================================================
-// GESTIÓN DINÁMICA DE CUPOS POR TURNO (20 Plazas Mañana / 20 Plazas Tarde)
+// GESTIÓN DINÁMICA DE CUPOS POR TURNO (30 Plazas Mañana / 30 Plazas Tarde = 60 Plazas)
+// Distribución por Código Postal: 28523 (24) | 28522 (26) | 28521 (10) | 28524 (0 - Futura Expansión)
 // ============================================================================
 const SHIFT_STATE = {
-  morning: { max: 20, booked: 0, available: 20, isFull: false },
-  afternoon: { max: 20, booked: 0, available: 20, isFull: false },
-  totalAvailable: 40,
+  morning: { max: 30, booked: 0, available: 30, isFull: false },
+  afternoon: { max: 30, booked: 0, available: 30, isFull: false },
+  totalAvailable: 60,
   totalFull: false,
-  loaded: false
+  loaded: false,
+  zones: {
+    '28523': { name: 'Covibar, Almendros y Pablo Iglesias', morning: 12, afternoon: 12, total: 24, max: 24 },
+    '28522': { name: 'Sector Central y Zona Futura', morning: 13, afternoon: 13, total: 26, max: 26 },
+    '28521': { name: 'Casco Antiguo y Zona Este', morning: 5, afternoon: 5, total: 10, max: 10 },
+    '28524': { name: 'Nuevos Desarrollos y Áreas de Expansión', morning: 0, afternoon: 0, total: 0, max: 0, isFuture: true }
+  }
 };
 
 /**
@@ -201,17 +221,17 @@ function fetchShiftAvailability() {
       if (data && (data.status === 'success' || data.morning)) {
         if (data.morning) {
           SHIFT_STATE.morning = {
-            max: data.morning.max || 20,
+            max: data.morning.max || 30,
             booked: data.morning.booked || 0,
-            available: typeof data.morning.available === 'number' ? data.morning.available : Math.max(0, 20 - (data.morning.booked || 0)),
+            available: typeof data.morning.available === 'number' ? data.morning.available : Math.max(0, 30 - (data.morning.booked || 0)),
             isFull: Boolean(data.morning.isFull || (data.morning.available <= 0))
           };
         }
         if (data.afternoon) {
           SHIFT_STATE.afternoon = {
-            max: data.afternoon.max || 20,
+            max: data.afternoon.max || 30,
             booked: data.afternoon.booked || 0,
-            available: typeof data.afternoon.available === 'number' ? data.afternoon.available : Math.max(0, 20 - (data.afternoon.booked || 0)),
+            available: typeof data.afternoon.available === 'number' ? data.afternoon.available : Math.max(0, 30 - (data.afternoon.booked || 0)),
             isFull: Boolean(data.afternoon.isFull || (data.afternoon.available <= 0))
           };
         }
@@ -223,7 +243,7 @@ function fetchShiftAvailability() {
       }
     })
     .catch(err => {
-      console.log('Disponibilidad de turnos inicializada con cupos por defecto (20/20):', err);
+      console.log('Disponibilidad de turnos inicializada con cupos por defecto (30/30):', err);
       updateShiftCapacityUI();
     });
 }
@@ -390,13 +410,13 @@ function checkCurrentSelectedShiftWaitlist() {
     if (waitlistNotice) {
       waitlistNotice.classList.remove('hidden');
       if (waitlistNoticeTitle) {
-        waitlistNoticeTitle.textContent = `Turno de ${isMorning ? 'Mañana' : 'Tarde'} Completo (20/20 plazas cubiertas)`;
+        waitlistNoticeTitle.textContent = `Turno de ${isMorning ? 'Mañana' : 'Tarde'} Completo (30/30 plazas cubiertas)`;
       }
       if (waitlistNoticeDesc) {
         if (otherShiftAvail > 0) {
-          waitlistNoticeDesc.innerHTML = `Las 20 plazas de este turno están cubiertas para asegurar la puntualidad del servicio. Puedes unirte a la <strong>Lista de Espera Prioritaria</strong> con el botón inferior o seleccionar el <strong>${otherShiftName}</strong> (${otherShiftAvail} plazas disponibles).`;
+          waitlistNoticeDesc.innerHTML = `Las 30 plazas de este turno están cubiertas para asegurar la puntualidad del servicio. Puedes unirte a la <strong>Lista de Espera Prioritaria</strong> con el botón inferior o seleccionar el <strong>${otherShiftName}</strong> (${otherShiftAvail} plazas disponibles).`;
         } else {
-          waitlistNoticeDesc.innerHTML = `Todas las plazas del día están cubiertas (40/40). Al enviar tu solicitud entrarás en el <strong>puesto nº 1 de la Lista de Espera Prioritaria</strong> y te avisaremos en cuanto se libere una vacante.`;
+          waitlistNoticeDesc.innerHTML = `Todas las plazas del día están cubiertas (60/60). Al enviar tu solicitud entrarás en el <strong>puesto nº 1 de la Lista de Espera Prioritaria</strong> y te avisaremos en cuanto se libere una vacante.`;
         }
       }
     }
@@ -989,6 +1009,17 @@ function tryAutoDetectZip() {
     const cpMatch = detectedZipValue.match(/\b2852[1-5]\b/);
     const cpDigits = cpMatch ? cpMatch[0] : '';
     
+    if (cpDigits === '28524' || cpDigits === '28525') {
+      if (zipAutoBadge) {
+        zipAutoBadge.style.display = 'inline-flex';
+        zipAutoBadge.className = 'text-[11px] text-amber-900 font-semibold mt-1.5 items-center gap-1.5 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-300';
+        if (zipAutoBadgeText) {
+          zipAutoBadgeText.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-amber-600"></i> Zona 28524: Área de futura expansión actualmente sin plazas activas.';
+        }
+      }
+      return;
+    }
+
     let matchedOptionIndex = -1;
     for (let i = 0; i < zipSelect.options.length; i++) {
       if (cpDigits && zipSelect.options[i].value.includes(cpDigits)) {
@@ -1000,13 +1031,14 @@ function tryAutoDetectZip() {
       }
     }
 
-    if (matchedOptionIndex !== -1) {
+    if (matchedOptionIndex !== -1 && !zipSelect.options[matchedOptionIndex].disabled) {
       zipSelect.selectedIndex = matchedOptionIndex;
       zipSelect.value = zipSelect.options[matchedOptionIndex].value;
       zipSelect.classList.add('border-[#25815F]', 'bg-emerald-50/60');
       
       if (zipAutoBadge) {
         zipAutoBadge.style.display = 'inline-flex';
+        zipAutoBadge.className = 'text-[11px] text-[#25815F] font-semibold mt-1.5 items-center gap-1.5 bg-[#E8F5EF] px-2.5 py-1 rounded-lg border border-[#25815F]/20';
         if (zipAutoBadgeText) {
           zipAutoBadgeText.textContent = `Código Postal ${cpDigits || detectedZipValue.substring(0, 5)} asignado automáticamente por tu calle`;
         }
