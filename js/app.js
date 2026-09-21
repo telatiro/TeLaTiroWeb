@@ -72,80 +72,80 @@ const CONFIG = {
       category: 'pisos',
       price: '39,90 €',
       period: '/ mes',
-      costPerBag: '¡Solo ~1,99 € por servicio!',
+      costPerBag: '¡Solo desde 0,99 € por bolsa!',
       frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes)',
       days: 'Lunes a Viernes',
-      details: '5 servicios semanales • Lunes a Viernes • 1 bolsa 50L (o 2 de 25L) • Tarjeta bancaria'
+      details: '5 servicios semanales • Lunes a Viernes • 2 bolsas (o hasta 50L) • Tarjeta bancaria'
     },
     piso_premium: {
       name: 'Plan Pisos y Apartamentos (5 días)',
       category: 'pisos',
       price: '39,90 €',
       period: '/ mes',
-      costPerBag: '¡Solo ~1,99 € por servicio!',
+      costPerBag: '¡Solo desde 0,99 € por bolsa!',
       frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes)',
       days: 'Lunes a Viernes',
-      details: '5 servicios semanales • Lunes a Viernes • 1 bolsa 50L (o 2 de 25L) • Tarjeta bancaria'
+      details: '5 servicios semanales • Lunes a Viernes • 2 bolsas (o hasta 50L) • Tarjeta bancaria'
     },
     piso_plus: {
       name: 'Plan Pisos y Apartamentos (5 días)',
       category: 'pisos',
       price: '39,90 €',
       period: '/ mes',
-      costPerBag: '¡Solo ~1,99 € por servicio!',
+      costPerBag: '¡Solo desde 0,99 € por bolsa!',
       frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes)',
       days: 'Lunes a Viernes',
-      details: '5 servicios semanales • Lunes a Viernes • 1 bolsa 50L (o 2 de 25L) • Tarjeta bancaria'
+      details: '5 servicios semanales • Lunes a Viernes • 2 bolsas (o hasta 50L) • Tarjeta bancaria'
     },
     piso_2d: {
       name: 'Plan Pisos y Apartamentos (5 días)',
       category: 'pisos',
       price: '39,90 €',
       period: '/ mes',
-      costPerBag: '¡Solo ~1,99 € por servicio!',
+      costPerBag: '¡Solo desde 0,99 € por bolsa!',
       frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes)',
       days: 'Lunes a Viernes',
-      details: '5 servicios semanales • Lunes a Viernes • 1 bolsa 50L (o 2 de 25L) • Tarjeta bancaria'
+      details: '5 servicios semanales • Lunes a Viernes • 2 bolsas (o hasta 50L) • Tarjeta bancaria'
     },
     chalet_5d: {
       name: 'Plan Casas y Chalets (5 días)',
       category: 'chalets',
       price: '49,90 €',
       period: '/ mes',
-      costPerBag: '¡Solo ~2,49 € por servicio!',
+      costPerBag: '¡Solo desde 1,25 € por bolsa!',
       frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes)',
       days: 'Lunes a Viernes',
-      details: '5 servicios semanales • Lunes a Viernes • 1 bolsa 50L (o 2 de 25L) • Tarjeta bancaria'
+      details: '5 servicios semanales • Lunes a Viernes • 2 bolsas (o hasta 50L) • Tarjeta bancaria'
     },
     chalet_premium: {
       name: 'Plan Casas y Chalets (5 días)',
       category: 'chalets',
       price: '49,90 €',
       period: '/ mes',
-      costPerBag: '¡Solo ~2,49 € por servicio!',
+      costPerBag: '¡Solo desde 1,25 € por bolsa!',
       frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes)',
       days: 'Lunes a Viernes',
-      details: '5 servicios semanales • Lunes a Viernes • 1 bolsa 50L (o 2 de 25L) • Tarjeta bancaria'
+      details: '5 servicios semanales • Lunes a Viernes • 2 bolsas (o hasta 50L) • Tarjeta bancaria'
     },
     chalet_plus: {
       name: 'Plan Casas y Chalets (5 días)',
       category: 'chalets',
       price: '49,90 €',
       period: '/ mes',
-      costPerBag: '¡Solo ~2,49 € por servicio!',
+      costPerBag: '¡Solo desde 1,25 € por bolsa!',
       frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes)',
       days: 'Lunes a Viernes',
-      details: '5 servicios semanales • Lunes a Viernes • 1 bolsa 50L (o 2 de 25L) • Tarjeta bancaria'
+      details: '5 servicios semanales • Lunes a Viernes • 2 bolsas (o hasta 50L) • Tarjeta bancaria'
     },
     chalet_2d: {
       name: 'Plan Casas y Chalets (5 días)',
       category: 'chalets',
       price: '49,90 €',
       period: '/ mes',
-      costPerBag: '¡Solo ~2,49 € por servicio!',
+      costPerBag: '¡Solo desde 1,25 € por bolsa!',
       frequency: 'Nº de Servicios: 5 días a la semana (Lunes a Viernes)',
       days: 'Lunes a Viernes',
-      details: '5 servicios semanales • Lunes a Viernes • 1 bolsa 50L (o 2 de 25L) • Tarjeta bancaria'
+      details: '5 servicios semanales • Lunes a Viernes • 2 bolsas (o hasta 50L) • Tarjeta bancaria'
     },
     puntual: {
       name: 'Servicio Puntual',
@@ -155,7 +155,7 @@ const CONFIG = {
       costPerBag: 'Servicio individual puntual',
       frequency: 'Servicio puntual de 1 día',
       days: 'Lunes a Viernes (a elegir)',
-      details: '1 servicio puntual • 1 bolsa 50L (o 2 de 25L) • Pago seguro con Tarjeta bancaria'
+      details: '1 servicio puntual • 2 bolsas (o hasta 50L) • Pago seguro con Tarjeta bancaria'
     }
   },
   // ==========================================================================
