@@ -220,21 +220,70 @@ function fetchShiftAvailability() {
     .then(data => {
       if (data && (data.status === 'success' || data.morning)) {
         if (data.morning) {
+          const maxM = data.morning.max || 30;
+          const bookedM = data.morning.booked || 0;
+          const availM = typeof data.morning.available === 'number' ? data.morning.available : Math.max(0, maxM - bookedM);
           SHIFT_STATE.morning = {
-            max: data.morning.max || 30,
-            booked: data.morning.booked || 0,
-            available: typeof data.morning.available === 'number' ? data.morning.available : Math.max(0, 30 - (data.morning.booked || 0)),
-            isFull: Boolean(data.morning.isFull || (data.morning.available <= 0))
+            max: maxM,
+            booked: bookedM,
+            available: availM,
+            isFull: Boolean(data.morning.isFull || (availM <= 0))
           };
         }
         if (data.afternoon) {
+          const maxA = data.afternoon.max || 30;
+          const bookedA = data.afternoon.booked || 0;
+          const availA = typeof data.afternoon.available === 'number' ? data.afternoon.available : Math.max(0, maxA - bookedA);
           SHIFT_STATE.afternoon = {
-            max: data.afternoon.max || 30,
-            booked: data.afternoon.booked || 0,
-            available: typeof data.afternoon.available === 'number' ? data.afternoon.available : Math.max(0, 30 - (data.afternoon.booked || 0)),
-            isFull: Boolean(data.afternoon.isFull || (data.afternoon.available <= 0))
+            max: maxA,
+            booked: bookedA,
+            available: availA,
+            isFull: Boolean(data.afternoon.isFull || (availA <= 0))
           };
         }
+
+        // 1. Si Google Apps Script devuelve desglose exacto por zonas:
+        if (data.zones) {
+          for (let zKey in data.zones) {
+            if (SHIFT_STATE.zones[zKey]) {
+              const gz = data.zones[zKey];
+              SHIFT_STATE.zones[zKey].morning = typeof gz.morning === 'number' ? gz.morning : SHIFT_STATE.zones[zKey].morning;
+              SHIFT_STATE.zones[zKey].afternoon = typeof gz.afternoon === 'number' ? gz.afternoon : SHIFT_STATE.zones[zKey].afternoon;
+              SHIFT_STATE.zones[zKey].total = typeof gz.total === 'number' ? gz.total : (SHIFT_STATE.zones[zKey].morning + SHIFT_STATE.zones[zKey].afternoon);
+              SHIFT_STATE.zones[zKey].bookedMorning = gz.bookedMorning || 0;
+              SHIFT_STATE.zones[zKey].bookedAfternoon = gz.bookedAfternoon || 0;
+            }
+          }
+        } else if (data.morning || data.afternoon) {
+          // 2. Si Google Apps Script responde con totales globales (5 mañana / 9 tarde = 14 reservas):
+          // Restamos proporcionalmente las reservas en cada una de las 3 zonas activas:
+          const totalBookedM = data.morning ? (data.morning.booked || 0) : 0;
+          const totalBookedA = data.afternoon ? (data.afternoon.booked || 0) : 0;
+          
+          // Reparto proporcional inteligente:
+          // 28523 (12/12 plazas):
+          const bM23 = Math.min(12, Math.round(totalBookedM * (12 / 30)));
+          const bA23 = Math.min(12, Math.round(totalBookedA * (12 / 30)));
+          // 28522 (13/13 plazas):
+          const bM22 = Math.min(13, Math.round(totalBookedM * (13 / 30)));
+          const bA22 = Math.min(13, Math.round(totalBookedA * (13 / 30)));
+          // 28521 (5/5 plazas):
+          const bM21 = Math.min(5, Math.max(0, totalBookedM - bM23 - bM22));
+          const bA21 = Math.min(5, Math.max(0, totalBookedA - bA23 - bA22));
+
+          SHIFT_STATE.zones['28523'].morning = Math.max(0, 12 - bM23);
+          SHIFT_STATE.zones['28523'].afternoon = Math.max(0, 12 - bA23);
+          SHIFT_STATE.zones['28523'].total = SHIFT_STATE.zones['28523'].morning + SHIFT_STATE.zones['28523'].afternoon;
+
+          SHIFT_STATE.zones['28522'].morning = Math.max(0, 13 - bM22);
+          SHIFT_STATE.zones['28522'].afternoon = Math.max(0, 13 - bA22);
+          SHIFT_STATE.zones['28522'].total = SHIFT_STATE.zones['28522'].morning + SHIFT_STATE.zones['28522'].afternoon;
+
+          SHIFT_STATE.zones['28521'].morning = Math.max(0, 5 - bM21);
+          SHIFT_STATE.zones['28521'].afternoon = Math.max(0, 5 - bA21);
+          SHIFT_STATE.zones['28521'].total = SHIFT_STATE.zones['28521'].morning + SHIFT_STATE.zones['28521'].afternoon;
+        }
+
         SHIFT_STATE.totalAvailable = SHIFT_STATE.morning.available + SHIFT_STATE.afternoon.available;
         SHIFT_STATE.totalFull = SHIFT_STATE.morning.isFull && SHIFT_STATE.afternoon.isFull;
         SHIFT_STATE.loaded = true;
@@ -256,14 +305,17 @@ function getSelectedZoneCapacity() {
   const zipVal = zipSelect ? zipSelect.value : '';
   
   if (!zipVal || zipVal === '') {
+    const mAvail = (SHIFT_STATE.morning && typeof SHIFT_STATE.morning.available === 'number') ? SHIFT_STATE.morning.available : 30;
+    const aAvail = (SHIFT_STATE.afternoon && typeof SHIFT_STATE.afternoon.available === 'number') ? SHIFT_STATE.afternoon.available : 30;
+    const totAvail = mAvail + aAvail;
     return {
       key: 'all',
       name: 'Todo Rivas Vaciamadrid',
-      morning: 30,
-      afternoon: 30,
-      total: 60,
-      isMorningFull: false,
-      isAfternoonFull: false,
+      morning: mAvail,
+      afternoon: aAvail,
+      total: totAvail,
+      isMorningFull: mAvail <= 0,
+      isAfternoonFull: aAvail <= 0,
       isFuture: false,
       isGlobal: true
     };
@@ -279,7 +331,7 @@ function getSelectedZoneCapacity() {
     ? SHIFT_STATE.zones[zoneKey] 
     : { name: 'Covibar, Almendros y Pablo Iglesias', morning: 12, afternoon: 12, total: 24, max: 24 };
 
-  const isFuture = Boolean(zoneInfo.isFuture || zoneInfo.total === 0);
+  const isFuture = Boolean(zoneInfo.isFuture || zoneInfo.max === 0);
   const mAvail = isFuture ? 0 : (typeof zoneInfo.morning === 'number' ? zoneInfo.morning : 12);
   const aAvail = isFuture ? 0 : (typeof zoneInfo.afternoon === 'number' ? zoneInfo.afternoon : 12);
   const totAvail = isFuture ? 0 : (typeof zoneInfo.total === 'number' ? zoneInfo.total : (mAvail + aAvail));
@@ -356,7 +408,7 @@ function updateShiftCapacityUI() {
   // 1. Actualizar textos de las opciones del select de franja horaria
   if (timeSlotSelect) {
     let mLabel = zoneCap.isGlobal 
-      ? `Mañana (09:00 - 13:00 h) — [30 plazas disponibles]` 
+      ? `Mañana (09:00 - 13:00 h) — [${mAvail} plazas disponibles]` 
       : `Mañana (09:00 - 13:00 h) — [${mAvail} plazas en CP ${zoneCap.key}]`;
     if (zoneCap.isFuture) {
       mLabel = `Mañana (09:00 - 13:00 h) — [Sin plazas disponibles / Próxima apertura]`;
@@ -367,7 +419,7 @@ function updateShiftCapacityUI() {
     }
 
     let aLabel = zoneCap.isGlobal 
-      ? `Tarde (16:00 - 20:00 h) — [30 plazas disponibles]` 
+      ? `Tarde (16:00 - 20:00 h) — [${aAvail} plazas disponibles]` 
       : `Tarde (16:00 - 20:00 h) — [${aAvail} plazas en CP ${zoneCap.key}]`;
     if (zoneCap.isFuture) {
       aLabel = `Tarde (16:00 - 20:00 h) — [Sin plazas disponibles / Próxima apertura]`;
@@ -382,6 +434,25 @@ function updateShiftCapacityUI() {
         opt.text = mLabel;
       } else if (opt.value.toLowerCase().includes('tarde') || opt.value.includes('16:00')) {
         opt.text = aLabel;
+      }
+    }
+  }
+
+  // 1.b Actualizar opciones del select de Código Postal si ya cargaron los datos en vivo
+  const zipSelect = document.getElementById('clientZip');
+  if (zipSelect && SHIFT_STATE.loaded) {
+    for (let opt of zipSelect.options) {
+      if (opt.value.includes('28523')) {
+        const z = SHIFT_STATE.zones['28523'];
+        opt.text = `28523 - Covibar, Almendros y Pablo Iglesias (${z.total} plazas disponibles)`;
+      } else if (opt.value.includes('28522')) {
+        const z = SHIFT_STATE.zones['28522'];
+        opt.text = `28522 - Sector Central y Zona Futura (${z.total} plazas disponibles)`;
+      } else if (opt.value.includes('28521')) {
+        const z = SHIFT_STATE.zones['28521'];
+        opt.text = `28521 - Casco Antiguo y Zona Este (${z.total} plazas disponibles)`;
+      } else if (opt.value.includes('28524')) {
+        opt.text = `28524 - Nuevos Desarrollos y Áreas de Expansión (Sin plazas disponibles / Próxima apertura)`;
       }
     }
   }
