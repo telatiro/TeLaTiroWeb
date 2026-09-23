@@ -48,7 +48,9 @@ const CONFIG = {
       keywords: ['28521', 'casco antiguo', 'casco', 'este', 'vaciamadrid'],
       maxMorning: 5,
       maxAfternoon: 5,
-      maxTotal: 10
+      maxTotal: 10,
+      morningWindow: '12:00 - 13:00 h',
+      afternoonWindow: '19:00 - 20:00 h'
     },
     '28522': {
       cp: '28522',
@@ -57,7 +59,9 @@ const CONFIG = {
       keywords: ['28522', 'sector central', 'futura', 'central'],
       maxMorning: 13,
       maxAfternoon: 13,
-      maxTotal: 26
+      maxTotal: 26,
+      morningWindow: '10:30 - 12:00 h',
+      afternoonWindow: '17:30 - 19:00 h'
     },
     '28523': {
       cp: '28523',
@@ -66,7 +70,9 @@ const CONFIG = {
       keywords: ['28523', 'almendros', 'avenida de los almendros', 'pablo iglesias', 'covibar', 'partija', 'la partija'],
       maxMorning: 12,
       maxAfternoon: 12,
-      maxTotal: 24
+      maxTotal: 24,
+      morningWindow: '09:00 - 10:30 h',
+      afternoonWindow: '16:00 - 17:30 h'
     },
     '28524': {
       cp: '28524 / 28525',
@@ -76,7 +82,9 @@ const CONFIG = {
       maxMorning: 0,
       maxAfternoon: 0,
       maxTotal: 0,
-      isFuture: true
+      isFuture: true,
+      morningWindow: 'Próxima apertura',
+      afternoonWindow: 'Próxima apertura'
     }
   },
   plans: {
@@ -199,10 +207,10 @@ const SHIFT_STATE = {
   totalFull: false,
   loaded: false,
   zones: {
-    '28523': { name: 'Covibar, Almendros y Pablo Iglesias', morning: 12, afternoon: 12, total: 24, max: 24 },
-    '28522': { name: 'Sector Central y Zona Futura', morning: 13, afternoon: 13, total: 26, max: 26 },
-    '28521': { name: 'Casco Antiguo y Zona Este', morning: 5, afternoon: 5, total: 10, max: 10 },
-    '28524': { name: 'Nuevos Desarrollos y Áreas de Expansión', morning: 0, afternoon: 0, total: 0, max: 0, isFuture: true }
+    '28523': { name: 'Covibar, Almendros y Pablo Iglesias', morning: 12, afternoon: 12, total: 24, max: 24, morningWindow: '09:00 - 10:30 h', afternoonWindow: '16:00 - 17:30 h' },
+    '28522': { name: 'Sector Central y Zona Futura', morning: 13, afternoon: 13, total: 26, max: 26, morningWindow: '10:30 - 12:00 h', afternoonWindow: '17:30 - 19:00 h' },
+    '28521': { name: 'Casco Antiguo y Zona Este', morning: 5, afternoon: 5, total: 10, max: 10, morningWindow: '12:00 - 13:00 h', afternoonWindow: '19:00 - 20:00 h' },
+    '28524': { name: 'Nuevos Desarrollos y Áreas de Expansión', morning: 0, afternoon: 0, total: 0, max: 0, isFuture: true, morningWindow: 'Próxima apertura', afternoonWindow: 'Próxima apertura' }
   }
 };
 
@@ -314,6 +322,8 @@ function getSelectedZoneCapacity() {
       morning: mAvail,
       afternoon: aAvail,
       total: totAvail,
+      morningWindow: '09:00 - 13:00 h',
+      afternoonWindow: '16:00 - 20:00 h',
       isMorningFull: mAvail <= 0,
       isAfternoonFull: aAvail <= 0,
       isFuture: false,
@@ -329,7 +339,7 @@ function getSelectedZoneCapacity() {
   
   const zoneInfo = (SHIFT_STATE.zones && SHIFT_STATE.zones[zoneKey]) 
     ? SHIFT_STATE.zones[zoneKey] 
-    : { name: 'Covibar, Almendros y Pablo Iglesias', morning: 12, afternoon: 12, total: 24, max: 24 };
+    : { name: 'Covibar, Almendros y Pablo Iglesias', morning: 12, afternoon: 12, total: 24, max: 24, morningWindow: '09:00 - 10:30 h', afternoonWindow: '16:00 - 17:30 h' };
 
   const isFuture = Boolean(zoneInfo.isFuture || zoneInfo.max === 0);
   const mAvail = isFuture ? 0 : (typeof zoneInfo.morning === 'number' ? zoneInfo.morning : 12);
@@ -344,6 +354,8 @@ function getSelectedZoneCapacity() {
     morning: mAvail,
     afternoon: aAvail,
     total: totAvail,
+    morningWindow: zoneInfo.morningWindow || '09:00 - 13:00 h',
+    afternoonWindow: zoneInfo.afternoonWindow || '16:00 - 20:00 h',
     isMorningFull: mFull,
     isAfternoonFull: aFull,
     isFuture: isFuture,
@@ -409,24 +421,24 @@ function updateShiftCapacityUI() {
   if (timeSlotSelect) {
     let mLabel = zoneCap.isGlobal 
       ? `Mañana (09:00 - 13:00 h) — [${mAvail} plazas disponibles]` 
-      : `Mañana (09:00 - 13:00 h) — [${mAvail} plazas en CP ${zoneCap.key}]`;
+      : `Mañana • ${zoneCap.morningWindow} (Ventana estimada) — [${mAvail} plazas en CP ${zoneCap.key}]`;
     if (zoneCap.isFuture) {
-      mLabel = `Mañana (09:00 - 13:00 h) — [Sin plazas disponibles / Próxima apertura]`;
+      mLabel = `Mañana • Próxima apertura — [Sin plazas disponibles]`;
     } else if (mFull) {
-      mLabel = `Mañana (09:00 - 13:00 h) — [COMPLETO • Lista de Espera]`;
+      mLabel = `Mañana • ${zoneCap.morningWindow} — [COMPLETO • Lista de Espera]`;
     } else if (mAvail <= 3 && !zoneCap.isGlobal) {
-      mLabel = `Mañana (09:00 - 13:00 h) — [¡Últimas ${mAvail} plazas en CP ${zoneCap.key}!]`;
+      mLabel = `Mañana • ${zoneCap.morningWindow} (Ventana estimada) — [¡Últimas ${mAvail} plazas en CP ${zoneCap.key}!]`;
     }
 
     let aLabel = zoneCap.isGlobal 
       ? `Tarde (16:00 - 20:00 h) — [${aAvail} plazas disponibles]` 
-      : `Tarde (16:00 - 20:00 h) — [${aAvail} plazas en CP ${zoneCap.key}]`;
+      : `Tarde • ${zoneCap.afternoonWindow} (Ventana estimada) — [${aAvail} plazas en CP ${zoneCap.key}]`;
     if (zoneCap.isFuture) {
-      aLabel = `Tarde (16:00 - 20:00 h) — [Sin plazas disponibles / Próxima apertura]`;
+      aLabel = `Tarde • Próxima apertura — [Sin plazas disponibles]`;
     } else if (aFull) {
-      aLabel = `Tarde (16:00 - 20:00 h) — [COMPLETO • Lista de Espera]`;
+      aLabel = `Tarde • ${zoneCap.afternoonWindow} — [COMPLETO • Lista de Espera]`;
     } else if (aAvail <= 3 && !zoneCap.isGlobal) {
-      aLabel = `Tarde (16:00 - 20:00 h) — [¡Últimas ${aAvail} plazas en CP ${zoneCap.key}!]`;
+      aLabel = `Tarde • ${zoneCap.afternoonWindow} (Ventana estimada) — [¡Últimas ${aAvail} plazas en CP ${zoneCap.key}!]`;
     }
 
     for (let opt of timeSlotSelect.options) {

@@ -57,7 +57,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="css/styles.css?v=31">
+  <link rel="stylesheet" href="css/styles.css?v=32">
 </head>
 <body class="bg-[#F8FAF9] text-[#2D3748] font-sans antialiased selection:bg-[#25815F] selection:text-white">
 
@@ -1391,11 +1391,12 @@
             <!-- Punctual Time Notice / Limit Alert -->
             <div id="punctualTimeNotice" class="hidden"></div>
 
-            <!-- Bag Readiness Punctuality Notice -->
-            <div class="bg-amber-50/80 border border-amber-200/80 rounded-2xl p-3.5 flex items-start gap-2.5 text-xs text-amber-900">
-              <i class="fa-solid fa-clock text-amber-600 mt-0.5 flex-shrink-0"></i>
+            <!-- Route & Estimated Time Window Notice -->
+            <div id="routeEstimatedTimeNotice" class="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-3.5 flex items-start gap-2.5 text-xs text-emerald-950">
+              <i class="fa-solid fa-compass text-[#25815F] mt-0.5 flex-shrink-0 text-sm"></i>
               <div>
-                <strong>Puntualidad en la entrega:</strong> Ten preparadas tus bolsas cerradas <strong>a las 09:00 h (turno mañana) o a las 16:00 h (turno tarde)</strong>. Las bolsas deben permanecer siempre en el ámbito privado del inmueble y nunca depositarse en la vía pública o acera.
+                <strong class="text-[#13402E] block mb-0.5">Ventana horaria estimada según ruta y tráfico:</strong>
+                <span id="routeEstimatedTimeText">Los servicios se realizan de forma consecutiva agrupando las viviendas por sectores contiguos para optimizar el recorrido. La hora indicada es aproximada y orientativa, ya que puede variar unos minutos según el tráfico, incidencias puntuales o accesos a comunidades.</span>
               </div>
             </div>
 
@@ -1612,21 +1613,43 @@
 
       <div class="space-y-4">
         
-        <!-- FAQ 1: Horarios y Días -->
+        <!-- FAQ 1: Horarios y Franjas -->
         <div class="faq-item clean-card overflow-hidden">
           <button class="faq-header w-full p-6 text-left flex items-center justify-between gap-4 font-bold text-gray-900 hover:text-[#25815F] transition-colors focus:outline-none">
-            <span class="text-base sm:text-lg">¿Cuáles son las franjas horarias y días disponibles según mi plan?</span>
+            <span class="text-base sm:text-lg">¿A qué hora pasa el asistente por mi puerta?</span>
             <i class="fa-solid fa-chevron-down faq-chevron text-gray-400 transition-transform duration-300"></i>
           </button>
-          <div class="faq-content px-6 pb-6 text-sm text-gray-600 leading-relaxed">
-            Disponemos de <strong>2 turnos diarios</strong> para tu máxima comodidad:<br>
-            • <strong>Turno de Mañana:</strong> de 09:00 a 13:00 h.<br>
-            • <strong>Turno de Tarde:</strong> de 16:00 a 20:00 h.<br><br>
-            ⏰ <strong>Importante sobre la preparación de las bolsas:</strong> Ten preparadas tus bolsas cerradas <strong>a las 09:00 h (turno mañana) o a las 16:00 h (turno tarde)</strong>. Las bolsas deben permanecer siempre en el ámbito privado del inmueble y nunca depositarse en la vía pública o acera. Nuestro asistente pasará durante la franja horaria acordada.<br><br>
-            Los días de servicio están organizados de forma fija según el plan que elijas:<br>
-            • <strong>Plan Pisos y Apartamentos (39,90 € / mes):</strong> 5 días a la semana (Lunes a Viernes).<br>
-            • <strong>Plan Casas y Chalets (49,90 € / mes):</strong> 5 días a la semana (Lunes a Viernes).<br><br>
-            Para el <strong>servicio puntual (4,90 €)</strong> puedes solicitarlo para cualquier día de Lunes a Viernes. Si deseas el servicio para ese mismo día, la solicitud debe realizarse con al menos 2 horas de antelación al fin del turno (<strong>hora tope para Mañana: 11:00 h</strong> / <strong>hora tope para Tarde: 18:00 h</strong>).
+          <div class="faq-content px-6 pb-6 text-sm text-gray-600 leading-relaxed space-y-3">
+            <p>
+              Disponemos de <strong>2 turnos diarios</strong> (Mañana y Tarde) organizados en <strong>ventanas estimadas de paso por sectores geográficos contiguos</strong> para optimizar el recorrido y evitar desplazamientos innecesarios:
+            </p>
+            <div class="bg-gray-50 p-3.5 rounded-xl border border-gray-200 text-xs space-y-2">
+              <div>
+                <strong>🌅 Turno de Mañana (09:00 a 13:00 h):</strong>
+                <ul class="list-disc list-inside mt-1 ml-1 text-gray-700 space-y-0.5">
+                  <li><strong>CP 28523 (Covibar, Almendros, Pablo Iglesias):</strong> 09:00 a 10:30 h (Ventana estimada)</li>
+                  <li><strong>CP 28522 (Sector Central, Rivas Futura, José Hierro):</strong> 10:30 a 12:00 h (Ventana estimada)</li>
+                  <li><strong>CP 28521 (Casco Antiguo y Zona Este):</strong> 12:00 a 13:00 h (Ventana estimada)</li>
+                </ul>
+              </div>
+              <div class="pt-1.5 border-t border-gray-200">
+                <strong>🌇 Turno de Tarde (16:00 a 20:00 h):</strong>
+                <ul class="list-disc list-inside mt-1 ml-1 text-gray-700 space-y-0.5">
+                  <li><strong>CP 28523 (Covibar, Almendros, Pablo Iglesias):</strong> 16:00 a 17:30 h (Ventana estimada)</li>
+                  <li><strong>CP 28522 (Sector Central, Rivas Futura, José Hierro):</strong> 17:30 a 19:00 h (Ventana estimada)</li>
+                  <li><strong>CP 28521 (Casco Antiguo y Zona Este):</strong> 19:00 a 20:00 h (Ventana estimada)</li>
+                </ul>
+              </div>
+            </div>
+            <p class="text-xs text-gray-500">
+              <em>* Nota de ruta:</em> Los servicios se realizan de forma consecutiva agrupando las viviendas por sectores contiguos para optimizar el recorrido. La hora indicada es aproximada y orientativa, ya que puede variar unos minutos según el tráfico, incidencias puntuales o accesos a comunidades.
+            </p>
+            <p>
+              Los días de servicio están organizados de forma fija según el plan que elijas:<br>
+              • <strong>Plan Pisos y Apartamentos (39,90 € / mes):</strong> 5 días a la semana (Lunes a Viernes).<br>
+              • <strong>Plan Casas y Chalets (49,90 € / mes):</strong> 5 días a la semana (Lunes a Viernes).<br>
+              • <strong>Servicio puntual (4,90 €):</strong> 1 día a elegir de Lunes a Viernes (solicitud con al menos 2 horas de antelación al fin del turno).
+            </p>
           </div>
         </div>
 
@@ -2299,6 +2322,6 @@
   </div>
 
   <!-- Javascript -->
-  <script src="js/app.js?v=31"></script>
+  <script src="js/app.js?v=32"></script>
 </body>
 </html>
