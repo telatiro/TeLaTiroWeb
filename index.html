@@ -1320,19 +1320,20 @@
               </div>
             </div>
 
-            <!-- 3. Time Slots, Days and Payment Method -->
+            <!-- 3. Time Slots, Estimated Hour, Days and Payment Method -->
             <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+              <!-- Shift Selector (Turno) -->
               <div class="sm:col-span-6 space-y-1.5">
                 <label for="clientTimeSlot" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1 flex items-center justify-between">
-                  <span>Franja Horaria *</span>
+                  <span>Turno de Servicio *</span>
                   <span id="shiftCapacityStatusBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-[#1E5E44] inline-flex items-center gap-1">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                     <span id="shiftCapacityStatusText">30 plazas/turno (60 plazas)</span>
                   </span>
                 </label>
-                <select id="clientTimeSlot" class="custom-input">
-                  <option value="Turno Mañana (09:00 - 13:00 h)" selected>Mañana (09:00 - 13:00 h)</option>
-                  <option value="Turno Tarde (16:00 - 20:00 h)">Tarde (16:00 - 20:00 h)</option>
+                <select id="clientTimeSlot" name="shift" class="custom-input font-medium">
+                  <option value="Turno Mañana (09:00 - 13:00 h)" selected>Turno Mañana (09:00 - 13:00 h)</option>
+                  <option value="Turno Tarde (16:00 - 20:00 h)">Turno Tarde (16:00 - 20:00 h)</option>
                 </select>
                 <!-- Dynamic Shift Capacity Indicator -->
                 <div id="shiftCapacityDetails" class="text-[11px] p-2 rounded-xl border border-emerald-200/80 bg-emerald-50/60 text-emerald-950 flex items-center justify-between flex-wrap gap-1.5">
@@ -1357,20 +1358,37 @@
                 </div>
               </div>
 
-              <div class="sm:col-span-6 space-y-4">
-                <div>
-                  <label for="clientDays" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Nº de Servicios / Días *</label>
-                  <select id="clientDays" name="frequency" class="custom-input">
-                    <option value="5 Servicios semanales: Lunes a Viernes (L, M, X, J, V)" selected>5 Servicios semanales: Lunes a Viernes</option>
-                  </select>
+              <!-- Estimated Hour / Preferred Time Selector (Hora Estimada) -->
+              <div class="sm:col-span-6 space-y-1.5">
+                <label for="clientEstimatedHour" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1 flex items-center justify-between">
+                  <span>Hora Estimada *</span>
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-[#1E5E44] border border-emerald-200 inline-flex items-center gap-1">
+                    <i class="fa-solid fa-clock text-[#25815F]"></i> Horario preferente
+                  </span>
+                </label>
+                <select id="clientEstimatedHour" name="estimated-hour" class="custom-input font-medium">
+                  <option value="09:00 - 10:30 h (Hora estimada)" selected>09:00 - 10:30 h (Hora estimada)</option>
+                </select>
+                <div class="text-[11px] text-gray-500 p-2 rounded-xl bg-gray-50 border border-gray-200/80 flex items-center gap-1.5">
+                  <i class="fa-solid fa-route text-[#25815F] flex-shrink-0"></i>
+                  <span id="estimatedHourHelpText">Asignada automáticamente según tu sector y código postal.</span>
                 </div>
+              </div>
 
-                <div>
-                  <label for="clientPayment" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Forma de Pago *</label>
-                  <select id="clientPayment" name="payment-method" class="custom-input">
-                    <option value="Tarjeta bancaria (Débito / Crédito)" selected>Tarjeta bancaria (Débito / Crédito)</option>
-                  </select>
-                </div>
+              <!-- Days Selector -->
+              <div class="sm:col-span-6">
+                <label for="clientDays" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Nº de Servicios / Días *</label>
+                <select id="clientDays" name="frequency" class="custom-input">
+                  <option value="5 Servicios semanales: Lunes a Viernes (L, M, X, J, V)" selected>5 Servicios semanales: Lunes a Viernes</option>
+                </select>
+              </div>
+
+              <!-- Payment Selector -->
+              <div class="sm:col-span-6">
+                <label for="clientPayment" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Forma de Pago *</label>
+                <select id="clientPayment" name="payment-method" class="custom-input">
+                  <option value="Tarjeta bancaria (Débito / Crédito)" selected>Tarjeta bancaria (Débito / Crédito)</option>
+                </select>
               </div>
             </div>
 
@@ -1395,7 +1413,7 @@
             <div id="routeEstimatedTimeNotice" class="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-3.5 flex items-start gap-2.5 text-xs text-emerald-950">
               <i class="fa-solid fa-compass text-[#25815F] mt-0.5 flex-shrink-0 text-sm"></i>
               <div>
-                <strong class="text-[#13402E] block mb-0.5">Ventana horaria estimada según ruta y tráfico:</strong>
+                <strong class="text-[#13402E] block mb-0.5">Hora estimada según ruta y tráfico:</strong>
                 <span id="routeEstimatedTimeText">Los servicios se realizan de forma consecutiva agrupando las viviendas por sectores contiguos para optimizar el recorrido. La hora indicada es aproximada y orientativa, ya que puede variar unos minutos según el tráfico, incidencias puntuales o accesos a comunidades.</span>
               </div>
             </div>
@@ -1621,23 +1639,23 @@
           </button>
           <div class="faq-content px-6 pb-6 text-sm text-gray-600 leading-relaxed space-y-3">
             <p>
-              Disponemos de <strong>2 turnos diarios</strong> (Mañana y Tarde) organizados en <strong>ventanas estimadas de paso por sectores geográficos contiguos</strong> para optimizar el recorrido y evitar desplazamientos innecesarios:
+              Disponemos de <strong>2 turnos diarios</strong> (Mañana y Tarde) organizados en <strong>horas estimadas de paso por sectores geográficos contiguos</strong> para optimizar el recorrido y evitar desplazamientos innecesarios:
             </p>
             <div class="bg-gray-50 p-3.5 rounded-xl border border-gray-200 text-xs space-y-2">
               <div>
                 <strong>🌅 Turno de Mañana (09:00 a 13:00 h):</strong>
                 <ul class="list-disc list-inside mt-1 ml-1 text-gray-700 space-y-0.5">
-                  <li><strong>CP 28523 (Covibar, Almendros, Pablo Iglesias):</strong> 09:00 a 10:30 h (Ventana estimada)</li>
-                  <li><strong>CP 28522 (Sector Central, Rivas Futura, José Hierro):</strong> 10:30 a 12:00 h (Ventana estimada)</li>
-                  <li><strong>CP 28521 (Casco Antiguo y Zona Este):</strong> 12:00 a 13:00 h (Ventana estimada)</li>
+                  <li><strong>CP 28523 (Covibar, Almendros, Pablo Iglesias):</strong> 09:00 a 10:30 h (Hora estimada)</li>
+                  <li><strong>CP 28522 (Sector Central, Rivas Futura, José Hierro):</strong> 10:30 a 12:00 h (Hora estimada)</li>
+                  <li><strong>CP 28521 (Casco Antiguo y Zona Este):</strong> 12:00 a 13:00 h (Hora estimada)</li>
                 </ul>
               </div>
               <div class="pt-1.5 border-t border-gray-200">
                 <strong>🌇 Turno de Tarde (16:00 a 20:00 h):</strong>
                 <ul class="list-disc list-inside mt-1 ml-1 text-gray-700 space-y-0.5">
-                  <li><strong>CP 28523 (Covibar, Almendros, Pablo Iglesias):</strong> 16:00 a 17:30 h (Ventana estimada)</li>
-                  <li><strong>CP 28522 (Sector Central, Rivas Futura, José Hierro):</strong> 17:30 a 19:00 h (Ventana estimada)</li>
-                  <li><strong>CP 28521 (Casco Antiguo y Zona Este):</strong> 19:00 a 20:00 h (Ventana estimada)</li>
+                  <li><strong>CP 28523 (Covibar, Almendros, Pablo Iglesias):</strong> 16:00 a 17:30 h (Hora estimada)</li>
+                  <li><strong>CP 28522 (Sector Central, Rivas Futura, José Hierro):</strong> 17:30 a 19:00 h (Hora estimada)</li>
+                  <li><strong>CP 28521 (Casco Antiguo y Zona Este):</strong> 19:00 a 20:00 h (Hora estimada)</li>
                 </ul>
               </div>
             </div>
@@ -2322,6 +2340,6 @@
   </div>
 
   <!-- Javascript -->
-  <script src="js/app.js?v=32"></script>
+  <script src="js/app.js?v=34"></script>
 </body>
 </html>

@@ -364,6 +364,83 @@ function getSelectedZoneCapacity() {
 }
 
 /**
+ * Actualiza el selector de Hora Estimada / Horario Preferente según el Turno y Código Postal seleccionado
+ */
+function updateEstimatedHourUI() {
+  const timeSlotSelect = document.getElementById('clientTimeSlot');
+  const estimatedHourSelect = document.getElementById('clientEstimatedHour');
+  const helpText = document.getElementById('estimatedHourHelpText');
+  if (!estimatedHourSelect) return;
+
+  const currentShiftVal = timeSlotSelect ? timeSlotSelect.value : 'mañana';
+  const isMorning = currentShiftVal.toLowerCase().includes('mañana') || currentShiftVal.includes('09:00');
+  const zoneCap = getSelectedZoneCapacity();
+
+  const prevVal = estimatedHourSelect.value;
+  estimatedHourSelect.innerHTML = '';
+
+  if (zoneCap.isFuture) {
+    const opt = document.createElement('option');
+    opt.value = 'Próxima apertura (Fase de Expansión)';
+    opt.textContent = 'Próxima apertura (Fase de Expansión)';
+    opt.selected = true;
+    estimatedHourSelect.appendChild(opt);
+    if (helpText) helpText.textContent = `Zona ${zoneCap.key}: En fase de estudio y futura apertura.`;
+    return;
+  }
+
+  if (!zoneCap.isGlobal) {
+    // Sector específico seleccionado (28523, 28522, 28521)
+    const windowText = isMorning ? zoneCap.morningWindow : zoneCap.afternoonWindow;
+    const optText = `${windowText} (Hora estimada)`;
+    const opt = document.createElement('option');
+    opt.value = optText;
+    opt.textContent = `${optText} — CP ${zoneCap.key}`;
+    opt.selected = true;
+    estimatedHourSelect.appendChild(opt);
+
+    if (helpText) {
+      helpText.textContent = `Asignada automáticamente para CP ${zoneCap.key} (${zoneCap.name}).`;
+    }
+  } else {
+    // Si aún no ha seleccionado CP: Ofrecer los 3 tramos horarios según código postal
+    if (isMorning) {
+      const optionsMorning = [
+        { val: '09:00 - 10:30 h (Hora estimada)', label: '09:00 - 10:30 h (Hora estimada - CP 28523 Covibar / Almendros)' },
+        { val: '10:30 - 12:00 h (Hora estimada)', label: '10:30 - 12:00 h (Hora estimada - CP 28522 Sector Central / Futura)' },
+        { val: '12:00 - 13:00 h (Hora estimada)', label: '12:00 - 13:00 h (Hora estimada - CP 28521 Casco Antiguo / Este)' }
+      ];
+      optionsMorning.forEach((o, idx) => {
+        const opt = document.createElement('option');
+        opt.value = o.val;
+        opt.textContent = o.label;
+        if (prevVal && prevVal.includes(o.val.slice(0, 5))) opt.selected = true;
+        else if (idx === 0 && !prevVal) opt.selected = true;
+        estimatedHourSelect.appendChild(opt);
+      });
+    } else {
+      const optionsAfternoon = [
+        { val: '16:00 - 17:30 h (Hora estimada)', label: '16:00 - 17:30 h (Hora estimada - CP 28523 Covibar / Almendros)' },
+        { val: '17:30 - 19:00 h (Hora estimada)', label: '17:30 - 19:00 h (Hora estimada - CP 28522 Sector Central / Futura)' },
+        { val: '19:00 - 20:00 h (Hora estimada)', label: '19:00 - 20:00 h (Hora estimada - CP 28521 Casco Antiguo / Este)' }
+      ];
+      optionsAfternoon.forEach((o, idx) => {
+        const opt = document.createElement('option');
+        opt.value = o.val;
+        opt.textContent = o.label;
+        if (prevVal && prevVal.includes(o.val.slice(0, 5))) opt.selected = true;
+        else if (idx === 0 && !prevVal) opt.selected = true;
+        estimatedHourSelect.appendChild(opt);
+      });
+    }
+
+    if (helpText) {
+      helpText.textContent = `Selecciona tu código postal arriba para fijar la hora estimada exacta.`;
+    }
+  }
+}
+
+/**
  * Actualiza los badges de cupo, textos del desplegable y avisos de plazas
  */
 function updateShiftCapacityUI() {
@@ -386,12 +463,13 @@ function updateShiftCapacityUI() {
     if (timeSlotSelect) {
       for (let opt of timeSlotSelect.options) {
         if (opt.value.toLowerCase().includes('mañana') || opt.value.includes('09:00')) {
-          opt.text = 'Mañana (09:00 - 13:00 h)';
+          opt.text = 'Turno Mañana (09:00 - 13:00 h)';
         } else if (opt.value.toLowerCase().includes('tarde') || opt.value.includes('16:00')) {
-          opt.text = 'Tarde (16:00 - 20:00 h)';
+          opt.text = 'Turno Tarde (16:00 - 20:00 h)';
         }
       }
     }
+    updateEstimatedHourUI();
     const waitlistNotice = document.getElementById('waitlistNotice');
     if (waitlistNotice) waitlistNotice.classList.add('hidden');
     const submitBtn = document.getElementById('bookingSubmitBtn');
@@ -417,28 +495,28 @@ function updateShiftCapacityUI() {
   const aFull = zoneCap.isAfternoonFull;
   const totAvail = zoneCap.total;
 
-  // 1. Actualizar textos de las opciones del select de franja horaria
+  // 1. Actualizar textos de las opciones del select de Turno de Servicio
   if (timeSlotSelect) {
     let mLabel = zoneCap.isGlobal 
-      ? `Mañana (09:00 - 13:00 h) — [${mAvail} plazas disponibles]` 
-      : `Mañana • ${zoneCap.morningWindow} (Ventana estimada) — [${mAvail} plazas en CP ${zoneCap.key}]`;
+      ? `Turno Mañana (09:00 - 13:00 h) — [${mAvail} plazas disponibles]` 
+      : `Turno Mañana (09:00 - 13:00 h) — [${mAvail} plazas en CP ${zoneCap.key}]`;
     if (zoneCap.isFuture) {
-      mLabel = `Mañana • Próxima apertura — [Sin plazas disponibles]`;
+      mLabel = `Turno Mañana • Próxima apertura — [Sin plazas disponibles]`;
     } else if (mFull) {
-      mLabel = `Mañana • ${zoneCap.morningWindow} — [COMPLETO • Lista de Espera]`;
+      mLabel = `Turno Mañana (09:00 - 13:00 h) — [COMPLETO • Lista de Espera]`;
     } else if (mAvail <= 3 && !zoneCap.isGlobal) {
-      mLabel = `Mañana • ${zoneCap.morningWindow} (Ventana estimada) — [¡Últimas ${mAvail} plazas en CP ${zoneCap.key}!]`;
+      mLabel = `Turno Mañana (09:00 - 13:00 h) — [¡Últimas ${mAvail} plazas en CP ${zoneCap.key}!]`;
     }
 
     let aLabel = zoneCap.isGlobal 
-      ? `Tarde (16:00 - 20:00 h) — [${aAvail} plazas disponibles]` 
-      : `Tarde • ${zoneCap.afternoonWindow} (Ventana estimada) — [${aAvail} plazas en CP ${zoneCap.key}]`;
+      ? `Turno Tarde (16:00 - 20:00 h) — [${aAvail} plazas disponibles]` 
+      : `Turno Tarde (16:00 - 20:00 h) — [${aAvail} plazas en CP ${zoneCap.key}]`;
     if (zoneCap.isFuture) {
-      aLabel = `Tarde • Próxima apertura — [Sin plazas disponibles]`;
+      aLabel = `Turno Tarde • Próxima apertura — [Sin plazas disponibles]`;
     } else if (aFull) {
-      aLabel = `Tarde • ${zoneCap.afternoonWindow} — [COMPLETO • Lista de Espera]`;
+      aLabel = `Turno Tarde (16:00 - 20:00 h) — [COMPLETO • Lista de Espera]`;
     } else if (aAvail <= 3 && !zoneCap.isGlobal) {
-      aLabel = `Tarde • ${zoneCap.afternoonWindow} (Ventana estimada) — [¡Últimas ${aAvail} plazas en CP ${zoneCap.key}!]`;
+      aLabel = `Turno Tarde (16:00 - 20:00 h) — [¡Últimas ${aAvail} plazas en CP ${zoneCap.key}!]`;
     }
 
     for (let opt of timeSlotSelect.options) {
@@ -468,6 +546,9 @@ function updateShiftCapacityUI() {
       }
     }
   }
+
+  // 1.c Actualizar también el selector adyacente de Hora Estimada
+  updateEstimatedHourUI();
 
   // 2. Indicadores de cada turno (Mañana y Tarde)
   if (morningText && morningDot) {
@@ -502,7 +583,7 @@ function updateShiftCapacityUI() {
     }
   }
 
-  // 3. Badge global superior sobre el selector de Franja Horaria
+  // 3. Badge global superior sobre el selector de Turno
   if (badgeText && badgeContainer) {
     if (zoneCap.isFuture || totAvail <= 0) {
       badgeContainer.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-800 inline-flex items-center gap-1';
@@ -1233,6 +1314,7 @@ function initBookingForm() {
   const paymentSelect = document.getElementById('clientPayment');
   const daysSelect = document.getElementById('clientDays');
   const timeSlotSelect = document.getElementById('clientTimeSlot');
+  const estimatedHourSelect = document.getElementById('clientEstimatedHour');
   const phoneInput = document.getElementById('clientPhone');
   const emailInput = document.getElementById('clientEmail');
   const emailDatalist = document.getElementById('savedEmailsList');
@@ -1267,9 +1349,10 @@ function initBookingForm() {
   // Consultar disponibilidad de plazas en tiempo real
   fetchShiftAvailability();
 
-  // Escuchar cambios en la franja horaria para advertir de lista de espera si está completo
+  // Escuchar cambios en el turno de servicio para sincronizar la hora estimada y lista de espera
   if (timeSlotSelect) {
     timeSlotSelect.addEventListener('change', () => {
+      updateEstimatedHourUI();
       checkCurrentSelectedShiftWaitlist();
     });
   }
@@ -1615,18 +1698,56 @@ function getFormData() {
     address = `${address}${door ? ', ' + door : ''}, ${cpDigits} Rivas-Vaciamadrid`;
   }
 
-  const timeSlot = document.getElementById('clientTimeSlot')?.value || 'Turno Mañana (09:00 - 13:00 h)';
-  const days = document.getElementById('clientDays')?.value || '3 Servicios semanales: Lunes, Miércoles y Viernes';
+  const timeSlotRaw = document.getElementById('clientTimeSlot')?.value || 'Turno Mañana (09:00 - 13:00 h)';
+  const isMorning = timeSlotRaw.toLowerCase().includes('mañana') || timeSlotRaw.includes('09:00');
+  const shift = isMorning ? 'Mañana' : 'Tarde';
+  
+  const zoneCap = getSelectedZoneCapacity();
+  let estimatedHourVal = document.getElementById('clientEstimatedHour')?.value || '';
+  if (!estimatedHourVal) {
+    estimatedHourVal = isMorning ? (zoneCap.morningWindow || '09:00 - 13:00 h') : (zoneCap.afternoonWindow || '16:00 - 20:00 h');
+    if (zoneCap.isFuture) {
+      estimatedHourVal = 'Próxima apertura';
+    } else {
+      estimatedHourVal = `${estimatedHourVal} (Hora estimada)`;
+    }
+  }
+
+  const estimatedWindow = estimatedHourVal;
+  const horaEstimada = estimatedHourVal;
+
+  const days = document.getElementById('clientDays')?.value || '5 Servicios semanales: Lunes a Viernes';
   const paymentMethod = document.getElementById('clientPayment')?.value || 'Tarjeta bancaria (Débito / Crédito)';
   const referral = document.getElementById('clientReferral')?.value.trim() || '';
   const notes = document.getElementById('clientNotes')?.value.trim() || '';
 
   // Determinar si este registro va a Lista de Espera por cupo completo (solo planes mensuales)
   const isPunctual = selectedPlan === 'puntual';
-  const isMorning = timeSlot.toLowerCase().includes('mañana') || timeSlot.includes('09:00');
   const isWaitlist = isPunctual ? false : Boolean(isMorning ? SHIFT_STATE.morning.isFull : SHIFT_STATE.afternoon.isFull);
 
-  return { plan: selectedPlan, planName, startDate, name, phone, email, streetType, streetName: cleanStreetName, door, rawAddress, address, zip, timeSlot, days, paymentMethod, referral, notes, isWaitlist };
+  return { 
+    plan: selectedPlan, 
+    planName, 
+    startDate, 
+    name, 
+    phone, 
+    email, 
+    streetType, 
+    streetName: cleanStreetName, 
+    door, 
+    rawAddress, 
+    address, 
+    zip, 
+    timeSlot: timeSlotRaw,
+    shift,
+    estimatedWindow,
+    horaEstimada,
+    days, 
+    paymentMethod, 
+    referral, 
+    notes, 
+    isWaitlist 
+  };
 }
 
 /**

@@ -12,6 +12,9 @@ function onOpen() {
     .addItem('🌅 Generar Ruta Mañana (09-13h)', 'generarRutaManana')
     .addItem('🌇 Generar Ruta Tarde (16-20h)', 'generarRutaTarde')
     .addSeparator()
+    .addItem('📤 Sincronizar con Hoja del Recogedor', 'sincronizarRutaConRecogedor')
+    .addItem('⚙️ Configurar ID Hoja del Recogedor', 'configurarIdHojaRecogedor')
+    .addSeparator()
     .addItem('📑 Crear / Verificar Todas las Pestañas', 'inicializarPestanas')
     .addItem('🧪 Probar Envío de Email / Autorizar', 'testEnviarEmail')
     .addToUi();
@@ -46,7 +49,7 @@ function crearEstructuraInicialSiEsNecesario() {
     var encabSol = [
       "Fecha", "Nombre", "Teléfono", "Email", "Plan", 
       "Días / Frecuencia", "Sector / CP", "Calle / Vía y Nº", "Piso / Puerta / Portal",
-      "Turno / Franja", "Forma de Pago", "Fecha Estimada de Inicio", 
+      "Turno", "Hora Estimada", "Forma de Pago", "Fecha Estimada de Inicio", 
       "Recomendado por (Plan Amigo)", "Observaciones", "Estado"
     ];
     sheetSol.appendRow(encabSol);
@@ -765,7 +768,7 @@ function doPost(e) {
     var encabezadosOficiales = [
       "Fecha", "Nombre", "Teléfono", "Email", "Plan", 
       "Días / Frecuencia", "Sector / CP", "Calle / Vía y Nº", "Piso / Puerta / Portal",
-      "Turno / Franja", "Forma de Pago", "Fecha Estimada de Inicio", 
+      "Turno", "Hora Estimada", "Forma de Pago", "Fecha Estimada de Inicio", 
       "Recomendado por (Plan Amigo)", "Observaciones", "Estado"
     ];
 
@@ -819,17 +822,42 @@ function doPost(e) {
     var colTelefono = findCol(["teléfono", "telefono", "movil", "whatsapp"], 2);
     var colEmail = findCol(["email", "correo"], 3);
     var colPlan = findCol(["plan"], 4);
-    var colDias = findCol(["días", "dias", "frecuencia", "servicios"], 5);
-    var colSector = findCol(["sector", "código postal", "codigo postal", "cp"], 6);
-    var colCalle = findCol(["calle y nº", "calle y no", "vía y nº", "via y no", "calle", "vía", "via", "dirección", "direccion", "domicilio"], 7);
+    var colSector = findCol(["sector", "código postal", "codigo postal", "cp"], 5);
+    var colCalle = findCol(["calle y nº", "calle y no", "vía y nº", "via y no", "calle", "vía", "via", "dirección", "direccion", "domicilio"], 6);
     var colNumero = findCol(["número", "numero", "nº", "n°", "num", "portal/nº"], -1);
-    var colPiso = findCol(["piso", "puerta", "portal", "escalera", "bloque"], 8);
-    var colTurno = findCol(["turno", "franja", "horario"], 9);
+    var colPiso = findCol(["piso", "puerta", "portal", "escalera", "bloque"], 7);
+    var colDias = findCol(["días", "dias", "frecuencia", "servicios", "recogida"], 9);
     var colPago = findCol(["pago", "forma"], 10);
     var colInicio = findCol(["inicio", "fecha inicio", "fecha estimada", "comienzo"], 11);
     var colReferral = findCol(["recomendado", "amigo", "referral", "conoció", "conocio", "cómo nos"], 12);
     var colNotas = findCol(["observaciones", "notas", "comentarios"], 13);
     var colEstado = findCol(["estado", "situación", "situacion"], 14);
+
+    // 1. Detección Inteligente de Turno y Hora Estimada (Excluyendo estrictamente Fecha y Hora)
+    var colHoraEstimada = -1;
+    var colTurno = -1;
+
+    for (var c = 0; c < headers.length; c++) {
+      var h = headers[c];
+      // Ignorar cualquier columna que contenga fecha (ej: Fecha y Hora)
+      if (h.indexOf("fecha") !== -1) continue;
+
+      if (h.indexOf("hora estimada") !== -1 || h.indexOf("ventana") !== -1 || h.indexOf("preferent") !== -1 || h.indexOf("tramo") !== -1 || h.indexOf("hora aprox") !== -1 || h.indexOf("horario estimado") !== -1 || h === "hora" || h === "horas" || h === "hora estimada") {
+        colHoraEstimada = c;
+      } else if (h.indexOf("turno") !== -1 || h.indexOf("franja") !== -1 || h === "horario") {
+        colTurno = c;
+      }
+    }
+
+    if (colTurno === -1) colTurno = findCol(["turno", "franja"], 7);
+
+    // Si aún no se ha detectado colHoraEstimada, comprobar si la columna a la derecha de Turno es la de Hora Estimada
+    if (colHoraEstimada === -1 && colTurno !== -1 && (colTurno + 1) < numCols) {
+      var nextH = headers[colTurno + 1] || "";
+      if (nextH.indexOf("pago") === -1 && nextH.indexOf("forma") === -1 && nextH.indexOf("días") === -1 && nextH.indexOf("dias") === -1 && nextH.indexOf("inicio") === -1 && nextH.indexOf("fecha") === -1) {
+        colHoraEstimada = colTurno + 1;
+      }
+    }
 
     var newRow = new Array(numCols);
     for (var r = 0; r < numCols; r++) newRow[r] = "-";
@@ -853,7 +881,51 @@ function doPost(e) {
       newRow[colCalle] = fullAddress;
     }
 
-    newRow[colTurno] = data.timeSlot || "-";
+    // Determinar Turno limpio (Mañana / Tarde) y Hora Estimada según sector
+    var turnoRaw = (data.shift || data.timeSlot || "-").toString().trim();
+    var isM = turnoRaw.toLowerCase().indexOf("mañana") !== -1 || turnoRaw.indexOf("09") !== -1;
+    var turnoLimpio = isM ? "Mañana" : "Tarde";
+    
+    var sectorTextoTotal = ((data.zip || "") + " " + (data.sector || "") + " " + calleFinal).toLowerCase();
+    var cpKey = "28523";
+    if (sectorTextoTotal.indexOf("28523") !== -1 || sectorTextoTotal.indexOf("covibar") !== -1 || sectorTextoTotal.indexOf("almendros") !== -1 || sectorTextoTotal.indexOf("pablo iglesias") !== -1) {
+      cpKey = "28523";
+    } else if (sectorTextoTotal.indexOf("28522") !== -1 || sectorTextoTotal.indexOf("central") !== -1 || sectorTextoTotal.indexOf("futura") !== -1 || sectorTextoTotal.indexOf("pilar miró") !== -1 || sectorTextoTotal.indexOf("pilar miro") !== -1) {
+      cpKey = "28522";
+    } else if (sectorTextoTotal.indexOf("28521") !== -1 || sectorTextoTotal.indexOf("casco") !== -1 || sectorTextoTotal.indexOf("pueblo") !== -1 || sectorTextoTotal.indexOf("este") !== -1) {
+      cpKey = "28521";
+    } else if (sectorTextoTotal.indexOf("28524") !== -1 || sectorTextoTotal.indexOf("expansion") !== -1 || sectorTextoTotal.indexOf("expansión") !== -1 || sectorTextoTotal.indexOf("nuevos") !== -1) {
+      cpKey = "28524";
+    } else {
+      var cpMatch = sectorTextoTotal.match(/\b(2852[1-5])\b/);
+      if (cpMatch) cpKey = cpMatch[1];
+    }
+    
+    var horaEstimadaFinal = data.estimatedWindow || data.horaEstimada || "";
+    if (!horaEstimadaFinal || horaEstimadaFinal === "-") {
+      if (cpKey === "28523") {
+        horaEstimadaFinal = isM ? "09:00 - 10:30 h" : "16:00 - 17:30 h";
+      } else if (cpKey === "28522") {
+        horaEstimadaFinal = isM ? "10:30 - 12:00 h" : "17:30 - 19:00 h";
+      } else if (cpKey === "28521") {
+        horaEstimadaFinal = isM ? "12:00 - 13:00 h" : "19:00 - 20:00 h";
+      } else if (cpKey === "28524") {
+        horaEstimadaFinal = "Próxima apertura";
+      } else {
+        horaEstimadaFinal = isM ? "09:00 - 10:30 h" : "16:00 - 17:30 h";
+      }
+    }
+
+    if (colTurno !== -1) {
+      newRow[colTurno] = turnoLimpio;
+    }
+
+    if (colHoraEstimada !== -1 && colHoraEstimada !== colTurno) {
+      newRow[colHoraEstimada] = horaEstimadaFinal;
+    } else if (colTurno !== -1) {
+      newRow[colTurno] = turnoLimpio + " • " + horaEstimadaFinal;
+    }
+
     newRow[colPago] = data.paymentMethod || "-";
     newRow[colInicio] = data.startDate || "-";
     newRow[colReferral] = data.referral || "Ninguno / Web";
@@ -886,7 +958,8 @@ function doPost(e) {
 
         <h3 style="color: #25815F; border-bottom: 2px solid #E8F5EF; padding-bottom: 5px; margin-top: 20px;">Servicio Seleccionado</h3>
         <p><strong>📦 Plan:</strong> <span style="background: #E8F5EF; color: #13402E; padding: 3px 8px; border-radius: 4px; font-weight: bold;">${data.planName || data.plan || "-"}</span></p>
-        <p><strong>⏰ Franja Horaria:</strong> ${data.timeSlot || "-"}</p>
+        <p><strong>⏰ Turno:</strong> <span style="background: #E8F5EF; color: #13402E; padding: 3px 8px; border-radius: 4px; font-weight: bold;">${turnoLimpio}</span></p>
+        <p><strong>⏱️ Hora Estimada:</strong> <strong>${horaEstimadaFinal}</strong></p>
         <p><strong>📅 Días de Servicio:</strong> ${data.days || "-"}</p>
         <p><strong>💳 Forma de Pago:</strong> ${data.paymentMethod || "-"}</p>
         <p><strong>🚀 Fecha Estimada de Inicio:</strong> ${data.startDate || "-"}</p>
@@ -930,14 +1003,15 @@ function doPost(e) {
             <p style="margin: 6px 0;"><strong>📦 Plan elegido:</strong> ${data.planName || data.plan || "-"}</p>
             <p style="margin: 6px 0;"><strong>📍 Calle y Nº:</strong> ${calleFinal}</p>
             <p style="margin: 6px 0;"><strong>🚪 Piso / Puerta:</strong> ${pisoFinal}</p>
-            <p style="margin: 6px 0;"><strong>⏰ Turno asignado:</strong> ${data.timeSlot || "-"}</p>
+            <p style="margin: 6px 0;"><strong>⏰ Turno:</strong> ${turnoLimpio}</p>
+            <p style="margin: 6px 0;"><strong>⏱️ Hora Estimada:</strong> <strong>${horaEstimadaFinal}</strong></p>
             <p style="margin: 6px 0;"><strong>📅 Días de servicio:</strong> ${data.days || "-"}</p>
             <p style="margin: 6px 0;"><strong>💳 Forma de pago:</strong> ${data.paymentMethod || "-"}</p>
             <p style="margin: 6px 0;"><strong>🚀 Fecha estimada de inicio:</strong> <strong>${data.startDate || "-"}</strong></p>
           </div>
 
           <p style="font-size: 13px; color: #666;">
-            Nuestro equipo de coordinación contactará contigo por WhatsApp o llamada para verificar los detalles de acceso a tu portal o cancela y asignarte la ruta definitiva.
+            Los servicios se realizan de forma consecutiva agrupando las viviendas por sectores contiguos. La hora indicada es aproximada y orientativa para mayor comodidad.
           </p>
           
           <div style="margin-top: 25px; padding-top: 15px; border-top: 1px solid #eee; text-align: center; font-size: 12px; color: #888;">
@@ -1257,10 +1331,10 @@ function correspondeServicioHoy(plan, diasServicio, diaNombre) {
   return false;
 }
 
-// 9. GENERADOR DE HOJA DE RUTA DIARIA (CALLE Y Nº EXACTO)
+  // 9. GENERADOR DE HOJA DE RUTA DIARIA (CALLE Y Nº EXACTO + HORA ESTIMADA)
 function generarRutaDiaria(turnoManual) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var hojaClientes = ss.getSheetByName("Solicitudes") || ss.getSheetByName("Solicitudes Clientes") || ss.getSheetByName("Clientes") || ss.getSheets()[0];
+  var hojaClientes = ss.getSheetByName("Solicitudes Clientes") || ss.getSheetByName("Solicitudes") || ss.getSheetByName("Clientes") || ss.getSheets()[0];
   var hojaRuta = ss.getSheetByName("Hoja de Ruta");
   
   if (!hojaRuta) {
@@ -1299,26 +1373,51 @@ function generarRutaDiaria(turnoManual) {
   var colNombre = buscarIndice(["nombre"], 1);
   var colTelefono = buscarIndice(["teléfono", "telefono", "whatsapp", "movil"], 2);
   var colPlan = buscarIndice(["plan"], 4);
-  var colDias = buscarIndice(["días", "dias", "frecuencia", "nº de servicios"], 5);
+  var colDias = buscarIndice(["días", "dias", "frecuencia", "nº de servicios", "recogida"], 5);
   var colSector = buscarIndice(["sector", "código postal", "codigo postal", "cp"], 6);
   var colCalle = buscarIndice(["calle y nº", "calle y no", "vía y nº", "via y no", "calle", "vía", "via", "dirección", "direccion", "domicilio"], 7);
   var colNumero = buscarIndice(["número", "numero", "nº", "n°", "num", "portal/nº"], -1);
   var colPiso = buscarIndice(["piso", "puerta", "portal", "escalera", "bloque"], 8);
-  var colFranja = buscarIndice(["franja", "turno", "horario"], 9);
+  
+  var colFranja = -1;
+  var colHoraEstimada = -1;
+  for (var c = 0; c < encabezados.length; c++) {
+    var h = encabezados[c];
+    if (h.indexOf("fecha") !== -1) continue;
+    if (h.indexOf("hora estimada") !== -1 || h.indexOf("ventana") !== -1 || h.indexOf("tramo") !== -1 || h.indexOf("preferent") !== -1 || h === "hora" || h === "horas" || h === "hora estimada") {
+      colHoraEstimada = c;
+    } else if (h.indexOf("turno") !== -1 || h.indexOf("franja") !== -1 || h === "horario") {
+      colFranja = c;
+    }
+  }
+  if (colFranja === -1) colFranja = buscarIndice(["turno", "franja"], 9);
+
   var colPago = buscarIndice(["pago", "forma"], 10);
   var colNotas = buscarIndice(["observaciones", "notas", "comentarios"], 13);
   var colEstado = buscarIndice(["estado", "situación", "situacion"], 14);
   
-  // Limpiar completamente cualquier dato o checkbox anterior (filas 4 a fin de hoja)
+  // Limpiar completamente cualquier dato o checkbox anterior (filas 2 a fin de hoja)
   var maxFilas = hojaRuta.getMaxRows();
   if (maxFilas >= 4) {
-    var rangoLimpiar = hojaRuta.getRange(4, 1, maxFilas - 3, 10);
+    var rangoLimpiar = hojaRuta.getRange(4, 1, maxFilas - 3, 12);
     rangoLimpiar.clearContent();
     rangoLimpiar.clearFormat();
     try {
       rangoLimpiar.removeCheckboxes();
     } catch(errCb) {}
   }
+  
+  // Escribir encabezados en fila 2
+  var encabRuta = [
+    "Trasladado", "Parada", "Calle y Número (Maps)", "Piso / Puerta (Cliente)", "Turno", "Hora Estimada", "Teléfono / WhatsApp", "Notas de Acceso"
+  ];
+  hojaRuta.getRange(2, 1, 1, encabRuta.length).setValues([encabRuta]);
+  hojaRuta.getRange(2, 1, 1, encabRuta.length)
+    .setFontWeight("bold")
+    .setBackground("#13402E")
+    .setFontColor("#FFFFFF")
+    .setHorizontalAlignment("center");
+  hojaRuta.setFrozenRows(2);
   
   var paradasCandidatas = [];
   
@@ -1332,7 +1431,7 @@ function generarRutaDiaria(turnoManual) {
     var numeroRaw = (colNumero !== -1 && colNumero < fila.length && fila[colNumero]) ? (fila[colNumero] + "").trim() : "";
     var pisoRaw = (colPiso !== -1 && colPiso < fila.length && fila[colPiso]) ? (fila[colPiso] + "").trim() : "";
     var sectorCp = (colSector !== -1 && colSector < fila.length && fila[colSector]) ? (fila[colSector] + "").trim() : "";
-    var franja = (colFranja !== -1 && colFranja < fila.length && fila[colFranja]) ? (fila[colFranja] + "").trim() : "";
+    var franjaRaw = (colFranja !== -1 && colFranja < fila.length && fila[colFranja]) ? (fila[colFranja] + "").trim() : "";
     var formaPago = (colPago !== -1 && colPago < fila.length && fila[colPago]) ? (fila[colPago] + "").trim() : "";
     var notas = (colNotas !== -1 && colNotas < fila.length && fila[colNotas]) ? (fila[colNotas] + "").trim() : "";
     var estado = (colEstado !== -1 && colEstado < fila.length && fila[colEstado]) ? (fila[colEstado] + "").toLowerCase().trim() : "";
@@ -1342,25 +1441,26 @@ function generarRutaDiaria(turnoManual) {
     var calleYNumero = parsed.calle;
     var piso = parsed.piso;
 
-    // Ignorar si no hay calle o es solo el municipio
     if (!calleYNumero || calleYNumero.length < 3 || calleYNumero.toLowerCase() === "rivas-vaciamadrid") {
       continue;
     }
     
-    // FILTRO DE ESTADO: Solo descartar bajas, cancelados o pausados
+    // FILTRO DE ESTADO
     if (estado.indexOf("baja") !== -1 || estado.indexOf("cancel") !== -1 || estado.indexOf("pausad") !== -1 || estado.indexOf("inactiv") !== -1 || estado.indexOf("prueba") !== -1) {
       continue;
     }
     
     var tocaHoy = correspondeServicioHoy(plan, diasServicio, diaSeleccionado);
     
+    var isM = (franjaRaw.toLowerCase().indexOf("mañana") !== -1 || franjaRaw.indexOf("09") !== -1);
+    var turnoLimpio = isM ? "Mañana" : "Tarde";
+    
     var turnoCoincide = true;
-    var franjaTexto = franja.toLowerCase();
     var turnoBuscar = (turnoSeleccionado + "").toLowerCase();
     
-    if (turnoBuscar.indexOf("mañana") !== -1 && franjaTexto.indexOf("tarde") !== -1 && franjaTexto.indexOf("mañana") === -1) {
+    if (turnoBuscar.indexOf("mañana") !== -1 && !isM) {
       turnoCoincide = false;
-    } else if (turnoBuscar.indexOf("tarde") !== -1 && franjaTexto.indexOf("mañana") !== -1 && franjaTexto.indexOf("tarde") === -1) {
+    } else if (turnoBuscar.indexOf("tarde") !== -1 && isM) {
       turnoCoincide = false;
     }
     
@@ -1384,6 +1484,25 @@ function generarRutaDiaria(turnoManual) {
         pisoVecinoTexto = piso + " (" + nombre + ")";
       }
 
+      // Obtener Hora Estimada guardada o calcularla según sector
+      var horaEstimadaVal = (colHoraEstimada !== -1 && colHoraEstimada < fila.length && fila[colHoraEstimada]) ? (fila[colHoraEstimada] + "").trim() : "";
+      if (!horaEstimadaVal || horaEstimadaVal === "-") {
+        var cpText = ((sectorCp || "") + " " + calleYNumero).toLowerCase();
+        var cpKey = "28523";
+        if (cpText.indexOf("28523") !== -1 || cpText.indexOf("covibar") !== -1 || cpText.indexOf("almendros") !== -1 || cpText.indexOf("pablo iglesias") !== -1) {
+          cpKey = "28523";
+        } else if (cpText.indexOf("28522") !== -1 || cpText.indexOf("central") !== -1 || cpText.indexOf("futura") !== -1 || cpText.indexOf("pilar miró") !== -1 || cpText.indexOf("pilar miro") !== -1) {
+          cpKey = "28522";
+        } else if (cpText.indexOf("28521") !== -1 || cpText.indexOf("casco") !== -1 || cpText.indexOf("pueblo") !== -1 || cpText.indexOf("este") !== -1) {
+          cpKey = "28521";
+        }
+        
+        if (cpKey === "28523") horaEstimadaVal = isM ? "09:00 - 10:30 h" : "16:00 - 17:30 h";
+        else if (cpKey === "28522") horaEstimadaVal = isM ? "10:30 - 12:00 h" : "17:30 - 19:00 h";
+        else if (cpKey === "28521") horaEstimadaVal = isM ? "12:00 - 13:00 h" : "19:00 - 20:00 h";
+        else horaEstimadaVal = isM ? "09:00 - 10:30 h" : "16:00 - 17:30 h";
+      }
+
       paradasCandidatas.push({
         nombre: nombre,
         piso: piso,
@@ -1391,7 +1510,9 @@ function generarRutaDiaria(turnoManual) {
         telefono: telefono,
         calle: calleYNumero,
         direccionLimpia: dirLimpia,
-        franja: franja,
+        turno: turnoLimpio,
+        horaEstimada: horaEstimadaVal,
+        franja: turnoLimpio,
         notas: detalleNotas.join(" | ")
       });
     }
@@ -1411,19 +1532,15 @@ function generarRutaDiaria(turnoManual) {
     var paradasTarde = [];
     
     for (var k = 0; k < paradasCandidatas.length; k++) {
-      var franjaK = (paradasCandidatas[k].franja || "").toLowerCase();
-      if (franjaK.indexOf("tarde") !== -1 && franjaK.indexOf("mañana") === -1) {
+      if (paradasCandidatas[k].turno === "Tarde") {
         paradasTarde.push(paradasCandidatas[k]);
       } else {
         paradasManana.push(paradasCandidatas[k]);
       }
     }
     
-    // Optimizar por cercanía cada turno de forma independiente
     var rutaMananaOpt = optimizarRutaPorCercania(paradasManana);
     var rutaTardeOpt = optimizarRutaPorCercania(paradasTarde);
-    
-    // Unir: primero Mañana y después Tarde
     paradas = rutaMananaOpt.concat(rutaTardeOpt);
   } else {
     paradas = optimizarRutaPorCercania(paradasCandidatas);
@@ -1436,7 +1553,7 @@ function generarRutaDiaria(turnoManual) {
     var numFila = 4 + j;
     
     hojaRuta.getRange(numFila, 1).insertCheckboxes();    // Col A: Trasladado
-    hojaRuta.getRange(numFila, 2).setValue(j + 1);       // Col B: Parada # (Secuencia optimizada)
+    hojaRuta.getRange(numFila, 2).setValue(j + 1);       // Col B: Parada #
     
     // Col C: Calle y Número con enlace directo individual a Google Maps
     var urlMapsIndividual = "https://maps.google.com/?q=" + encodeURIComponent(p.direccionLimpia);
@@ -1446,17 +1563,33 @@ function generarRutaDiaria(turnoManual) {
       .build();
     hojaRuta.getRange(numFila, 3).setRichTextValue(richDir); // Col C: Calle y Número
     
-    hojaRuta.getRange(numFila, 4).setValue(p.pisoVecino); // Col D: Piso / Puerta (Vecino)
-    hojaRuta.getRange(numFila, 5).setValue(p.franja);     // Col E: Turno
-    hojaRuta.getRange(numFila, 6).setValue(p.telefono);   // Col F: Teléfono / WhatsApp
-    hojaRuta.getRange(numFila, 7).setValue(p.notas);      // Col G: Notas de Acceso
+    hojaRuta.getRange(numFila, 4).setValue(p.pisoVecino);   // Col D: Piso / Puerta (Cliente)
+    hojaRuta.getRange(numFila, 5).setValue(p.turno);        // Col E: Turno
+    hojaRuta.getRange(numFila, 6).setValue(p.horaEstimada); // Col F: Hora Estimada (A la derecha del Turno)
+    
+    // Col G: Teléfono / WhatsApp con link directo
+    var telVal = (p.telefono || "").toString().trim();
+    if (telVal && telVal !== "-") {
+      var telClean = telVal.replace(/[^0-9]/g, "");
+      var nombreCli = (p.pisoVecino || "").indexOf("(") !== -1 ? p.pisoVecino.substring(p.pisoVecino.indexOf("(") + 1, p.pisoVecino.indexOf(")")) : "cliente";
+      var urlWa = "https://wa.me/34" + telClean + "?text=" + encodeURIComponent("Hola " + nombreCli + ", te avisamos desde TeLaTiro que nuestro asistente está llegando a tu portal para la recogida de hoy.");
+      var richWa = SpreadsheetApp.newRichTextValue()
+        .setText("💬 " + telVal)
+        .setLinkUrl(urlWa)
+        .build();
+      hojaRuta.getRange(numFila, 7).setRichTextValue(richWa); // Col G: Teléfono / WhatsApp
+    } else {
+      hojaRuta.getRange(numFila, 7).setValue("-");
+    }
+    
+    hojaRuta.getRange(numFila, 8).setValue(p.notas);        // Col H: Notas de Acceso
     
     if (p.direccionLimpia && direccionesParaMaps.indexOf(p.direccionLimpia) === -1) {
       direccionesParaMaps.push(p.direccionLimpia);
     }
   }
   
-  // GENERAR ENLACE OFICIAL COMPLETO A GOOGLE MAPS (Universal API: origin + waypoints ordenados + destination)
+  // GENERAR ENLACE OFICIAL COMPLETO A GOOGLE MAPS
   if (direccionesParaMaps.length > 0) {
     var urlMaps = "";
     if (direccionesParaMaps.length === 1) {
@@ -1465,7 +1598,6 @@ function generarRutaDiaria(turnoManual) {
       urlMaps = "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(direccionesParaMaps[0]) + 
                 "&destination=" + encodeURIComponent(direccionesParaMaps[1]);
     } else {
-      // 3 o más paradas: origen + waypoints intermedios en orden de cercanía + destino final
       var origen = direccionesParaMaps[0];
       var destino = direccionesParaMaps[direccionesParaMaps.length - 1];
       var waypoints = direccionesParaMaps.slice(1, direccionesParaMaps.length - 1).join("|");
@@ -1482,5 +1614,179 @@ function generarRutaDiaria(turnoManual) {
     hojaRuta.getRange("F1").setRichTextValue(richText);
   }
   
+  for (var cR = 1; cR <= encabRuta.length; cR++) {
+    hojaRuta.autoResizeColumn(cR);
+  }
+  
   SpreadsheetApp.getUi().alert("✅ Ruta optimizada por cercanía: " + paradas.length + " paradas para el " + diaSeleccionado + " (" + turnoSeleccionado + ").");
+}
+
+// ============================================================================
+// 10. CONFIGURACIÓN Y SINCRONIZACIÓN AUTOMÁTICA CON LA HOJA DEL RECOGEDOR
+// ============================================================================
+
+function configurarIdHojaRecogedor() {
+  var ui = SpreadsheetApp.getUi();
+  var actual = PropertiesService.getScriptProperties().getProperty("ID_HOJA_RECOGEDOR") || "";
+  var resp = ui.prompt(
+    "⚙️ Configuración de la Hoja del Recogedor", 
+    "Pega aquí la URL completa o el ID del archivo de Google Sheets del recogedor:\n\n(ID guardado actualmente: " + (actual || "Ninguno") + ")", 
+    ui.ButtonSet.OK_CANCEL
+  );
+  
+  if (resp.getSelectedButton() === ui.Button.OK) {
+    var texto = resp.getResponseText().trim();
+    if (!texto) {
+      ui.alert("⚠️ No has introducido ningún enlace o ID.");
+      return;
+    }
+    var match = texto.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    var idFinal = match ? match[1] : texto;
+    
+    PropertiesService.getScriptProperties().setProperty("ID_HOJA_RECOGEDOR", idFinal);
+    ui.alert("✅ ¡ID de la Hoja del Recogedor guardado con éxito!\n\nID: " + idFinal);
+  }
+}
+
+function sincronizarRutaConRecogedor() {
+  var ui = SpreadsheetApp.getUi();
+  var idRecogedor = PropertiesService.getScriptProperties().getProperty("ID_HOJA_RECOGEDOR");
+  
+  if (!idRecogedor) {
+    var resp = ui.prompt(
+      "⚙️ Primera vinculación de la Hoja del Recogedor", 
+      "Pega aquí la URL completa o el ID del archivo de Google Sheets del recogedor:", 
+      ui.ButtonSet.OK_CANCEL
+    );
+    if (resp.getSelectedButton() === ui.Button.OK && resp.getResponseText().trim()) {
+      var texto = resp.getResponseText().trim();
+      var match = texto.match(/\/d\/([a-zA-Z0-9_-]+)/);
+      idRecogedor = match ? match[1] : texto;
+      PropertiesService.getScriptProperties().setProperty("ID_HOJA_RECOGEDOR", idRecogedor);
+    } else {
+      ui.alert("⚠️ Operación cancelada. Se necesita el ID para sincronizar.");
+      return;
+    }
+  }
+
+  var ssMaestra = SpreadsheetApp.getActiveSpreadsheet();
+  
+  // 1. Regenerar automáticamente la Hoja de Ruta Maestra con las 8 columnas actualizadas
+  generarRutaDiaCompleto();
+  var hojaRutaMaestra = ssMaestra.getSheetByName("Hoja de Ruta");
+  
+  var maxFilas = hojaRutaMaestra.getLastRow();
+  if (maxFilas < 4) {
+    ui.alert("ℹ️ No hay paradas generadas en la Hoja de Ruta para sincronizar.");
+    return;
+  }
+  
+  var ssRecogedor;
+  try {
+    ssRecogedor = SpreadsheetApp.openById(idRecogedor);
+  } catch(e) {
+    ui.alert("❌ Error al conectar con la hoja del recogedor. Comprueba que el enlace/ID sea correcto y tengas permisos.\n\nDetalle: " + e.toString());
+    return;
+  }
+  
+  var hojaDestino = ssRecogedor.getSheets()[0];
+  hojaDestino.setName("Ruta de Hoy");
+  hojaDestino.clear();
+  try {
+    hojaDestino.removeCheckboxes();
+  } catch(errCb) {}
+  
+  // 1. Controles y encabezados superiores en destino
+  var diaValor = hojaRutaMaestra.getRange("B1").getValue() || "Hoy";
+  var turnoValor = hojaRutaMaestra.getRange("D1").getValue() || "Todos";
+  var mapsRichText = hojaRutaMaestra.getRange("F1").getRichTextValue();
+  var urlMaps = mapsRichText ? mapsRichText.getLinkUrl() : "";
+  var textoMaps = mapsRichText ? mapsRichText.getText() : "🗺️ ABRIR RUTA EN GOOGLE MAPS";
+  
+  hojaDestino.getRange("A1").setValue("Día:").setFontWeight("bold").setHorizontalAlignment("right");
+  hojaDestino.getRange("B1").setValue(diaValor).setFontWeight("bold").setHorizontalAlignment("center").setBackground("#E8F5EF");
+  hojaDestino.getRange("C1").setValue("Turno:").setFontWeight("bold").setHorizontalAlignment("right");
+  hojaDestino.getRange("D1").setValue(turnoValor).setFontWeight("bold").setHorizontalAlignment("center").setBackground("#E8F5EF");
+  
+  if (urlMaps) {
+    var botonRich = SpreadsheetApp.newRichTextValue()
+      .setText(textoMaps)
+      .setLinkUrl(urlMaps)
+      .build();
+    hojaDestino.getRange("F1").setRichTextValue(botonRich);
+  } else {
+    hojaDestino.getRange("F1").setValue("🗺️ ABRIR RUTA EN GOOGLE MAPS");
+  }
+  
+  hojaDestino.getRange("F1")
+    .setFontWeight("bold")
+    .setHorizontalAlignment("center")
+    .setBackground("#25815F")
+    .setFontColor("#FFFFFF");
+    
+  // 2. Encabezados de columnas en Fila 2 (Con Hora Estimada a la derecha de Turno)
+  var encabezadosRuta = [
+    "Trasladado", "Parada", "Calle y Número (Maps)", "Piso / Puerta (Cliente)", "Turno", "Hora Estimada", "Teléfono / WhatsApp", "Notas de Acceso"
+  ];
+  hojaDestino.getRange(2, 1, 1, encabezadosRuta.length).setValues([encabezadosRuta]);
+  hojaDestino.getRange(2, 1, 1, encabezadosRuta.length)
+    .setFontWeight("bold")
+    .setBackground("#13402E")
+    .setFontColor("#FFFFFF")
+    .setHorizontalAlignment("center");
+  hojaDestino.setFrozenRows(2);
+  
+  // 3. Volcar los datos fila a fila con checkboxes interactivos y enlaces
+  var numParadas = maxFilas - 3;
+  for (var f = 4; f <= maxFilas; f++) {
+    var fDest = f - 1; // fila 3 en adelante
+    
+    // Checkbox interactivo real para que el empleado marque en su móvil
+    hojaDestino.getRange(fDest, 1).insertCheckboxes();
+    hojaDestino.getRange(fDest, 1).setHorizontalAlignment("center");
+    
+    // Parada #
+    var numParada = hojaRutaMaestra.getRange(f, 2).getValue();
+    hojaDestino.getRange(fDest, 2).setValue(numParada).setHorizontalAlignment("center").setFontWeight("bold");
+    
+    // Calle y Nº con link directo individual Maps
+    var richCalle = hojaRutaMaestra.getRange(f, 3).getRichTextValue();
+    if (richCalle) {
+      hojaDestino.getRange(fDest, 3).setRichTextValue(richCalle);
+    } else {
+      hojaDestino.getRange(fDest, 3).setValue(hojaRutaMaestra.getRange(f, 3).getValue());
+    }
+    
+    // Piso / Puerta (Cliente)
+    var pisoVal = hojaRutaMaestra.getRange(f, 4).getValue();
+    hojaDestino.getRange(fDest, 4).setValue(pisoVal).setFontWeight("bold");
+    
+    // Turno
+    var turnoVal = hojaRutaMaestra.getRange(f, 5).getValue();
+    hojaDestino.getRange(fDest, 5).setValue(turnoVal).setHorizontalAlignment("center");
+    
+    // Hora Estimada (A la derecha de Turno)
+    var horaEstVal = hojaRutaMaestra.getRange(f, 6).getValue();
+    hojaDestino.getRange(fDest, 6).setValue(horaEstVal).setHorizontalAlignment("center").setFontWeight("bold");
+    
+    // Teléfono / WhatsApp con link directo
+    var richWa = hojaRutaMaestra.getRange(f, 7).getRichTextValue();
+    if (richWa) {
+      hojaDestino.getRange(fDest, 7).setRichTextValue(richWa).setHorizontalAlignment("center");
+    } else {
+      var telVal = (hojaRutaMaestra.getRange(f, 7).getValue() || "").toString().trim();
+      hojaDestino.getRange(fDest, 7).setValue(telVal || "-").setHorizontalAlignment("center");
+    }
+    
+    // Notas de acceso
+    var notasVal = hojaRutaMaestra.getRange(f, 8).getValue();
+    hojaDestino.getRange(fDest, 8).setValue(notasVal);
+  }
+  
+  // Formato visual y anchos de columna
+  for (var c = 1; c <= encabezadosRuta.length; c++) {
+    hojaDestino.autoResizeColumn(c);
+  }
+  
+  ui.alert("✅ ¡Ruta sincronizada con éxito en la Hoja del Recogedor!\n\n• Paradas enviadas: " + numParadas + "\n• Columna de Hora Estimada incluida ⏱️\n• Casillas cuadradas interactivas activas ☑️");
 }
