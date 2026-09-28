@@ -710,7 +710,7 @@ function initHeader() {
 }
 
 /**
- * 2. Menú Móvil
+ * 2. Menú Móvil y Navegación Inteligente para Secciones Ocultas en Móvil
  */
 function initMobileMenu() {
   const toggleBtn = document.getElementById('mobileMenuToggle');
@@ -737,8 +737,43 @@ function initMobileMenu() {
   if (closeBtn) closeBtn.addEventListener('click', closeMenu);
   if (menuBackdrop) menuBackdrop.addEventListener('click', closeMenu);
 
+  function revealAndScroll(targetId) {
+    if (!targetId) return;
+    const targetEl = document.getElementById(targetId);
+    if (targetEl) {
+      if (targetEl.classList.contains('hidden')) {
+        targetEl.classList.remove('hidden');
+      }
+      setTimeout(() => {
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+    }
+  }
+
   navLinks.forEach(link => {
-    link.addEventListener('click', closeMenu);
+    link.addEventListener('click', () => {
+      const href = link.getAttribute('href');
+      closeMenu();
+      if (href && href.startsWith('#') && href.length > 1) {
+        const targetId = href.substring(1);
+        revealAndScroll(targetId);
+      }
+    });
+  });
+
+  // Delegación global para cualquier enlace interno que apunte a secciones que puedan estar ocultas en móvil
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('a[href^="#"]');
+    if (anchor && !anchor.classList.contains('mobile-nav-link') && !anchor.classList.contains('open-legal-modal')) {
+      const href = anchor.getAttribute('href');
+      if (href && href.length > 1) {
+        const targetId = href.substring(1);
+        const targetEl = document.getElementById(targetId);
+        if (targetEl && targetEl.classList.contains('hidden')) {
+          targetEl.classList.remove('hidden');
+        }
+      }
+    }
   });
 }
 
