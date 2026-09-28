@@ -1,5 +1,5 @@
 // TeLaTiro - Service Worker para PWA (Instalación Standalone en Android e iOS)
-const CACHE_NAME = 'telatiro-pwa-v44';
+const CACHE_NAME = 'telatiro-pwa-v45';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -9,7 +9,8 @@ const ASSETS_TO_CACHE = [
   '/app-icon.svg',
   '/icon-192.png',
   '/icon-512.png',
-  '/assets/logo.svg'
+  '/assets/logo.svg',
+  '/assets/hero-collector-walking.jpg'
 ];
 
 self.addEventListener('install', (event) => {
