@@ -751,17 +751,18 @@ function initMobileMenu() {
   }
 
   navLinks.forEach(link => {
-    link.addEventListener('click', () => {
+    link.addEventListener('click', (e) => {
       const href = link.getAttribute('href');
       closeMenu();
       if (href && href.startsWith('#') && href.length > 1) {
+        e.preventDefault();
         const targetId = href.substring(1);
         revealAndScroll(targetId);
       }
     });
   });
 
-  // Delegación global para cualquier enlace interno que apunte a secciones que puedan estar ocultas en móvil
+  // Delegación global para cualquier enlace interno que apunte a secciones que puedan estar ocultas en móvil (como el botón del Hero)
   document.addEventListener('click', (e) => {
     const anchor = e.target.closest('a[href^="#"]');
     if (anchor && !anchor.classList.contains('mobile-nav-link') && !anchor.classList.contains('open-legal-modal')) {
@@ -770,7 +771,8 @@ function initMobileMenu() {
         const targetId = href.substring(1);
         const targetEl = document.getElementById(targetId);
         if (targetEl && targetEl.classList.contains('hidden')) {
-          targetEl.classList.remove('hidden');
+          e.preventDefault();
+          revealAndScroll(targetId);
         }
       }
     }
