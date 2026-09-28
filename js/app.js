@@ -965,6 +965,7 @@ function updatePaymentOptions(planKey) {
  */
 function updateDayOptions(planKey) {
   const daysSelect = document.getElementById('clientDays');
+  const daysLabel = document.getElementById('clientDaysLabel');
   const timeSlotSelect = document.getElementById('clientTimeSlot');
   const punctualNotice = document.getElementById('punctualTimeNotice');
   if (!daysSelect) return;
@@ -975,6 +976,7 @@ function updateDayOptions(planKey) {
   const isPastEveningDeadline = currentHour >= 18;
 
   if (planKey !== 'puntual') {
+    if (daysLabel) daysLabel.textContent = 'Nº de Servicios / Días *';
     // 5 días por semana: Fijo Lunes a Viernes completo
     daysSelect.innerHTML = `
       <option value="5 Servicios semanales: Lunes a Viernes (L, M, X, J, V)" selected>5 Servicios semanales: Lunes a Viernes</option>
@@ -986,6 +988,7 @@ function updateDayOptions(planKey) {
     if (punctualNotice) punctualNotice.classList.add('hidden');
 
   } else if (planKey === 'puntual') {
+    if (daysLabel) daysLabel.textContent = 'Día *';
     // Servicio puntual: 1 día a elegir de Lunes a Viernes con regla de 2 horas
     let optionsHtml = '';
     const weekdays = [
