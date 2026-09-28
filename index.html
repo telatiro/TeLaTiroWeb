@@ -57,7 +57,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="css/styles.css?v=42">
+  <link rel="stylesheet" href="css/styles.css?v=43">
 </head>
 <body class="bg-[#F8FAF9] text-[#2D3748] font-sans antialiased selection:bg-[#25815F] selection:text-white">
 
@@ -1519,8 +1519,233 @@
     </div>
   </section>
 
+  <!-- SECTION: TRABAJA CON NOSOTROS / RED DE COLABORADORES -->
+  <section id="unete" class="py-20 bg-gradient-to-b from-white via-[#F8FAF9] to-[#E8F5EF]/30 border-t border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-14 space-y-4">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-100/80 border border-emerald-300 text-xs sm:text-sm font-bold text-[#19573F]">
+          <i class="fa-solid fa-briefcase text-[#25815F]"></i>
+          <span>Bolsa de Empleo y Red de Colaboradores</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1E1E1E] tracking-tight">
+          ¿Eres autónomo o empresa?<br>
+          <span class="text-[#25815F]">Únete a la red de TeLaTiro</span>
+        </h2>
+        <p class="text-base sm:text-lg text-gray-600 leading-relaxed">
+          Buscamos personas activas, autónomos y empresas de servicios o mantenimiento para prestar servicios de asistencia domiciliaria y depósito de bolsas en contenedores municipales en portales y urbanizaciones. Genera ingresos estables con dedicación flexible.
+        </p>
+      </div>
+
+      <!-- 3 Key Benefits Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div class="clean-card p-6 space-y-3 border-t-4 border-[#25815F]">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-[#25815F] flex items-center justify-center text-xl font-bold">
+            <i class="fa-solid fa-money-bill-wave"></i>
+          </div>
+          <h3 class="text-lg font-bold text-[#1E1E1E]">Ingresos Recurrentes</h3>
+          <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+            Servicios compactos y agrupados por zonas contiguas. Maximiza tu rendimiento asistiendo puerta a contenedor sin perder tiempo en grandes desplazamientos.
+          </p>
+        </div>
+
+        <div class="clean-card p-6 space-y-3 border-t-4 border-[#25815F]">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-[#25815F] flex items-center justify-center text-xl font-bold">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+          </div>
+          <h3 class="text-lg font-bold text-[#1E1E1E]">Horarios Flexibles</h3>
+          <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+            Compatible con otras actividades o empleos. Turnos a elegir: Mañanas (09:00 h), Tardes (16:00 h) o ambos turnos.
+          </p>
+        </div>
+
+        <div class="clean-card p-6 space-y-3 border-t-4 border-[#25815F]">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-[#25815F] flex items-center justify-center text-xl font-bold">
+            <i class="fa-solid fa-mobile-screen-button"></i>
+          </div>
+          <h3 class="text-lg font-bold text-[#1E1E1E]">Hojas de Servicios Digitales</h3>
+          <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+            Recibe en tu móvil la hoja de direcciones ordenada y enlace directo a Google Maps para cada servicio.
+          </p>
+        </div>
+      </div>
+
+      <!-- Form Container Card -->
+      <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl border border-gray-200/80 overflow-hidden">
+        <div class="bg-[#25815F] text-white p-6 sm:p-8 text-center sm:text-left">
+          <h3 class="text-xl sm:text-2xl font-bold">Formulario de Candidatura y Colaboración</h3>
+          <p class="text-xs sm:text-sm text-emerald-100 mt-1">Déjanos tus datos para coordinar una entrevista de colaboración.</p>
+        </div>
+
+        <form id="recruiterForm" class="p-6 sm:p-10 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Nombre / Razón Social -->
+            <div class="space-y-2">
+              <label for="recruiterName" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                Nombre y Apellidos / Razón Social <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                <input type="text" id="recruiterName" name="recruiterName" required placeholder="Ej: Carlos Gómez / Limpiezas Gómez S.L." class="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-xl text-sm text-gray-800 placeholder-gray-400 focus:bg-white focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all">
+              </div>
+            </div>
+
+            <!-- Tipo de Perfil -->
+            <div class="space-y-2">
+              <label for="recruiterProfileType" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                Tipo de Perfil <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <i class="fa-solid fa-id-card absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                <select id="recruiterProfileType" name="recruiterProfileType" required class="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-xl text-sm text-gray-800 focus:bg-white focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all appearance-none">
+                  <option value="Autónomo">Autónomo</option>
+                  <option value="Empresa">Empresa</option>
+                  <option value="Particular">Particular</option>
+                </select>
+                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
+              </div>
+            </div>
+
+            <!-- Teléfono / WhatsApp -->
+            <div class="space-y-2">
+              <label for="recruiterPhone" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                Teléfono / WhatsApp de Contacto <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <i class="fa-solid fa-phone absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                <input type="tel" id="recruiterPhone" name="recruiterPhone" required maxlength="9" placeholder="600000000" class="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-xl text-sm text-gray-800 placeholder-gray-400 focus:bg-white focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all">
+              </div>
+            </div>
+
+            <!-- Correo Electrónico -->
+            <div class="space-y-2">
+              <label for="recruiterEmail" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                Correo Electrónico <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                <input type="email" id="recruiterEmail" name="recruiterEmail" required placeholder="tuemail@ejemplo.com" class="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-xl text-sm text-gray-800 placeholder-gray-400 focus:bg-white focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all">
+              </div>
+            </div>
+
+            <!-- Zona / Municipio -->
+            <div class="space-y-2">
+              <label for="recruiterZone" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                Zona / Municipio de Preferencia <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <i class="fa-solid fa-map-location-dot absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                <select id="recruiterZone" name="recruiterZone" required class="w-full pl-11 pr-10 py-3 bg-gray-50 border border-gray-300 rounded-xl text-sm text-gray-800 focus:bg-white focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all appearance-none">
+                  <option value="Zona 1: Rivas-Vaciamadrid" selected>Zona 1: Rivas-Vaciamadrid</option>
+                  <option value="Otras Zonas (Próxima Expansión)">Otras Zonas (Próxima Expansión)</option>
+                </select>
+                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
+              </div>
+            </div>
+
+            <!-- Disponibilidad Horaria -->
+            <div class="space-y-2">
+              <label for="recruiterAvailability" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                Disponibilidad Horaria <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <i class="fa-solid fa-clock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                <select id="recruiterAvailability" name="recruiterAvailability" required class="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-xl text-sm text-gray-800 focus:bg-white focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all appearance-none">
+                  <option value="Mañanas">Mañanas</option>
+                  <option value="Tardes">Tardes</option>
+                  <option value="Ambas (Mañanas y Tardes)">Ambas (Mañanas y Tardes)</option>
+                </select>
+                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
+              </div>
+            </div>
+
+            <!-- Medio de Transporte -->
+            <div class="md:col-span-2 space-y-2">
+              <label for="recruiterVehicle" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                Medio de Desplazamiento Personal al Domicilio <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <i class="fa-solid fa-person-walking absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                <select id="recruiterVehicle" name="recruiterVehicle" required class="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-xl text-sm text-gray-800 focus:bg-white focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all appearance-none">
+                  <option value="A pie (desplazamiento a pie para acudir a la zona)">A pie (desplazamiento a pie para acudir a la zona)</option>
+                  <option value="Patinete eléctrico / Bicicleta">Patinete eléctrico / Bicicleta (para acudir a la zona)</option>
+                  <option value="Moto / Scooter">Moto / Scooter (para acudir a la zona)</option>
+                  <option value="Coche propio">Coche propio (para acudir a la zona)</option>
+                  <option value="Furgoneta">Furgoneta (para acudir a la zona)</option>
+                  <option value="Transporte público (Metro / Autobús)">Transporte público (Metro / Autobús para acudir a la zona)</option>
+                </select>
+                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
+              </div>
+              <p class="text-[11px] text-gray-500 leading-snug">
+                Indica cómo te desplazarás para llegar a los domicilios asignados. <em>(Nota: el traslado de las bolsas desde la puerta de la vivienda hasta el contenedor municipal se efectúa inmediatamente; no se transportan residuos en vehículos)</em>.
+              </p>
+            </div>
+
+            <!-- Experiencia / Comentarios -->
+            <div class="md:col-span-2 space-y-2">
+              <label for="recruiterNotes" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                Experiencia previa o Comentarios adicionales (Opcional)
+              </label>
+              <textarea id="recruiterNotes" name="recruiterNotes" rows="3" placeholder="Cuéntanos brevemente si tienes experiencia en limpieza, reparto, rutas de comunidades o cualquier detalle de tu disponibilidad..." class="w-full p-4 bg-gray-50 border border-gray-300 rounded-xl text-sm text-gray-800 placeholder-gray-400 focus:bg-white focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all"></textarea>
+            </div>
+
+          </div>
+
+          <!-- RGPD & Collaboration Operating Principles -->
+          <div class="space-y-3 pt-2">
+            <!-- Box with key operating principles for collaborators -->
+            <div class="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4 text-xs text-emerald-950 space-y-2">
+              <div class="font-bold flex items-center gap-2 text-[#1E5E44]">
+                <i class="fa-solid fa-file-contract text-emerald-600"></i> Principios Operativos y Normativa de la Red de Colaboración:
+              </div>
+              <ul class="space-y-1.5 text-gray-700 list-disc list-inside">
+                <li><strong>Servicio asistencial a pie:</strong> El traslado de las bolsas se efectúa exclusivamente a pie desde la puerta o acceso privado del cliente hasta el contenedor municipal correspondiente. Queda terminantemente prohibido el transporte de bolsas en vehículos a motor o su almacenamiento/acopio fuera del sistema público.</li>
+                <li><strong>Depósito directo e inmediato:</strong> El servicio concluye obligatoriamente con el depósito inmediato de las bolsas en el contenedor municipal autorizado. Queda prohibido desviar residuos a cualquier otro lugar.</li>
+                <li><strong>Integridad de las bolsas:</strong> El colaborador no abre, manipula ni clasifica el contenido de las bolsas (la separación en origen es exclusiva del usuario).</li>
+                <li><strong>Bolsas no conformes:</strong> En caso de detectar bolsas rotas, abiertas, con residuos peligrosos o escombros no permitidos, no se trasladarán y se notificará de inmediato a coordinación (dejando constancia visual limitada estrictamente al residuo, sin captar personas, interiores ni números de puerta).</li>
+              </ul>
+            </div>
+
+            <label class="flex items-start gap-3 cursor-pointer text-xs text-gray-600">
+              <input type="checkbox" id="recruiterPrivacy" required class="mt-0.5 rounded border-gray-300 text-[#25815F] focus:ring-[#25815F] h-4 w-4">
+              <span>
+                He leído y acepto los <button type="button" class="open-legal-modal font-bold text-[#25815F] underline hover:text-[#1E5E44]" data-tab="colaboradores">Términos Operativos de Colaboración</button> y la Política de Privacidad para la evaluación de mi candidatura en TeLaTiro.
+              </span>
+            </label>
+          </div>
+
+          <!-- Alertas de estado -->
+          <div id="recruiterSuccessAlert" class="hidden p-4 rounded-2xl bg-emerald-50 border border-emerald-300 text-emerald-900 text-sm flex items-center gap-3">
+            <i class="fa-solid fa-circle-check text-emerald-600 text-2xl flex-shrink-0"></i>
+            <div>
+              <p class="font-bold">¡Candidatura enviada con éxito!</p>
+              <p class="text-xs text-emerald-700 mt-0.5">Hemos recibido tus datos y los hemos incorporado a nuestra bolsa de colaboradores. Nos pondremos en contacto contigo en breve.</p>
+            </div>
+          </div>
+
+          <div id="recruiterErrorAlert" class="hidden p-4 rounded-2xl bg-red-50 border border-red-300 text-red-900 text-sm flex items-center gap-3">
+            <i class="fa-solid fa-triangle-exclamation text-red-600 text-2xl flex-shrink-0"></i>
+            <div>
+              <p class="font-bold">Hubo un problema al enviar la solicitud.</p>
+              <p class="text-xs text-red-700 mt-0.5">Por favor verifica los campos o escríbenos directamente por WhatsApp.</p>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" id="btnSubmitRecruiter" class="btn-primary w-full py-4 text-base font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span id="btnRecruiterText">Enviar Solicitud de Colaborador</span>
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
   <!-- FAQ SECTION -->
-  <section id="preguntas-frecuentes" class="py-20 bg-white border-t border-gray-200">
+  <section id="preguntas-frecuentes" class="hidden lg:block py-20 bg-white border-t border-gray-200">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <div class="text-center max-w-3xl mx-auto mb-14 space-y-3">
@@ -1781,231 +2006,6 @@
           </div>
         </div>
 
-      </div>
-
-    </div>
-  </section>
-
-  <!-- SECTION: TRABAJA CON NOSOTROS / RED DE COLABORADORES -->
-  <section id="unete" class="hidden lg:block py-20 bg-gradient-to-b from-white via-[#F8FAF9] to-[#E8F5EF]/30 border-t border-gray-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <!-- Section Header -->
-      <div class="text-center max-w-3xl mx-auto mb-14 space-y-4">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-100/80 border border-emerald-300 text-xs sm:text-sm font-bold text-[#19573F]">
-          <i class="fa-solid fa-briefcase text-[#25815F]"></i>
-          <span>Bolsa de Empleo y Red de Colaboradores</span>
-        </div>
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1E1E1E] tracking-tight">
-          ¿Eres autónomo o empresa?<br>
-          <span class="text-[#25815F]">Únete a la red de TeLaTiro</span>
-        </h2>
-        <p class="text-base sm:text-lg text-gray-600 leading-relaxed">
-          Buscamos personas activas, autónomos y empresas de servicios o mantenimiento para prestar servicios de asistencia domiciliaria y depósito de bolsas en contenedores municipales en portales y urbanizaciones. Genera ingresos estables con dedicación flexible.
-        </p>
-      </div>
-
-      <!-- 3 Key Benefits Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        <div class="clean-card p-6 space-y-3 border-t-4 border-[#25815F]">
-          <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-[#25815F] flex items-center justify-center text-xl font-bold">
-            <i class="fa-solid fa-money-bill-wave"></i>
-          </div>
-          <h3 class="text-lg font-bold text-[#1E1E1E]">Ingresos Recurrentes</h3>
-          <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
-            Servicios compactos y agrupados por zonas contiguas. Maximiza tu rendimiento asistiendo puerta a contenedor sin perder tiempo en grandes desplazamientos.
-          </p>
-        </div>
-
-        <div class="clean-card p-6 space-y-3 border-t-4 border-[#25815F]">
-          <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-[#25815F] flex items-center justify-center text-xl font-bold">
-            <i class="fa-solid fa-clock-rotate-left"></i>
-          </div>
-          <h3 class="text-lg font-bold text-[#1E1E1E]">Horarios Flexibles</h3>
-          <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
-            Compatible con otras actividades o empleos. Turnos a elegir: Mañanas (09:00 h), Tardes (16:00 h) o ambos turnos.
-          </p>
-        </div>
-
-        <div class="clean-card p-6 space-y-3 border-t-4 border-[#25815F]">
-          <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-[#25815F] flex items-center justify-center text-xl font-bold">
-            <i class="fa-solid fa-mobile-screen-button"></i>
-          </div>
-          <h3 class="text-lg font-bold text-[#1E1E1E]">Hojas de Servicios Digitales</h3>
-          <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
-            Recibe en tu móvil la hoja de direcciones ordenada y enlace directo a Google Maps para cada servicio.
-          </p>
-        </div>
-      </div>
-
-      <!-- Form Container Card -->
-      <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl border border-gray-200/80 overflow-hidden">
-        <div class="bg-[#25815F] text-white p-6 sm:p-8 text-center sm:text-left">
-          <h3 class="text-xl sm:text-2xl font-bold">Formulario de Candidatura y Colaboración</h3>
-          <p class="text-xs sm:text-sm text-emerald-100 mt-1">Déjanos tus datos para coordinar una entrevista de colaboración.</p>
-        </div>
-
-        <form id="recruiterForm" class="p-6 sm:p-10 space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
-            <!-- Nombre / Razón Social -->
-            <div class="space-y-2">
-              <label for="recruiterName" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
-                Nombre y Apellidos / Razón Social <span class="text-red-500">*</span>
-              </label>
-              <div class="relative">
-                <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
-                <input type="text" id="recruiterName" name="recruiterName" required placeholder="Ej: Carlos Gómez / Limpiezas Gómez S.L." class="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-xl text-sm text-gray-800 placeholder-gray-400 focus:bg-white focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all">
-              </div>
-            </div>
-
-            <!-- Tipo de Perfil -->
-            <div class="space-y-2">
-              <label for="recruiterProfileType" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
-                Tipo de Perfil <span class="text-red-500">*</span>
-              </label>
-              <div class="relative">
-                <i class="fa-solid fa-id-card absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
-                <select id="recruiterProfileType" name="recruiterProfileType" required class="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-xl text-sm text-gray-800 focus:bg-white focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all appearance-none">
-                  <option value="Autónomo">Autónomo</option>
-                  <option value="Empresa">Empresa</option>
-                  <option value="Particular">Particular</option>
-                </select>
-                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
-              </div>
-            </div>
-
-            <!-- Teléfono / WhatsApp -->
-            <div class="space-y-2">
-              <label for="recruiterPhone" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
-                Teléfono / WhatsApp de Contacto <span class="text-red-500">*</span>
-              </label>
-              <div class="relative">
-                <i class="fa-solid fa-phone absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
-                <input type="tel" id="recruiterPhone" name="recruiterPhone" required maxlength="9" placeholder="600000000" class="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-xl text-sm text-gray-800 placeholder-gray-400 focus:bg-white focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all">
-              </div>
-            </div>
-
-            <!-- Correo Electrónico -->
-            <div class="space-y-2">
-              <label for="recruiterEmail" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
-                Correo Electrónico <span class="text-red-500">*</span>
-              </label>
-              <div class="relative">
-                <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
-                <input type="email" id="recruiterEmail" name="recruiterEmail" required placeholder="tuemail@ejemplo.com" class="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-xl text-sm text-gray-800 placeholder-gray-400 focus:bg-white focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all">
-              </div>
-            </div>
-
-            <!-- Zona / Municipio -->
-            <div class="space-y-2">
-              <label for="recruiterZone" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
-                Zona / Municipio de Preferencia <span class="text-red-500">*</span>
-              </label>
-              <div class="relative">
-                <i class="fa-solid fa-map-location-dot absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
-                <select id="recruiterZone" name="recruiterZone" required class="w-full pl-11 pr-10 py-3 bg-gray-50 border border-gray-300 rounded-xl text-sm text-gray-800 focus:bg-white focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all appearance-none">
-                  <option value="Zona 1: Rivas-Vaciamadrid" selected>Zona 1: Rivas-Vaciamadrid</option>
-                  <option value="Otras Zonas (Próxima Expansión)">Otras Zonas (Próxima Expansión)</option>
-                </select>
-                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
-              </div>
-            </div>
-
-            <!-- Disponibilidad Horaria -->
-            <div class="space-y-2">
-              <label for="recruiterAvailability" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
-                Disponibilidad Horaria <span class="text-red-500">*</span>
-              </label>
-              <div class="relative">
-                <i class="fa-solid fa-clock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
-                <select id="recruiterAvailability" name="recruiterAvailability" required class="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-xl text-sm text-gray-800 focus:bg-white focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all appearance-none">
-                  <option value="Mañanas">Mañanas</option>
-                  <option value="Tardes">Tardes</option>
-                  <option value="Ambas (Mañanas y Tardes)">Ambas (Mañanas y Tardes)</option>
-                </select>
-                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
-              </div>
-            </div>
-
-            <!-- Medio de Transporte -->
-            <div class="md:col-span-2 space-y-2">
-              <label for="recruiterVehicle" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
-                Medio de Desplazamiento Personal al Domicilio <span class="text-red-500">*</span>
-              </label>
-              <div class="relative">
-                <i class="fa-solid fa-person-walking absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
-                <select id="recruiterVehicle" name="recruiterVehicle" required class="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-xl text-sm text-gray-800 focus:bg-white focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all appearance-none">
-                  <option value="A pie (desplazamiento a pie para acudir a la zona)">A pie (desplazamiento a pie para acudir a la zona)</option>
-                  <option value="Patinete eléctrico / Bicicleta">Patinete eléctrico / Bicicleta (para acudir a la zona)</option>
-                  <option value="Moto / Scooter">Moto / Scooter (para acudir a la zona)</option>
-                  <option value="Coche propio">Coche propio (para acudir a la zona)</option>
-                  <option value="Furgoneta">Furgoneta (para acudir a la zona)</option>
-                  <option value="Transporte público (Metro / Autobús)">Transporte público (Metro / Autobús para acudir a la zona)</option>
-                </select>
-                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
-              </div>
-              <p class="text-[11px] text-gray-500 leading-snug">
-                Indica cómo te desplazarás para llegar a los domicilios asignados. <em>(Nota: el traslado de las bolsas desde la puerta de la vivienda hasta el contenedor municipal se efectúa inmediatamente; no se transportan residuos en vehículos)</em>.
-              </p>
-            </div>
-
-            <!-- Experiencia / Comentarios -->
-            <div class="md:col-span-2 space-y-2">
-              <label for="recruiterNotes" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">
-                Experiencia previa o Comentarios adicionales (Opcional)
-              </label>
-              <textarea id="recruiterNotes" name="recruiterNotes" rows="3" placeholder="Cuéntanos brevemente si tienes experiencia en limpieza, reparto, rutas de comunidades o cualquier detalle de tu disponibilidad..." class="w-full p-4 bg-gray-50 border border-gray-300 rounded-xl text-sm text-gray-800 placeholder-gray-400 focus:bg-white focus:border-[#25815F] focus:ring-2 focus:ring-[#25815F]/20 focus:outline-none transition-all"></textarea>
-            </div>
-
-          </div>
-
-          <!-- RGPD & Collaboration Operating Principles -->
-          <div class="space-y-3 pt-2">
-            <!-- Box with key operating principles for collaborators -->
-            <div class="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4 text-xs text-emerald-950 space-y-2">
-              <div class="font-bold flex items-center gap-2 text-[#1E5E44]">
-                <i class="fa-solid fa-file-contract text-emerald-600"></i> Principios Operativos y Normativa de la Red de Colaboración:
-              </div>
-              <ul class="space-y-1.5 text-gray-700 list-disc list-inside">
-                <li><strong>Servicio asistencial a pie:</strong> El traslado de las bolsas se efectúa exclusivamente a pie desde la puerta o acceso privado del cliente hasta el contenedor municipal correspondiente. Queda terminantemente prohibido el transporte de bolsas en vehículos a motor o su almacenamiento/acopio fuera del sistema público.</li>
-                <li><strong>Depósito directo e inmediato:</strong> El servicio concluye obligatoriamente con el depósito inmediato de las bolsas en el contenedor municipal autorizado. Queda prohibido desviar residuos a cualquier otro lugar.</li>
-                <li><strong>Integridad de las bolsas:</strong> El colaborador no abre, manipula ni clasifica el contenido de las bolsas (la separación en origen es exclusiva del usuario).</li>
-                <li><strong>Bolsas no conformes:</strong> En caso de detectar bolsas rotas, abiertas, con residuos peligrosos o escombros no permitidos, no se trasladarán y se notificará de inmediato a coordinación (dejando constancia visual limitada estrictamente al residuo, sin captar personas, interiores ni números de puerta).</li>
-              </ul>
-            </div>
-
-            <label class="flex items-start gap-3 cursor-pointer text-xs text-gray-600">
-              <input type="checkbox" id="recruiterPrivacy" required class="mt-0.5 rounded border-gray-300 text-[#25815F] focus:ring-[#25815F] h-4 w-4">
-              <span>
-                He leído y acepto los <button type="button" class="open-legal-modal font-bold text-[#25815F] underline hover:text-[#1E5E44]" data-tab="colaboradores">Términos Operativos de Colaboración</button> y la Política de Privacidad para la evaluación de mi candidatura en TeLaTiro.
-              </span>
-            </label>
-          </div>
-
-          <!-- Alertas de estado -->
-          <div id="recruiterSuccessAlert" class="hidden p-4 rounded-2xl bg-emerald-50 border border-emerald-300 text-emerald-900 text-sm flex items-center gap-3">
-            <i class="fa-solid fa-circle-check text-emerald-600 text-2xl flex-shrink-0"></i>
-            <div>
-              <p class="font-bold">¡Candidatura enviada con éxito!</p>
-              <p class="text-xs text-emerald-700 mt-0.5">Hemos recibido tus datos y los hemos incorporado a nuestra bolsa de colaboradores. Nos pondremos en contacto contigo en breve.</p>
-            </div>
-          </div>
-
-          <div id="recruiterErrorAlert" class="hidden p-4 rounded-2xl bg-red-50 border border-red-300 text-red-900 text-sm flex items-center gap-3">
-            <i class="fa-solid fa-triangle-exclamation text-red-600 text-2xl flex-shrink-0"></i>
-            <div>
-              <p class="font-bold">Hubo un problema al enviar la solicitud.</p>
-              <p class="text-xs text-red-700 mt-0.5">Por favor verifica los campos o escríbenos directamente por WhatsApp.</p>
-            </div>
-          </div>
-
-          <!-- Submit Button -->
-          <button type="submit" id="btnSubmitRecruiter" class="btn-primary w-full py-4 text-base font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
-            <i class="fa-solid fa-paper-plane"></i>
-            <span id="btnRecruiterText">Enviar Solicitud de Colaborador</span>
-          </button>
-        </form>
       </div>
 
     </div>
@@ -2330,6 +2330,6 @@
   </div>
 
   <!-- Javascript -->
-  <script src="js/app.js?v=42"></script>
+  <script src="js/app.js?v=43"></script>
 </body>
 </html>
