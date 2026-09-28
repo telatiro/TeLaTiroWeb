@@ -1941,7 +1941,7 @@ function showToast(message, type = 'info') {
 }
 
 /**
- * 10. Alternador de Fotos del Hero (Entrega vs Felpudo)
+ * 10. Alternador de Fotos del Hero (Si existen pestañas de fotos)
  */
 function initHeroPhotoSwitcher() {
   const photoBtns = document.querySelectorAll('.photo-tab-btn');
