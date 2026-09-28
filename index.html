@@ -57,7 +57,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="css/styles.css?v=38">
+  <link rel="stylesheet" href="css/styles.css?v=39">
 </head>
 <body class="bg-[#F8FAF9] text-[#2D3748] font-sans antialiased selection:bg-[#25815F] selection:text-white">
 
@@ -570,25 +570,7 @@
         </p>
       </div>
 
-      <!-- INFORMATIVE COMMUNITY DISCOUNT BANNER -->
-      <div class="mb-10 max-w-5xl mx-auto bg-gradient-to-r from-[#25815F] to-[#164e38] rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-        <div class="space-y-2 text-center md:text-left">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
-            <i class="fa-solid fa-users"></i> Descuento Vecinal Agrupado
-          </div>
-          <h3 class="text-2xl sm:text-3xl font-extrabold">¿Sois 10 o más vecinos en el mismo edificio o urbanización?</h3>
-          <p class="text-emerald-100 text-sm max-w-2xl leading-relaxed">
-            Cuando <strong>10 o más viviendas de una misma comunidad</strong> contratan individualmente TeLaTiro de forma mensual, a cada cliente se le aplica automáticamente un <strong>descuento directo de 5 € al mes</strong> en su cuota.
-          </p>
-        </div>
-        <div class="bg-white/10 backdrop-blur-md border border-white/20 px-6 py-4 rounded-2xl text-center flex-shrink-0">
-          <span class="text-xs font-bold uppercase tracking-wider text-emerald-200 block">Ahorro por vecino</span>
-          <span class="text-2xl sm:text-3xl font-extrabold text-white">-5 € / mes</span>
-          <span class="text-[11px] text-emerald-200 block mt-0.5">(Para 10+ suscripciones)</span>
-        </div>
-      </div>
-
-      <!-- Pricing Cards Container: 2 Planes Mensuales Lunes a Viernes -->
+      <!-- 1. Pricing Cards Container: 2 Planes Mensuales Lunes a Viernes -->
       <div id="pricing-pisos" class="grid grid-cols-1 md:grid-cols-2 max-w-5xl mx-auto gap-8 items-stretch">
         
         <!-- PLAN PISO: 5 DÍAS (39,90€) - MÁS POPULAR -->
@@ -717,8 +699,31 @@
 
       </div>
 
-      <!-- INFORMATIVE REFERRAL PROMO (PLAN AMIGO VECINAL) -->
-      <div class="mt-10 bg-gradient-to-r from-emerald-50 via-white to-emerald-50 rounded-3xl p-6 sm:p-7 border border-[#25815F]/30 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+      <!-- 2. BANNER CARD: SERVICIO PUNTUAL (4,90€) -->
+      <div class="mt-10 max-w-5xl mx-auto bg-white rounded-3xl p-6 sm:p-8 border-2 border-dashed border-gray-300 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-sm hover:border-[#25815F] transition-colors">
+        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-left">
+          <div class="w-14 h-14 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center text-2xl flex-shrink-0">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <div class="space-y-1">
+            <div class="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
+              <span class="text-xs font-bold uppercase tracking-wider text-amber-800 bg-amber-100 px-3 py-0.5 rounded-full">Sin Suscripción</span>
+              <span class="text-xs text-gray-500">Servicio puntual de 1 día</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-bold text-[#1E1E1E]">¿Prefieres un Servicio Puntual sin cuotas?</h3>
+            <p class="text-sm text-gray-600 max-w-2xl">
+              Para días concretos, limpiezas o emergencias. <strong>4,90 € / servicio</strong> con pago 100% seguro con Tarjeta bancaria. Elige cualquier día de Lunes a Viernes (solicitud para el mismo día: hasta las <strong>11:00 h</strong> en Mañana o hasta las <strong>18:00 h</strong> en Tarde).
+            </p>
+          </div>
+        </div>
+        <button data-select-plan="puntual" class="btn-secondary whitespace-nowrap !py-3.5 !px-8 shadow-sm flex-shrink-0">
+          <span>Solicitar Servicio Puntual (4,90€)</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <!-- 3. INFORMATIVE REFERRAL PROMO (PLAN AMIGO VECINAL) -->
+      <div class="mt-8 max-w-5xl mx-auto bg-gradient-to-r from-emerald-50 via-white to-emerald-50 rounded-3xl p-6 sm:p-7 border border-[#25815F]/30 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="flex items-start gap-4 text-center md:text-left">
           <div class="w-12 h-12 rounded-2xl bg-[#25815F] text-white flex items-center justify-center text-xl flex-shrink-0 shadow-sm mx-auto md:mx-0">
             <i class="fa-solid fa-gift"></i>
@@ -740,27 +745,22 @@
         </div>
       </div>
 
-      <!-- BANNER CARD: SERVICIO PUNTUAL (4,90€) -->
-      <div class="mt-12 bg-white rounded-3xl p-6 sm:p-8 border-2 border-dashed border-gray-300 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-sm hover:border-[#25815F] transition-colors">
-        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-left">
-          <div class="w-14 h-14 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center text-2xl flex-shrink-0">
-            <i class="fa-solid fa-bolt"></i>
+      <!-- 4. INFORMATIVE COMMUNITY DISCOUNT BANNER (10+ VECINOS) -->
+      <div class="mt-8 max-w-5xl mx-auto bg-gradient-to-r from-[#25815F] to-[#164e38] rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+        <div class="space-y-2 text-center md:text-left">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
+            <i class="fa-solid fa-users"></i> Descuento Vecinal Agrupado
           </div>
-          <div class="space-y-1">
-            <div class="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
-              <span class="text-xs font-bold uppercase tracking-wider text-amber-800 bg-amber-100 px-3 py-0.5 rounded-full">Sin Suscripción</span>
-              <span class="text-xs text-gray-500">Servicio puntual de 1 día</span>
-            </div>
-            <h3 class="text-xl sm:text-2xl font-bold text-[#1E1E1E]">¿Prefieres un Servicio Puntual sin cuotas?</h3>
-            <p class="text-sm text-gray-600 max-w-2xl">
-              Para días concretos, limpiezas o emergencias. <strong>4,90 € / servicio</strong> con pago 100% seguro con Tarjeta bancaria. Elige cualquier día de Lunes a Viernes (solicitud para el mismo día: hasta las <strong>11:00 h</strong> en Mañana o hasta las <strong>18:00 h</strong> en Tarde).
-            </p>
-          </div>
+          <h3 class="text-2xl sm:text-3xl font-extrabold">¿Sois 10 o más vecinos en el mismo edificio o urbanización?</h3>
+          <p class="text-emerald-100 text-sm max-w-2xl leading-relaxed">
+            Cuando <strong>10 o más viviendas de una misma comunidad</strong> contratan individualmente TeLaTiro de forma mensual, a cada cliente se le aplica automáticamente un <strong>descuento directo de 5 € al mes</strong> en su cuota.
+          </p>
         </div>
-        <button data-select-plan="puntual" class="btn-secondary whitespace-nowrap !py-3.5 !px-8 shadow-sm flex-shrink-0">
-          <span>Solicitar Servicio Puntual (4,90€)</span>
-          <i class="fa-solid fa-arrow-right"></i>
-        </button>
+        <div class="bg-white/10 backdrop-blur-md border border-white/20 px-6 py-4 rounded-2xl text-center flex-shrink-0">
+          <span class="text-xs font-bold uppercase tracking-wider text-emerald-200 block">Ahorro por vecino</span>
+          <span class="text-2xl sm:text-3xl font-extrabold text-white">-5 € / mes</span>
+          <span class="text-[11px] text-emerald-200 block mt-0.5">(Para 10+ suscripciones)</span>
+        </div>
       </div>
 
       <!-- Maximum 2 Bags & Punctuality Disclaimer Alert -->
@@ -2347,6 +2347,6 @@
   </div>
 
   <!-- Javascript -->
-  <script src="js/app.js?v=38"></script>
+  <script src="js/app.js?v=39"></script>
 </body>
 </html>
